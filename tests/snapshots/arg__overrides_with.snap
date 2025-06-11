@@ -1,0 +1,7 @@
+---
+source: tests/arg.rs
+expression: output
+---
+claptrap_debug=true
+claptrap_color=true
+claptrap_flag=false

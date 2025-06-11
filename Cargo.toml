@@ -1,10 +1,29 @@
 [package]
 name = "claptrap"
-description = "Placeholder"
-version = "0.0.0"
+description = "Bring the power of clap command line parsing to shell scripts."
+version = "0.1.0"
 authors = ["FujiApple <fujiapple852@gmail.com>"]
+documentation = "https://github.com/fujiapple852/claptrap"
+homepage = "https://github.com/fujiapple852/claptrap"
 repository = "https://github.com/fujiapple852/claptrap"
+keywords = ["cli", "clap", "parse", "arg", "shell"]
+categories = ["command-line-utilities"]
+readme = "README.md"
 license = "Apache-2.0"
 edition = "2024"
+rust-version = "1.85.0"
 
 [dependencies]
+anstream = "0.6.19"
+anyhow = "1.0.98"
+clap = { version = "4.5.39", features = ["derive", "string", "cargo", "wrap_help", "usage", "unstable-styles", "color", "suggestions", "error-context", "env"] }
+clap_complete = "4.5.54"
+clap_mangen = "0.2.27"
+indexmap = { version = "2.9.0", features = ["serde"] }
+itertools = "0.14.0"
+serde = { version = "1.0.219", features = ["derive"] }
+strum = { version = "0.27.1", features = ["derive"] }
+toml = { version = "0.8.22", features = ["preserve_order"] }
+
+[dev-dependencies]
+insta = "1.43.1"

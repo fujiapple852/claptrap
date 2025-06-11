@@ -1,0 +1,8 @@
+---
+source: tests/basic.rs
+expression: output
+---
+command cat <<'EOF'
+myapp 0.1.0
+EOF
+exit 0

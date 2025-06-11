@@ -1,0 +1,11 @@
+---
+source: tests/command.rs
+expression: output
+---
+command cat <<'EOF'
+myprog v0.1.24 commit: abcdef89726d
+revision: 123
+release: 2
+binary: myprog
+EOF
+exit 0
