@@ -18,7 +18,6 @@ jobs:
         with:
           path: docs
 
-# TODO once claptrap.cli.rs is ready, uncomment the deploy job
   deploy:
     needs: build
     runs-on: ubuntu-latest
