@@ -54,10 +54,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install zsh (Linux)
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y zsh
+        run: sudo apt-get update && sudo apt-get install -y zsh && sudo apt-get install fish
       - name: Install zsh (macOS)
         if: runner.os == 'macOS'
-        run: brew install zsh
+        run: brew install zsh && brew install fish
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: ${{ matrix.rust }}
