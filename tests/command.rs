@@ -109,6 +109,37 @@ fn test_subcommand() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn test_subcommand_many() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "myprog"
+            [args]
+            arg1 = {}
+            [[subcommands]]
+            name = "subcommand"
+            about = "a sub command"
+                [subcommands.args]
+                arg2 = {}
+                  [[subcommands.subcommands]]
+                  name  = "nested"
+                  about = "A nested sub command"
+                    [subcommands.subcommands.args]
+                    arg3 = { long = "arg3", action = "append" }
+            [[subcommands]]
+            name = "subcommand2"
+            about = "another sub command"
+                [subcommands.args]
+                arg4 = {}
+        "#,
+    )
+    .unwrap();
+    let input = "subcommand nested --arg3 one --arg3 two";
+    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
+
 // TODO: error
 
 #[test]
