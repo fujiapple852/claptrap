@@ -1,0 +1,49 @@
+---
+title: Getting Started
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+---
+
+Welcome to **Claptrap**! This quick guide will help you install the tool and parse command line arguments in your shell scripts with ease.
+
+## Installation
+
+```bash
+cargo install claptrap --locked
+```
+
+## Basic Usage
+
+Create a `spec.toml` describing your arguments:
+
+```toml
+name = "myapp"
+version = "0.1.0"
+
+[args]
+mode = { short = "m", long = "mode" }
+protocol = { short = "p", long = "protocol" }
+```
+
+Use Claptrap in your script:
+
+```bash
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+eval "$(claptrap --spec spec.toml -- "$@")"
+
+echo "mode: $claptrap_mode"
+echo "protocol: $claptrap_protocol"
+```
+
+Run your script:
+
+```bash
+$ ./myapp.sh -m normal --protocol http
+mode: normal
+protocol: http
+```
+
+That's it! You're now ready to clap 👏 and trap 🪤 your arguments!
