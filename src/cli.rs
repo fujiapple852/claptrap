@@ -54,6 +54,16 @@ pub enum SubCommand {
         #[arg(short, long, value_name = "FILE")]
         output: Option<PathBuf>,
     },
+    /// Generate documentation
+    Doc {
+        /// The format of the documentation
+        #[arg(value_enum, short = 'f', long, default_value_t = DocFormat::Markdown)]
+        format: DocFormat,
+
+        /// The output file for the documentation
+        #[arg(short, long, value_name = "FILE")]
+        output: Option<PathBuf>,
+    },
 }
 
 /// Shell with template script available.
@@ -93,6 +103,23 @@ impl Display for SpecFormat {
             Self::Json => write!(f, "json"),
             Self::Yaml => write!(f, "yaml"),
             Self::Toml => write!(f, "toml"),
+        }
+    }
+}
+
+/// Documentation output format.
+#[derive(clap::ValueEnum, Debug, Copy, Clone, Default)]
+#[non_exhaustive]
+pub enum DocFormat {
+    /// Markdown formatted output
+    #[default]
+    Markdown,
+}
+
+impl Display for DocFormat {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Markdown => write!(f, "markdown"),
         }
     }
 }

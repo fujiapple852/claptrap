@@ -17,6 +17,7 @@ rust-version = "1.85.0"
 anstream = "0.6.19"
 anyhow = "1.0.98"
 clap = { version = "4.5.39", features = ["derive", "string", "cargo", "wrap_help", "usage", "unstable-styles", "color", "suggestions", "error-context", "env"] }
+clap-markdown = "0.1.5"
 clap_complete = "4.5.54"
 clap_mangen = "0.2.27"
 crc32fast = "1.4.2"
