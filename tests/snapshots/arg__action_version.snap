@@ -2,7 +2,7 @@
 source: tests/arg.rs
 expression: output
 ---
-command cat <<'EOF'
+command cat <<'EOF_bdec613a'
 prog 1.0.0
-EOF
+EOF_bdec613a
 exit 0

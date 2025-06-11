@@ -1,4 +1,5 @@
 use clap::builder::StyledStr;
+use crc32fast::hash;
 use itertools::Itertools;
 
 fn shell_quote(value: &str) -> String {
@@ -103,11 +104,15 @@ impl CatCmd {
 
 impl Display for CatCmd {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let msg = format!("{}", self.data.ansi());
+        let mut delimiter = format!("EOF_{:08x}", hash(msg.as_bytes()));
+        while msg.contains(&delimiter) {
+            delimiter.push('_');
+        }
         write!(
             f,
-            "command cat <<'EOF'\n{}EOF\nexit {}",
-            self.data.ansi(),
-            self.exit_code
+            "command cat <<'{}'\n{}{}\nexit {}",
+            delimiter, msg, delimiter, self.exit_code
         )
     }
 }
