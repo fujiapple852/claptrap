@@ -1,0 +1,24 @@
+name = "busybox"
+multicall = true
+
+[[subcommands]]
+name = "busybox"
+arg-required-else-help = true
+subcommand-value-name = "APPLET"
+subcommand-help-heading = "APPLETS"
+[subcommands.args]
+install = { long = "install", help = "Install hardlinks for all subcommands in path", exclusive = true, action = "set", default-missing-value = "/usr/local/bin" }
+[[subcommands.subcommands]]
+name = "true"
+about = "does nothing successfully"
+[[subcommands.subcommands]]
+name = "false"
+about = "does nothing unsuccessfully"
+
+[[subcommands]]
+name = "true"
+about = "does nothing successfully"
+
+[[subcommands]]
+name = "false"
+about = "does nothing unsuccessfully"

@@ -1,0 +1,13 @@
+name = "hostname"
+multicall = true
+arg-required-else-help = true
+subcommand-value-name = "APPLET"
+subcommand-help-heading = "APPLETS"
+
+[[subcommands]]
+name = "hostname"
+about = "show hostname part of FQDN"
+
+[[subcommands]]
+name = "dnsdomainname"
+about = "show domain name part of FQDN"

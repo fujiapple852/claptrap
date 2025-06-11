@@ -1,0 +1,57 @@
+name = "git"
+about = "A fictional versioning CLI"
+subcommand-required = true
+arg-required-else-help = true
+allow-external-subcommands = true
+
+[[subcommands]]
+name = "clone"
+about = "Clones repos"
+arg-required-else-help = true
+[subcommands.args]
+REMOTE = { index = 1, help = "The remote to clone" }
+
+[[subcommands]]
+name = "diff"
+about = "Compare two commits"
+[subcommands.args]
+base = { index = 1, value-name = "COMMIT" }
+head = { index = 2, value-name = "COMMIT" }
+path = { index = 3, value-name = "PATH", last = true }
+color = { long = "color", value-name = "WHEN", value-parser = ["always", "auto", "never"], num-args = "optional", require-equals = true, default-value = "auto", default-missing-value = "always" }
+
+[[subcommands]]
+name = "push"
+about = "pushes things"
+arg-required-else-help = true
+[subcommands.args]
+REMOTE = { index = 1, help = "The remote to target" }
+
+[[subcommands]]
+name = "add"
+about = "adds things"
+arg-required-else-help = true
+[subcommands.args]
+PATH = { value-name = "PATH", num-args = "..", action = "set" }
+
+[[subcommands]]
+name = "stash"
+args-conflicts-with-subcommands = true
+flatten-help = true
+[subcommands.args]
+message = { short = 'm', long = "message", value-name = "MESSAGE" }
+
+[[subcommands.subcommands]]
+name = "push"
+[subcommands.subcommands.args]
+message = { short = 'm', long = "message", value-name = "MESSAGE" }
+
+[[subcommands.subcommands]]
+name = "pop"
+[subcommands.subcommands.args]
+STASH = { index = 1 }
+
+[[subcommands.subcommands]]
+name = "apply"
+[subcommands.subcommands.args]
+STASH = { index = 1 }

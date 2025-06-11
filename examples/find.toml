@@ -1,0 +1,11 @@
+name = "find"
+
+[groups]
+tests = { args = ["empty", "name"], multiple = true }
+operators = { args = ["or", "and"], multiple = true }
+
+[args]
+empty = { long = "empty", action = "append", help = "File is empty and is either a regular file or a directory", group = "tests", num-args = 0, typed-value-parser = "bool", default-missing-value = "true", default-value = "false" }
+name = { long = "name", action = "append", help = "Base of file name (the path with the leading directories removed) matches shell pattern pattern", group = "tests" }
+or = { short = 'o', long = "or", action = "append", help = "expr2 is not evaluate if exp1 is true", group = "operators", num-args = 0, typed-value-parser = "bool", default-missing-value = "true", default-value = "false" }
+and = { short = 'a', long = "and", action = "append", help = "Same as `expr1 expr1`", group = "operators", num-args = 0, typed-value-parser = "bool", default-missing-value = "true", default-value = "false" }
