@@ -2,4 +2,4 @@
 source: tests/arg.rs
 expression: output
 ---
-claptrap_option=(TeSt123 teST123 tESt321)
+claptrap_option=('TeSt123' 'teST123' 'tESt321')

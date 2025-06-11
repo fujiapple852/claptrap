@@ -2,5 +2,5 @@
 source: tests/arg.rs
 expression: output1
 ---
-claptrap_first=one
-claptrap_third=three
+claptrap_first='one'
+claptrap_third='three'

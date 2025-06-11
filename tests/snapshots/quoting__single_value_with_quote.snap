@@ -1,0 +1,5 @@
+---
+source: tests/quoting.rs
+expression: output
+---
+claptrap_val='foo'\''bar'

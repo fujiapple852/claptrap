@@ -2,4 +2,4 @@
 source: tests/arg.rs
 expression: output
 ---
-claptrap_test=coffee
+claptrap_test='coffee'

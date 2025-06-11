@@ -2,5 +2,5 @@
 source: tests/arg.rs
 expression: output
 ---
-claptrap_debug=true
-claptrap_verbose=false
+claptrap_debug='true'
+claptrap_verbose='false'

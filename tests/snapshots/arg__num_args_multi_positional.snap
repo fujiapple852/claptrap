@@ -2,4 +2,4 @@
 source: tests/arg.rs
 expression: output1
 ---
-claptrap_file=(file1 file2 file3 word)
+claptrap_file=('file1' 'file2' 'file3' 'word')

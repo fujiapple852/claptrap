@@ -2,4 +2,4 @@
 source: tests/arg.rs
 expression: output1
 ---
-claptrap_dbg=true
+claptrap_dbg='true'
