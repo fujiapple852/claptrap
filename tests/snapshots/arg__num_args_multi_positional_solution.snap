@@ -1,0 +1,6 @@
+---
+source: tests/arg.rs
+expression: output
+---
+claptrap_file=(file1 file2 file3)
+claptrap_word=word

@@ -1,0 +1,22 @@
+---
+source: tests/command.rs
+expression: output
+---
+command cat <<'EOF'
+myapp v1.0
+           Does awesome things
+           (C) me@mail.com
+
+           Usage: myapp <opts> <command>
+
+           Options:
+           -h, --help       Display this message
+           -V, --version    Display version info
+           -s <stuff>       Do something with stuff
+           -v               Be verbose
+
+           Commands:
+           help             Print this message
+           work             Do some work
+EOF
+exit 0
