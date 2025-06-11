@@ -2,10 +2,10 @@
 source: tests/arg.rs
 expression: output
 ---
-command cat <<'EOF'
+command cat <<'EOF_dd29d008'
 [1m[4mUsage:[0m [1mprog[0m
 
 [1m[4mOptions:[0m
   [1m-h[0m, [1m--help[0m  Print help
-EOF
+EOF_dd29d008
 exit 0

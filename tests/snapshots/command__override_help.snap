@@ -2,7 +2,7 @@
 source: tests/command.rs
 expression: output
 ---
-command cat <<'EOF'
+command cat <<'EOF_3624ca48'
 myapp v1.0
            Does awesome things
            (C) me@mail.com
@@ -18,5 +18,5 @@ myapp v1.0
            Commands:
            help             Print this message
            work             Do some work
-EOF
+EOF_3624ca48
 exit 0

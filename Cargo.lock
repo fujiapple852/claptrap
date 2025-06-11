@@ -139,6 +139,7 @@ dependencies = [
  "clap",
  "clap_complete",
  "clap_mangen",
+ "crc32fast",
  "indexmap",
  "insta",
  "itertools",
@@ -166,6 +167,15 @@ dependencies = [
  "libc",
  "once_cell",
  "windows-sys",
+]
+
+[[package]]
+name = "crc32fast"
+version = "1.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a97769d94ddab943e4510d138150169a2758b5ef3eb191a9ee688de3e23ef7b3"
+dependencies = [
+ "cfg-if",
 ]
 
 [[package]]

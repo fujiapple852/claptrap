@@ -2,7 +2,7 @@
 source: tests/command.rs
 expression: output
 ---
-command cat <<'EOF'
+command cat <<'EOF_3527492b'
 myprog () Me, me@mymain.com - [1mmyprog[0m
-EOF
+EOF_3527492b
 exit 0
