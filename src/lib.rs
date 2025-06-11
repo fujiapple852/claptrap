@@ -19,15 +19,27 @@ pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
     let clap_app = clap::Command::from(cmd).no_binary_name(true);
     match clap_app.clone().try_get_matches_from(args) {
         Ok(matches) => Output::Variables(extract_matches(&clap_app, &matches, &mut vec![])),
-        Err(err) => match err.kind() {
-            clap::error::ErrorKind::DisplayHelp | clap::error::ErrorKind::DisplayVersion => {
-                Output::Cat(CatCmd::new(err.render(), ExitCode::Success))
+        Err(err) => {
+            let err = err.format(&mut clap_app.clone());
+            let color_choice = if clap_app.is_disable_colored_help_set() {
+                clap::ColorChoice::Never
+            } else {
+                clap_app.get_color()
+            };
+            let mut rendered = err.render();
+            if matches!(color_choice, clap::ColorChoice::Never) {
+                rendered = clap::builder::StyledStr::from(rendered.to_string());
             }
-            clap::error::ErrorKind::DisplayHelpOnMissingArgumentOrSubcommand => {
-                Output::Cat(CatCmd::new(err.render(), ExitCode::Usage))
+            match err.kind() {
+                clap::error::ErrorKind::DisplayHelp | clap::error::ErrorKind::DisplayVersion => {
+                    Output::Cat(CatCmd::new(rendered, ExitCode::Success))
+                }
+                clap::error::ErrorKind::DisplayHelpOnMissingArgumentOrSubcommand => {
+                    Output::Cat(CatCmd::new(rendered, ExitCode::Usage))
+                }
+                _ => Output::Cat(CatCmd::new(rendered, ExitCode::Error)),
             }
-            _ => Output::Cat(CatCmd::new(err.render(), ExitCode::Error)),
-        },
+        }
     }
 }
 

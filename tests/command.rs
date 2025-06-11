@@ -198,7 +198,6 @@ fn test_dont_delimit_trailing_values() {
     insta::assert_snapshot!(output);
 }
 
-/// TODO doesn't seem to disable color output
 #[test]
 fn test_color() {
     let app: Command = toml::from_str(
@@ -351,7 +350,6 @@ fn test_disable_help_subcommand() {
     insta::assert_snapshot!(output);
 }
 
-/// TODO doesn't seem to disable color output
 #[test]
 fn test_disable_colored_help() {
     let app: Command = toml::from_str(
