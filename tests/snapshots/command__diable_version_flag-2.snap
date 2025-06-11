@@ -1,0 +1,8 @@
+---
+source: tests/command.rs
+expression: output2
+---
+command cat <<'EOF'
+myprog 1.0.0
+EOF
+exit 0

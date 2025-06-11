@@ -1,0 +1,5 @@
+---
+source: tests/arg.rs
+expression: output1
+---
+claptrap_mode=fast
