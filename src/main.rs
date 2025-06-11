@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
 
-use crate::cli::{Shell, SpecFormat, SubCommand};
+use crate::cli::{DocFormat, Shell, SpecFormat, SubCommand};
 use anstream::ColorChoice;
 use clap::Parser;
 use clap::builder::StyledStr;
@@ -30,6 +30,10 @@ fn main() -> anyhow::Result<()> {
         }
         Some(SubCommand::Script { shell, output }) => {
             run_generate_template(&cli.spec, cli.spec_format, &shell, output)?;
+            exit(0);
+        }
+        Some(SubCommand::Doc { format, output }) => {
+            run_generate_doc(&cli.spec, cli.spec_format, format, output)?;
             exit(0);
         }
         None => {
@@ -125,6 +129,26 @@ fn run_generate_template(
         std::fs::write(output_path, template)?;
     } else {
         std::io::stdout().write_all(template.as_bytes())?;
+    }
+    Ok(())
+}
+
+fn run_generate_doc(
+    spec_path: &Path,
+    spec_format: SpecFormat,
+    doc_format: DocFormat,
+    output: Option<PathBuf>,
+) -> anyhow::Result<()> {
+    let spec = parse_spec(spec_path, spec_format)?;
+    let clap_cmd = clap::Command::from(spec).no_binary_name(true);
+    let markdown = clap_markdown::help_markdown_command(&clap_cmd);
+    let bytes = match doc_format {
+        DocFormat::Markdown => markdown.into_bytes(),
+    };
+    if let Some(output_path) = output {
+        std::fs::write(output_path, bytes)?;
+    } else {
+        std::io::stdout().write_all(&bytes)?;
     }
     Ok(())
 }
