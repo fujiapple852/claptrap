@@ -90,15 +90,9 @@ pub struct Arg {
     conflicts_with_all: Option<Vec<String>>,
     overrides_with: Option<String>,
     overrides_with_all: Option<Vec<String>>,
-    /// Non-standard option
-    typed_value_parser: Option<String>,
 }
 
-#[expect(
-    clippy::cognitive_complexity,
-    clippy::too_many_lines,
-    clippy::fallible_impl_from
-)]
+#[expect(clippy::cognitive_complexity, clippy::too_many_lines)]
 impl From<NamedArg> for clap::Arg {
     fn from(named_arg: NamedArg) -> Self {
         let value = named_arg.arg;
@@ -162,31 +156,32 @@ impl From<NamedArg> for clap::Arg {
         if let Some(action) = value.action {
             arg = arg.action(clap::ArgAction::from(action));
         }
-
-        match (value.value_parser, value.typed_value_parser) {
-            (Some(_), Some(_)) => {
-                panic!(
-                    "value_parser and typed_value_parser are mutually exclusive. Use one or the other."
-                );
-            }
-            (Some(value_parser), None) => {
-                arg = arg.value_parser(value_parser);
-            }
-            (None, Some(typed_value_parser)) => {
-                let value_parser = match TypedValueParser::from_str(&typed_value_parser).unwrap() {
-                    TypedValueParser::Bool => {
-                        clap::builder::ValueParser::new(clap::builder::BoolValueParser::new())
+        if let Some(value_parser) = value.value_parser {
+            match value_parser.as_slice() {
+                [magic] => match parse_typed_value_parser(magic) {
+                    Some(TypedValueParser::Bool) => {
+                        arg = arg.value_parser(clap::builder::ValueParser::new(
+                            clap::builder::BoolValueParser::new(),
+                        ));
                     }
-                    TypedValueParser::Boolish => {
-                        clap::builder::ValueParser::new(clap::builder::BoolishValueParser::new())
+                    Some(TypedValueParser::Boolish) => {
+                        arg = arg.value_parser(clap::builder::ValueParser::new(
+                            clap::builder::BoolishValueParser::new(),
+                        ));
                     }
-                    TypedValueParser::Falsey => {
-                        clap::builder::ValueParser::new(clap::builder::FalseyValueParser::new())
+                    Some(TypedValueParser::Falsey) => {
+                        arg = arg.value_parser(clap::builder::ValueParser::new(
+                            clap::builder::FalseyValueParser::new(),
+                        ));
                     }
-                };
-                arg = arg.value_parser(value_parser);
+                    None => {
+                        arg = arg.value_parser(value_parser);
+                    }
+                },
+                _ => {
+                    arg = arg.value_parser(value_parser);
+                }
             }
-            _ => {}
         }
         if let Some(num_args) = value.num_args {
             arg = arg.num_args(clap::builder::ValueRange::new(
@@ -394,4 +389,11 @@ enum TypedValueParser {
     Bool,
     Boolish,
     Falsey,
+}
+
+fn parse_typed_value_parser(value: &str) -> Option<TypedValueParser> {
+    value
+        .strip_prefix(':')
+        .and_then(|s| s.strip_suffix(':'))
+        .and_then(|inner| TypedValueParser::from_str(inner).ok())
 }

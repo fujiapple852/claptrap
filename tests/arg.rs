@@ -893,9 +893,9 @@ fn test_env_falsey() {
             r#"
             name = "prog"
             [args]
-            true_flag = { long = "true_flag", env = "TRUE_FLAG", action = "set-true", typed-value-parser = "falsey" }
-            false_flag = { long = "false_flag", env = "FALSE_FLAG", action = "set-true", typed-value-parser = "falsey" }
-            absent_flag = { long = "absent_flag", env = "ABSENT_FLAG", action = "set-true", typed-value-parser = "falsey" }
+            true_flag = { long = "true_flag", env = "TRUE_FLAG", action = "set-true", value-parser = [":falsey:"] }
+            false_flag = { long = "false_flag", env = "FALSE_FLAG", action = "set-true", value-parser = [":falsey:"] }
+            absent_flag = { long = "absent_flag", env = "ABSENT_FLAG", action = "set-true", value-parser = [":falsey:"] }
         "#,
         )
             .unwrap();
