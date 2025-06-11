@@ -32,6 +32,12 @@ mode = { short = "m", long = "mode" }
 protocol = { short = "p", long = "protocol" }
 ```
 
+You can also use a classic `getopts` style string instead of a spec file:
+
+```bash
+eval "$(claptrap --optstring "ab:c" -- "$@")"
+```
+
 Show usage (also `-h` or `--help`):
 
 ```shell

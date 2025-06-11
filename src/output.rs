@@ -53,8 +53,8 @@ impl Display for Var {
                         f,
                         "{}_{}_{}=({})",
                         PREFIX,
-                        name,
                         prefix.iter().format("_"),
+                        name,
                         values.iter().join(" ")
                     )
                 }

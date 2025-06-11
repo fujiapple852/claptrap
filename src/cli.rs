@@ -7,8 +7,23 @@ use std::path::PathBuf;
 #[command(version, about, long_about = None, arg_required_else_help(true))]
 pub struct Cli {
     /// Sets a custom config file
-    #[arg(short, long, value_name = "FILE", env = "CLAPTRAP_SPEC")]
-    pub spec: PathBuf,
+    #[arg(
+        short,
+        long,
+        value_name = "FILE",
+        env = "CLAPTRAP_SPEC",
+        required_unless_present = "optstring"
+    )]
+    pub spec: Option<PathBuf>,
+
+    /// Getopts/optstring specification
+    #[arg(
+        long,
+        value_name = "STRING",
+        env = "CLAPTRAP_OPTSTRING",
+        required_unless_present = "spec"
+    )]
+    pub optstring: Option<String>,
 
     /// The format of the spec file
     #[arg(long, value_name = "FORMAT", env = "CLAPTRAP_SPEC_FORMAT", default_value_t = SpecFormat::Auto)]

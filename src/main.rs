@@ -19,15 +19,26 @@ fn main() -> anyhow::Result<()> {
     let cli = cli::Cli::parse();
     match cli.command {
         Some(SubCommand::Completion { shell, output }) => {
-            run_generate_completions(&cli.spec, cli.spec_format, shell, output)?;
+            run_generate_completions(
+                cli.spec.as_deref(),
+                cli.optstring.as_deref(),
+                cli.spec_format,
+                shell,
+                output,
+            )?;
             exit(0);
         }
         Some(SubCommand::Man { output }) => {
-            run_generate_man(&cli.spec, cli.spec_format, output)?;
+            run_generate_man(
+                cli.spec.as_deref(),
+                cli.optstring.as_deref(),
+                cli.spec_format,
+                output,
+            )?;
             exit(0);
         }
         Some(SubCommand::Script { shell, output }) => {
-            run_generate_template(&cli.spec, cli.spec_format, shell, output)?;
+            run_generate_template(shell, output)?;
             exit(0);
         }
         None => {
@@ -44,7 +55,12 @@ fn main() -> anyhow::Result<()> {
             let mut stdout =
                 anstream::AutoStream::new(std::io::stdout().lock(), ColorChoice::Always);
             match panic::catch_unwind(AssertUnwindSafe(|| {
-                run_app(&cli.spec, cli.spec_format, cli.args)
+                run_app(
+                    cli.spec.as_deref(),
+                    cli.optstring.as_deref(),
+                    cli.spec_format,
+                    cli.args,
+                )
             })) {
                 Ok(val) => match val {
                     Ok(output) => {
@@ -70,12 +86,13 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn run_generate_completions(
-    spec_path: &Path,
+    spec_path: Option<&Path>,
+    optstring: Option<&str>,
     spec_format: SpecFormat,
     shell: clap_complete::Shell,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
-    let spec = parse_spec(spec_path, spec_format)?;
+    let spec = parse_spec(spec_path, optstring, spec_format)?;
     let mut clap_cmd = clap::Command::from(spec).no_binary_name(true);
     let name = clap_cmd.get_name().to_string();
     let mut buffer: Vec<u8> = vec![];
@@ -89,11 +106,12 @@ fn run_generate_completions(
 }
 
 fn run_generate_man(
-    spec_path: &Path,
+    spec_path: Option<&Path>,
+    optstring: Option<&str>,
     spec_format: SpecFormat,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
-    let spec = parse_spec(spec_path, spec_format)?;
+    let spec = parse_spec(spec_path, optstring, spec_format)?;
     let clap_cmd = clap::Command::from(spec).no_binary_name(true);
     let mut buffer: Vec<u8> = vec![];
     clap_mangen::Man::new(clap_cmd).render(&mut buffer)?;
@@ -105,12 +123,7 @@ fn run_generate_man(
     Ok(())
 }
 
-fn run_generate_template(
-    _spec_path: &Path,
-    _spec_format: SpecFormat,
-    shell: Shell,
-    output: Option<PathBuf>,
-) -> anyhow::Result<()> {
+fn run_generate_template(shell: Shell, output: Option<PathBuf>) -> anyhow::Result<()> {
     let template = match shell {
         Shell::Bash => Ok(include_str!("../templates/bash_template.sh")),
         Shell::Zsh => Ok(include_str!("../templates/zsh_template.sh")),
@@ -128,14 +141,24 @@ fn run_generate_template(
 }
 
 fn run_app(
-    spec_path: &Path,
+    spec_path: Option<&Path>,
+    optstring: Option<&str>,
     spec_format: SpecFormat,
     args: Vec<OsString>,
 ) -> error::Result<Output> {
-    Ok(parse(parse_spec(spec_path, spec_format)?, args))
+    Ok(parse(parse_spec(spec_path, optstring, spec_format)?, args))
 }
 
-fn parse_spec(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Command> {
+fn parse_spec(
+    spec_path: Option<&Path>,
+    optstring: Option<&str>,
+    spec_format: SpecFormat,
+) -> anyhow::Result<Command> {
+    if let Some(opt) = optstring {
+        return claptrap::getopts::command_from_optstring(opt);
+    }
+
+    let spec_path = spec_path.expect("spec path required if optstring not provided");
     let spec = if spec_path == PathBuf::from("-") {
         std::io::read_to_string(std::io::stdin())?
     } else {
