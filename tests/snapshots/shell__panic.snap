@@ -1,0 +1,5 @@
+---
+source: tests/shell.rs
+expression: "String::from_utf8_lossy(&output.stdout)"
+---
+Found positional argument whose index is 2 but there are only 1 positional arguments defined

@@ -1,0 +1,15 @@
+{
+  "name": "myapp",
+  "version": "0.1.0",
+  "arg-required-else-help": true,
+  "args": {
+    "mode": {
+      "short": "m",
+      "long": "mode"
+    },
+    "protocol": {
+      "short": "p",
+      "long": "protocol"
+    }
+  }
+}

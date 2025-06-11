@@ -1,0 +1,6 @@
+---
+source: tests/arg.rs
+expression: output
+---
+claptrap_cmds=(find type f -name special)
+claptrap_location=/home/clap
