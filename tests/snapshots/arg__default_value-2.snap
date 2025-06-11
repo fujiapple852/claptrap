@@ -1,0 +1,5 @@
+---
+source: tests/arg.rs
+expression: output2
+---
+claptrap_opt=non_default

@@ -1,0 +1,179 @@
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: '00 18 * * *'
+
+name: Continuous integration
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        build:
+          - linux-stable
+          - linux-musl-stable
+          - linux-beta
+          - linux-nightly
+          - macos-stable
+          - macos-stable-arm64
+          - windows-stable
+        include:
+          - build: linux-stable
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            rust: stable
+          - build: linux-musl-stable
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-musl
+            rust: stable
+          - build: linux-beta
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            rust: beta
+          - build: linux-nightly
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            rust: nightly
+          - build: macos-stable
+            os: macos-13
+            target: x86_64-apple-darwin
+            rust: stable
+          - build: macos-stable-arm64
+            os: macos-14
+            target: aarch64-apple-darwin
+            rust: stable
+          - build: windows-stable
+            os: windows-2022
+            target: x86_64-pc-windows-msvc
+            rust: stable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ matrix.rust }}
+          target: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --target ${{ matrix.target }}
+
+  build-cross:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        build: [ netbsd, freebsd ]
+        include:
+          - build: netbsd
+            os: ubuntu-22.04
+            target: x86_64-unknown-netbsd
+            rust: stable
+          - build: freebsd
+            os: ubuntu-22.04
+            target: x86_64-unknown-freebsd
+            rust: stable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ matrix.rust }}
+          target: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+      - name: Use Cross
+        shell: bash
+        run: |
+          cargo install cross --git https://github.com/cross-rs/cross
+      - name: Show command used for Cargo
+        run: |
+          echo "cargo command is: ${{ env.CARGO }}"
+          echo "target flag is: ${{ env.TARGET_FLAGS }}"
+      - name: cross build
+        run: cross build --target ${{ matrix.target }} --verbose
+
+  clippy:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        build:
+          - linux-stable
+          - macos-stable
+          - windows-stable
+        include:
+          - build: linux-stable
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            rust: stable
+          - build: macos-stable
+            os: macos-13
+            target: x86_64-apple-darwin
+            rust: stable
+          - build: windows-stable
+            os: windows-2022
+            target: x86_64-pc-windows-msvc
+            rust: stable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ matrix.rust }}
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --workspace --all-features --target ${{ matrix.target }} --tests -- -Dwarnings
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all -- --check
+
+  build-docker:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+      - name: Build Docker image
+        run: docker build -t claptrap-docker-image .
+
+
+  cargo-deny:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v1
+        with:
+          rust-version: "1.85.0"
+          log-level: warn
+          command: check
+          arguments: --all-features
+
+  cargo-msrv:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+      - name: install cargo-msrv
+        run: cargo install --git https://github.com/foresterre/cargo-msrv.git cargo-msrv
+      - name: check msrv
+        run: cargo msrv verify --output-format json --manifest-path Cargo.toml -- cargo check
+
+  style:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dprint/check@v2.2
+
+  conventional-commits:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Conventional Commits Lint
+        uses: webiny/action-conventional-commits@v1.3.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          allowed-commit-types: "feat,fix,chore,docs,style,refactor,test,build,ci,revert"

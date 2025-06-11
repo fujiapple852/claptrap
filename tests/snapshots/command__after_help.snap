@@ -1,0 +1,13 @@
+---
+source: tests/command.rs
+expression: output
+---
+command cat <<'EOF'
+[1m[4mUsage:[0m [1mmyprog[0m
+
+[1m[4mOptions:[0m
+  [1m-h[0m, [1m--help[0m  Print help
+
+Does really amazing things for great people... but be careful with -R!
+EOF
+exit 0

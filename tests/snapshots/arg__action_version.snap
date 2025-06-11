@@ -1,0 +1,8 @@
+---
+source: tests/arg.rs
+expression: output
+---
+command cat <<'EOF'
+prog 1.0.0
+EOF
+exit 0

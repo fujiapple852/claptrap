@@ -1,0 +1,7 @@
+---
+source: tests/arg.rs
+expression: output
+---
+claptrap_true_flag=true
+claptrap_false_flag=false
+claptrap_absent_flag=false

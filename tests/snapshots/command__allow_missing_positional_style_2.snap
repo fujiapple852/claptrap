@@ -1,0 +1,7 @@
+---
+source: tests/command.rs
+expression: output
+---
+claptrap_foo=foo
+claptrap_bar=bar
+claptrap_baz=(baz1 baz2 baz3)

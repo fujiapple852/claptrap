@@ -1,0 +1,6 @@
+---
+source: tests/arg.rs
+expression: output
+---
+claptrap_debug=true
+claptrap_mode=fast

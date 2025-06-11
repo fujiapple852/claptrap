@@ -1,0 +1,5 @@
+---
+source: tests/arg.rs
+expression: output
+---
+claptrap_cmd=(arg1 -r val1)
