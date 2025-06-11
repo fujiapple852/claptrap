@@ -1,5 +1,9 @@
 use clap::builder::StyledStr;
 use itertools::Itertools;
+
+fn shell_quote(value: &str) -> String {
+    format!("'{}'", value.replace('\'', "'\\''"))
+}
 use std::fmt::Display;
 
 // The prefix for variables output by claptrap
@@ -32,6 +36,7 @@ impl Display for Var {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Single(prefix, name, value) => {
+                let value = shell_quote(value);
                 if prefix.is_empty() {
                     write!(f, "{PREFIX}_{name}={value}")
                 } else {
@@ -46,8 +51,9 @@ impl Display for Var {
                 }
             }
             Self::Many(prefix, name, values) => {
+                let values = values.iter().map(|v| shell_quote(v)).join(" ");
                 if prefix.is_empty() {
-                    write!(f, "{}_{}=({})", PREFIX, name, values.iter().join(" "))
+                    write!(f, "{PREFIX}_{name}=({values})")
                 } else {
                     write!(
                         f,
@@ -55,7 +61,7 @@ impl Display for Var {
                         PREFIX,
                         prefix.iter().format("_"),
                         name,
-                        values.iter().join(" ")
+                        values
                     )
                 }
             }

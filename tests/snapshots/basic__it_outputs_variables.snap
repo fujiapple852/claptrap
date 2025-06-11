@@ -2,5 +2,5 @@
 source: tests/basic.rs
 expression: output
 ---
-claptrap_mode=stream
-claptrap_protocol=udp
+claptrap_mode='stream'
+claptrap_protocol='udp'

@@ -2,5 +2,5 @@
 source: tests/arg_group.rs
 expression: output
 ---
-claptrap_flag=true
-claptrap_color=false
+claptrap_flag='true'
+claptrap_color='false'
