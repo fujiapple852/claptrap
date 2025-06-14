@@ -23,7 +23,7 @@ indexmap = { version = "2.9.0", features = ["serde"] }
 itertools = "0.14.0"
 serde = { version = "1.0.219", features = ["derive"] }
 strum = { version = "0.27.1", features = ["derive"] }
-toml = { version = "0.8.22", features = ["preserve_order"] }
+toml = { version = "0.8.23", features = ["preserve_order"] }
 
 [dev-dependencies]
 insta = "1.43.1"
