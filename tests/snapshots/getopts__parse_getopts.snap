@@ -1,0 +1,7 @@
+---
+source: tests/getopts.rs
+expression: output
+---
+claptrap_a='true'
+claptrap_b='file'
+claptrap_c='opt'

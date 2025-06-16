@@ -20,7 +20,7 @@ impl NamedArg {
 }
 
 /// Represents a command line argument configuration.
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Default, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 pub struct Arg {
@@ -90,6 +90,31 @@ pub struct Arg {
     conflicts_with_all: Option<Vec<String>>,
     overrides_with: Option<String>,
     overrides_with_all: Option<Vec<String>>,
+}
+
+impl Arg {
+    #[must_use]
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    #[must_use]
+    pub fn short(mut self, ch: char) -> Self {
+        self.short = Some(ch);
+        self
+    }
+
+    #[must_use]
+    pub fn action(mut self, action: ArgAction) -> Self {
+        self.action = Some(action);
+        self
+    }
+
+    #[must_use]
+    pub fn num_args(mut self, num_args: NumArgs) -> Self {
+        self.num_args = Some(num_args);
+        self
+    }
 }
 
 #[expect(clippy::cognitive_complexity, clippy::too_many_lines)]
