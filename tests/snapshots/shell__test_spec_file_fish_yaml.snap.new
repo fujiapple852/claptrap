@@ -1,0 +1,7 @@
+---
+source: tests/shell.rs
+assertion_line: 39
+expression: "String::from_utf8_lossy(&output.stdout)"
+---
+mode: 
+protocol:

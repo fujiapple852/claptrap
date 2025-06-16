@@ -111,8 +111,11 @@ fn run_generate_template(
     shell: Shell,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
+    #[allow(unreachable_patterns)]
     let template = match shell {
         Shell::Bash => Ok(include_str!("../templates/bash_template.sh")),
+        Shell::Fish => Ok(include_str!("../templates/fish_template.fish")),
+        Shell::PowerShell => Ok(include_str!("../templates/powershell_template.ps1")),
         Shell::Zsh => Ok(include_str!("../templates/zsh_template.sh")),
         _ => Err(anyhow::anyhow!(
             "Unsupported shell for boilerplate generation: {:?}",
