@@ -58,9 +58,6 @@ jobs:
       - name: Install zsh (macOS)
         if: runner.os == 'macOS'
         run: brew install zsh
-      - name: Install zsh (Windows)
-        if: runner.os == 'Windows'
-        run: choco install -y zsh
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: ${{ matrix.rust }}
