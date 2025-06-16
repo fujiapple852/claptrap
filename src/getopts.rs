@@ -12,22 +12,42 @@ pub fn parse_getopts(spec: &str) -> anyhow::Result<Command> {
         // skip leading ':' which toggles silent error mode in `getopts`
         chars.next();
     }
+
     let mut command = Command::new("prog");
     while let Some(ch) = chars.next() {
+        if ch == ':' || ch.is_whitespace() {
+            return Err(anyhow::anyhow!("invalid option character: {ch}"));
+        }
+
         let mut arg = Arg::new().short(ch);
         let mut action = ArgAction::SetTrue;
-        if matches!(chars.peek(), Some(':')) {
+
+        let mut colon_count = 0;
+        while matches!(chars.peek(), Some(':')) {
+            colon_count += 1;
             chars.next();
-            action = ArgAction::Set;
-            if matches!(chars.peek(), Some(':')) {
-                chars.next();
-                arg = arg.num_args(NumArgs::RangeToInclusive(..=1));
-            } else {
+        }
+
+        match colon_count {
+            0 => {}
+            1 => {
+                action = ArgAction::Set;
                 arg = arg.num_args(NumArgs::Exact(1));
             }
+            2 => {
+                action = ArgAction::Set;
+                arg = arg.num_args(NumArgs::RangeToInclusive(..=1));
+            }
+            _ => {
+                return Err(anyhow::anyhow!(
+                    "too many ':' after option {ch}"
+                ));
+            }
         }
+
         arg = arg.action(action);
         command = command.arg(ch.to_string(), arg);
     }
+
     Ok(command)
 }

@@ -1,0 +1,5 @@
+---
+source: tests/getopts.rs
+expression: err.to_string()
+---
+invalid option character: :
