@@ -21,6 +21,12 @@ echo "mode: $claptrap_mode"
 echo "protocol: $claptrap_protocol"
 ```
 
+Alternatively, you can supply a classic `getopts` string at runtime:
+
+```bash
+eval "$(claptrap --getopts 'ab:c::' -- "$@")"
+```
+
 `myapp.toml`:
 
 ```toml
