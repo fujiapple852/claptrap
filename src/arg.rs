@@ -20,7 +20,7 @@ impl NamedArg {
 }
 
 /// Represents a command line argument configuration.
-#[derive(Debug, Deserialize, Default, Clone)]
+#[derive(Debug, Deserialize, Default, Clone, PartialEq)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 pub struct Arg {
@@ -338,7 +338,7 @@ impl From<NamedArg> for clap::Arg {
     }
 }
 
-#[derive(Debug, Deserialize, Default, Clone)]
+#[derive(Debug, Deserialize, Default, Clone, PartialEq)]
 #[serde(rename_all = "kebab-case")]
 pub enum ArgAction {
     #[default]
@@ -369,7 +369,7 @@ impl From<ArgAction> for clap::ArgAction {
     }
 }
 
-#[derive(Debug, Deserialize, Default, Clone)]
+#[derive(Debug, Deserialize, Default, Clone, PartialEq)]
 #[serde(rename_all = "kebab-case")]
 pub enum ValueHint {
     #[default]

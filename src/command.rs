@@ -4,7 +4,7 @@ use indexmap::IndexMap;
 use serde::Deserialize;
 
 /// Represents a command configuration for a CLI application.
-#[derive(Debug, Deserialize, Clone, Default)]
+#[derive(Debug, Deserialize, Clone, Default, PartialEq)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 pub struct Command {
@@ -296,7 +296,7 @@ impl From<Command> for clap::Command {
     }
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "kebab-case")]
 pub enum ColorChoice {
     Auto,

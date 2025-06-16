@@ -51,3 +51,67 @@ pub fn parse_getopts(spec: &str) -> anyhow::Result<Command> {
 
     Ok(command)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parse_empty() {
+        let cmd = parse_getopts("").unwrap();
+        assert_eq!(cmd, Command::new("prog"));
+    }
+
+    #[test]
+    fn parse_leading_colon_only() {
+        let cmd = parse_getopts(":").unwrap();
+        assert_eq!(cmd, Command::new("prog"));
+    }
+
+    #[test]
+    fn parse_basic_spec() {
+        let cmd = parse_getopts("ab:c::").unwrap();
+
+        let expected = Command::new("prog")
+            .arg(
+                "a",
+                Arg::new()
+                    .short('a')
+                    .action(ArgAction::SetTrue),
+            )
+            .arg(
+                "b",
+                Arg::new()
+                    .short('b')
+                    .num_args(NumArgs::Exact(1))
+                    .action(ArgAction::Set),
+            )
+            .arg(
+                "c",
+                Arg::new()
+                    .short('c')
+                    .num_args(NumArgs::RangeToInclusive(..=1))
+                    .action(ArgAction::Set),
+            );
+
+        assert_eq!(cmd, expected);
+    }
+
+    #[test]
+    fn error_triple_colon() {
+        let err = parse_getopts("a:::").unwrap_err();
+        assert!(err.to_string().contains("too many ':'"));
+    }
+
+    #[test]
+    fn error_stray_colon() {
+        let err = parse_getopts("::").unwrap_err();
+        assert!(err.to_string().contains("invalid option character"));
+    }
+
+    #[test]
+    fn error_whitespace() {
+        let err = parse_getopts("a b").unwrap_err();
+        assert!(err.to_string().contains("invalid option character"));
+    }
+}
