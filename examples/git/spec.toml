@@ -1,0 +1,35 @@
+name = "git"
+about = "A toy versioning of git"
+subcommand-required = true
+arg-required-else-help = true
+allow-external-subcommands = true
+
+[[subcommands]]
+name = "clone"
+about = "Clones repos"
+arg-required-else-help = true
+[subcommands.args]
+REMOTE = { index = 1, help = "The remote to clone" }
+
+[[subcommands]]
+name = "diff"
+about = "Compare two commits"
+[subcommands.args]
+base = { value-name = "COMMIT", required = true, help = "The base commit to compare against" }
+head = { value-name = "COMMIT", required = true, help = "The head commit to compare with" }
+path = { value-name = "PATH", last = true }
+color = { long = "color", value-name = "WHEN", value-parser = ["always", "auto", "never"], num-args = "0..=1", require-equals = true, default-value = "auto", default-missing-value = "always" }
+
+[[subcommands]]
+name = "push"
+about = "pushes things"
+arg-required-else-help = true
+[subcommands.args]
+REMOTE = { index = 1, help = "The remote to target" }
+
+[[subcommands]]
+name = "add"
+about = "adds things"
+arg-required-else-help = true
+[subcommands.args]
+PATH = { value-name = "PATH", num-args = "1..", help = "Stuff to add" }
