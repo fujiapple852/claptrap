@@ -1,0 +1,22 @@
+---
+source: tests/script.rs
+assertion_line: 17
+expression: "String::from_utf8_lossy(&output.stdout)"
+---
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+if ! command -v claptrap &> /dev/null; then
+    echo "claptrap command not found. Please install it first, see https://claptrap.cli.rs for instructions."
+    exit 1
+fi
+
+eval "$(claptrap --spec tests/resources/config/toml/myapp.toml -- "$@")"
+
+if [ -n "${claptrap_mode:-}" ]; then
+    echo "mode: ${claptrap_mode}"
+fi
+if [ -n "${claptrap_protocol:-}" ]; then
+    echo "protocol: ${claptrap_protocol}"
+fi
