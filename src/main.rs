@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use crate::cli::{Shell, SpecFormat, SubCommand};
 use anstream::ColorChoice;
 use clap::Parser;
@@ -27,7 +29,7 @@ fn main() -> anyhow::Result<()> {
             exit(0);
         }
         Some(SubCommand::Script { shell, output }) => {
-            run_generate_template(&cli.spec, cli.spec_format, shell, output)?;
+            run_generate_template(&cli.spec, cli.spec_format, &shell, output)?;
             exit(0);
         }
         None => {
@@ -59,7 +61,7 @@ fn main() -> anyhow::Result<()> {
                     }
                 },
                 Err(err) => {
-                    let panic = panic_output(err);
+                    let panic = panic_output(&err);
                     write!(stdout, "{panic}")?;
                     stdout.flush()?;
                     exit(0);
@@ -108,7 +110,7 @@ fn run_generate_man(
 fn run_generate_template(
     _spec_path: &Path,
     _spec_format: SpecFormat,
-    shell: Shell,
+    shell: &Shell,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
     let template = match shell {
@@ -160,7 +162,7 @@ fn parse_spec(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Comma
     })
 }
 
-fn panic_output(err: Box<dyn std::any::Any + Send>) -> Output {
+fn panic_output(err: &Box<dyn std::any::Any + Send>) -> Output {
     let panic_message = if let Some(message) = err.downcast_ref::<String>() {
         message
     } else if let Some(message) = err.downcast_ref::<&str>() {
@@ -169,7 +171,7 @@ fn panic_output(err: Box<dyn std::any::Any + Send>) -> Output {
         "An unexpected panic occurred"
     };
     Output::Cat(CatCmd::new(
-        StyledStr::from(format!("{}\n", panic_message)),
+        StyledStr::from(format!("{panic_message}\n")),
         ExitCode::Panic,
     ))
 }

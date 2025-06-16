@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use crate::command::Command;
 use crate::output::{CatCmd, ExitCode, Output, Var};
 use clap::ArgAction;
@@ -12,6 +14,7 @@ pub mod output;
 /// Parse the provided arguments and generate output.
 ///
 /// This function does not perform any I/O operations.
+#[must_use]
 pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
     let clap_app = clap::Command::from(cmd).no_binary_name(true);
     match clap_app.clone().try_get_matches_from(args) {
@@ -51,7 +54,7 @@ fn extract_matches(
                 Var::Many(
                     local_prefix.clone(),
                     id.to_string(),
-                    values.into_iter().map(|value| value.to_owned()).collect(),
+                    values.into_iter().map(ToOwned::to_owned).collect(),
                 )
             }),
             ArgAction::Set => {
@@ -60,7 +63,7 @@ fn extract_matches(
                         Var::Many(
                             local_prefix.clone(),
                             id.to_string(),
-                            values.into_iter().map(|value| value.to_owned()).collect(),
+                            values.into_iter().map(ToOwned::to_owned).collect(),
                         )
                     })
                 } else {
@@ -99,7 +102,7 @@ impl IsManyEx for clap::Arg {
     fn is_many(&self) -> bool {
         self.get_num_args()
             .map(|r| r.max_values() > 1)
-            .or(self.get_value_delimiter().map(|_| true))
+            .or_else(|| self.get_value_delimiter().map(|_| true))
             .unwrap_or(false)
     }
 }

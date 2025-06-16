@@ -11,7 +11,7 @@ fn test_no_args() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -28,7 +28,7 @@ fn test_arg() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -49,7 +49,7 @@ fn test_group() {
     )
     .unwrap();
     let input = "--major 1 --minor 2 --patch 3";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -73,7 +73,7 @@ fn test_groups() {
     )
     .unwrap();
     let input = "--major 1 -i eth0";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -104,7 +104,7 @@ fn test_subcommand() {
     )
     .unwrap();
     let input = "subcommand nested --arg3 value";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -135,7 +135,7 @@ fn test_subcommand_many() {
     )
     .unwrap();
     let input = "subcommand nested --arg3 one --arg3 two";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -156,7 +156,7 @@ fn test_ignore_error() {
     )
         .unwrap();
     let input = "-c file -f -x";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -174,7 +174,7 @@ fn test_args_override_self() {
     )
     .unwrap();
     let input = "--foo value --foo value";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -193,7 +193,7 @@ fn test_dont_delimit_trailing_values() {
     )
     .unwrap();
     let input = "cmd foo -- arg1 -r val1";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -211,7 +211,7 @@ fn test_color() {
     )
     .unwrap();
     let input = "--cfg config";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -230,7 +230,7 @@ fn test_term_width() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -247,7 +247,7 @@ fn test_max_term_width() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -266,12 +266,12 @@ fn test_diable_version_flag() {
     .unwrap();
 
     let input1 = "-V";
-    let args1: Vec<OsString> = input1.split(" ").map(OsString::from).collect();
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
     let output1 = parse(app.clone(), args1);
     insta::assert_snapshot!(output1);
 
     let input2 = "--version";
-    let args2: Vec<OsString> = input2.split(" ").map(OsString::from).collect();
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
     let output2 = parse(app, args2);
     insta::assert_snapshot!(output2);
 }
@@ -289,7 +289,7 @@ fn test_propagate_version() {
     )
     .unwrap();
     let input = "test --version";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -306,7 +306,7 @@ fn test_next_line_help() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -324,12 +324,12 @@ fn test_diable_help_flag() {
     .unwrap();
 
     let input1 = "-h";
-    let args1: Vec<OsString> = input1.split(" ").map(OsString::from).collect();
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
     let output1 = parse(app.clone(), args1);
     insta::assert_snapshot!(output1);
 
     let input2 = "--help";
-    let args2: Vec<OsString> = input2.split(" ").map(OsString::from).collect();
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
     let output2 = parse(app, args2);
     insta::assert_snapshot!(output2);
 }
@@ -346,7 +346,7 @@ fn test_disable_help_subcommand() {
     )
     .unwrap();
     let input = "help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -364,7 +364,7 @@ fn test_disable_colored_help() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -381,7 +381,7 @@ fn test_help_expected() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -398,7 +398,7 @@ fn test_hide_possible_values() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -415,7 +415,7 @@ fn test_infer_long_args() {
     )
     .unwrap();
     let input = "--te";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -433,7 +433,7 @@ fn test_infer_long_args_ambiguous() {
     )
     .unwrap();
     let input = "--te";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -452,7 +452,7 @@ fn test_infer_subcommands() {
     )
     .unwrap();
     let input = "te --arg1";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -468,7 +468,7 @@ fn test_bin_name() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -486,7 +486,7 @@ fn test_display_name() {
     )
     .unwrap();
     let input = "--cfg";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -503,7 +503,7 @@ fn test_author() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -519,13 +519,13 @@ fn test_about() {
     )
     .unwrap();
     let input = "-h";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
 
 #[test]
-#[ignore]
+#[ignore = "test is sensitive to terminal width"]
 fn test_long_about() {
     let app: Command = toml::from_str(
         r#"
@@ -536,7 +536,7 @@ fn test_long_about() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -552,13 +552,13 @@ fn test_after_help() {
     )
     .unwrap();
     let input = "-h";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
 
 #[test]
-#[ignore]
+#[ignore = "test is sensitive to terminal width"]
 fn test_after_long_help() {
     let app: Command = toml::from_str(
         r#"
@@ -569,7 +569,7 @@ fn test_after_long_help() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -585,7 +585,7 @@ fn test_before_help() {
     )
     .unwrap();
     let input = "-h";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -601,7 +601,7 @@ fn test_before_long_help() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -617,7 +617,7 @@ fn test_version() {
     )
     .unwrap();
     let input = "-V";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -633,7 +633,7 @@ fn test_long_version() {
     )
     .unwrap();
     let input = "--version";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -649,7 +649,7 @@ fn test_override_usage() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -665,7 +665,7 @@ fn test_override_help() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -681,7 +681,7 @@ fn test_template() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -714,7 +714,7 @@ fn test_flatten_help() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -732,7 +732,7 @@ fn test_next_help_heading() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -750,7 +750,7 @@ fn test_next_display_order() {
     )
         .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -770,7 +770,7 @@ fn test_allow_missing_positional() {
     )
     .unwrap();
     let input = "other";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -788,7 +788,7 @@ fn test_allow_missing_positional_with_default() {
     )
     .unwrap();
     let input = "other";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -808,12 +808,12 @@ fn test_allow_missing_positional_style_2() {
     .unwrap();
 
     let input1 = "foo bar baz1 baz2 baz3";
-    let args1: Vec<OsString> = input1.split(" ").map(OsString::from).collect();
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
     let output1 = parse(app.clone(), args1);
     insta::assert_snapshot!(output1);
 
     let input2 = "-- baz1 baz2 baz3";
-    let args2: Vec<OsString> = input2.split(" ").map(OsString::from).collect();
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
     let output2 = parse(app, args2);
     insta::assert_snapshot!(output2);
 }
@@ -832,7 +832,7 @@ fn test_short_flag() {
     )
         .unwrap();
     let input = "-Ss";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -851,7 +851,7 @@ fn test_long_flag() {
     )
         .unwrap();
     let input = "--sync --search";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -870,7 +870,7 @@ fn test_alias() {
     )
     .unwrap();
     let input = "do-stuff -s";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -890,7 +890,7 @@ fn test_short_flag_alias() {
     )
     .unwrap();
     let input = "-d --search";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -910,7 +910,7 @@ fn test_long_flag_alias() {
     )
     .unwrap();
     let input = "--testing -s";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -929,7 +929,7 @@ fn test_aliases() {
     )
     .unwrap();
     let input = "do-tests";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -948,7 +948,7 @@ fn test_short_flag_aliases() {
     )
     .unwrap();
     let input = "-a";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -968,7 +968,7 @@ fn test_long_flag_aliases() {
     )
     .unwrap();
     let input = "--testing";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -987,7 +987,7 @@ fn test_visible_alias() {
     )
     .unwrap();
     let input = "do-stuff file.txt";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1007,7 +1007,7 @@ fn test_visible_short_flag_alias() {
     )
     .unwrap();
     let input = "-d file.txt";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1027,7 +1027,7 @@ fn test_visible_long_flag_alias() {
     )
     .unwrap();
     let input = "--testing file.txt";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1046,7 +1046,7 @@ fn test_visible_aliases() {
     )
     .unwrap();
     let input = "do-stuff config.txt";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1065,7 +1065,7 @@ fn test_visible_short_flag_aliases() {
     )
     .unwrap();
     let input = "-a file.txt";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1085,7 +1085,7 @@ fn test_visible_long_flag_aliases() {
     )
     .unwrap();
     let input = "--testing file.txt";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1107,7 +1107,7 @@ fn test_display_order() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1128,7 +1128,7 @@ fn test_hide() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1167,7 +1167,7 @@ fn test_allow_external_subcommands() {
     )
     .unwrap();
     let input = "subcmd --option value -fff --flag";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1196,7 +1196,7 @@ fn test_args_conflicts_with_subcommands() {
     )
     .unwrap();
     let input = "test";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1215,7 +1215,7 @@ fn test_subcommand_precedence_over_arg() {
     )
     .unwrap();
     let input = "--arg 1 2 3 sub";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1235,7 +1235,7 @@ fn test_subcommand_value_name() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -1252,7 +1252,7 @@ fn test_subcommand_help_heading() {
     )
     .unwrap();
     let input = "--help";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }

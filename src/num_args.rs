@@ -62,7 +62,7 @@ pub enum NumArgs {
 impl Display for NumArgs {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
-            Self::Exact(n) => write!(f, "{}", n),
+            Self::Exact(n) => write!(f, "{n}"),
             Self::RangeFull => write!(f, ".."),
             Self::Range(range) => write!(f, "{}..{}", range.start, range.end),
             Self::RangeFrom(range) => write!(f, "{}..", range.start),
@@ -74,16 +74,16 @@ impl Display for NumArgs {
 }
 
 impl<'de> serde::Deserialize<'de> for NumArgs {
-    fn deserialize<D>(deserializer: D) -> Result<NumArgs, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         struct NumArgsVisitor;
 
-        impl<'de> Visitor<'de> for NumArgsVisitor {
+        impl Visitor<'_> for NumArgsVisitor {
             type Value = NumArgs;
 
-            fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("an integer or a string range")
             }
 
@@ -94,6 +94,7 @@ impl<'de> serde::Deserialize<'de> for NumArgs {
                 if value < 0 {
                     Err(E::custom("negative number of arguments is not allowed"))
                 } else {
+                    #[expect(clippy::cast_sign_loss)]
                     Ok(NumArgs::Exact(value as usize))
                 }
             }
@@ -180,15 +181,14 @@ fn parse_num_args(value: &str) -> Result<NumArgs, String> {
 
 impl From<NumArgs> for clap::builder::ValueRange {
     fn from(n: NumArgs) -> Self {
-        use NumArgs::*;
         match n {
-            RangeFull => Self::new(..),
-            Exact(n) => Self::new(n),
-            Range(range) => Self::new(range),
-            RangeFrom(range) => Self::new(range),
-            RangeTo(range) => Self::new(range),
-            RangeInclusive(range) => Self::new(range),
-            RangeToInclusive(range) => Self::new(range),
+            NumArgs::RangeFull => Self::new(..),
+            NumArgs::Exact(n) => Self::new(n),
+            NumArgs::Range(range) => Self::new(range),
+            NumArgs::RangeFrom(range) => Self::new(range),
+            NumArgs::RangeTo(range) => Self::new(range),
+            NumArgs::RangeInclusive(range) => Self::new(range),
+            NumArgs::RangeToInclusive(range) => Self::new(range),
         }
     }
 }
@@ -202,7 +202,7 @@ mod tests {
     #[test_case::test_case(r#"num-args = "empty""#, Ok(NumArgs::Exact(0)); "empty")]
     #[test_case::test_case(r#"num-args = "single""#, Ok(NumArgs::Exact(1)); "single")]
     #[test_case::test_case(r#"num-args = "optional""#, Ok(NumArgs::RangeToInclusive(..=1)); "optional")]
-    #[test_case::test_case(r#"num-args = 3"#, Ok(NumArgs::Exact(3)); "exact integer")]
+    #[test_case::test_case(r"num-args = 3", Ok(NumArgs::Exact(3)); "exact integer")]
     #[test_case::test_case(r#"num-args = "3""#, Ok(NumArgs::Exact(3)); "exact string")]
     #[test_case::test_case(r#"num-args = "..""#, Ok(NumArgs::RangeFull); "full")]
     #[test_case::test_case(r#"num-args = "1..3""#, Ok(NumArgs::Range(1..3)); "range from non-zero")]
@@ -220,7 +220,7 @@ mod tests {
     #[test_case::test_case(r#"num-args = "foo""#, Err(toml::de::Error::custom("unrecognised num_args format")); "unknown keyword")]
     #[test_case::test_case(r#"num-args = "4..2""#, Err(toml::de::Error::custom("lower bound must be < upper bound")); "range start >= end")]
     #[test_case::test_case(r#"num-args = "3..=1""#, Err(toml::de::Error::custom("lower bound must be <= upper bound")); "inclusive start > end")]
-    #[test_case::test_case(r#"num-args = -1"#, Err(toml::de::Error::custom("negative number of arguments is not allowed")); "negative integer")]
+    #[test_case::test_case(r"num-args = -1", Err(toml::de::Error::custom("negative number of arguments is not allowed")); "negative integer")]
     fn test_deserialize(input: &str, expected: Result<NumArgs, toml::de::Error>) {
         #[derive(Deserialize)]
         #[serde(rename_all = "kebab-case")]

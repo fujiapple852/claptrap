@@ -16,7 +16,7 @@ fn test_args() {
     )
     .unwrap();
     let input = "-f";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -35,7 +35,7 @@ fn test_multiple() {
     )
     .unwrap();
     let input = "-f -c";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -73,7 +73,7 @@ fn test_requires() {
     )
     .unwrap();
     let input = "-c";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -94,7 +94,7 @@ fn test_requires_all() {
     )
     .unwrap();
     let input = "-c -d";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -114,7 +114,7 @@ fn test_conflicts_with() {
     )
     .unwrap();
     let input = "-c -d";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }
@@ -135,7 +135,7 @@ fn test_conflicts_with_all() {
     )
     .unwrap();
     let input = "-c -v";
-    let args: Vec<OsString> = input.split(" ").map(OsString::from).collect();
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
     let output = parse(app, args);
     insta::assert_snapshot!(output);
 }

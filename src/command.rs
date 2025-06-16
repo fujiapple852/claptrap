@@ -75,9 +75,10 @@ pub struct Command {
     subcommand_help_heading: Option<String>,
 }
 
+#[expect(clippy::cognitive_complexity, clippy::too_many_lines)]
 impl From<Command> for clap::Command {
     fn from(cmd: Command) -> Self {
-        let mut command = clap::Command::new(cmd.name);
+        let mut command = Self::new(cmd.name);
         command = command.args(if let Some(args) = cmd.args {
             args.into_iter()
                 .map(|(name, arg)| clap::Arg::from(NamedArg::new(name, arg)))
@@ -89,17 +90,11 @@ impl From<Command> for clap::Command {
             command = command.groups(
                 groups
                     .into_iter()
-                    .map(|(name, group)| clap::ArgGroup::from(NamedArgGroup::new(name, group)))
-                    .collect::<Vec<_>>(),
+                    .map(|(name, group)| clap::ArgGroup::from(NamedArgGroup::new(name, group))),
             );
         }
         if let Some(subcommands) = cmd.subcommands {
-            command = command.subcommands(
-                subcommands
-                    .into_iter()
-                    .map(clap::Command::from)
-                    .collect::<Vec<_>>(),
-            );
+            command = command.subcommands(subcommands.into_iter().map(Self::from));
         }
         // TODO: error()
         if let Some(ignore_errors) = cmd.ignore_errors {
@@ -296,9 +291,9 @@ pub enum ColorChoice {
 impl From<ColorChoice> for clap::ColorChoice {
     fn from(color_choice: ColorChoice) -> Self {
         match color_choice {
-            ColorChoice::Auto => clap::ColorChoice::Auto,
-            ColorChoice::Always => clap::ColorChoice::Always,
-            ColorChoice::Never => clap::ColorChoice::Never,
+            ColorChoice::Auto => Self::Auto,
+            ColorChoice::Always => Self::Always,
+            ColorChoice::Never => Self::Never,
         }
     }
 }

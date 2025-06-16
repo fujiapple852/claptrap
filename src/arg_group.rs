@@ -7,6 +7,7 @@ pub struct NamedArgGroup {
 }
 
 impl NamedArgGroup {
+    #[must_use]
     pub fn new(name: String, arg: ArgGroup) -> Self {
         Self {
             name,
@@ -32,7 +33,7 @@ pub struct ArgGroup {
 impl From<NamedArgGroup> for clap::ArgGroup {
     fn from(named_arg_group: NamedArgGroup) -> Self {
         let value = named_arg_group.arg_group;
-        let mut arg_group = clap::ArgGroup::new(named_arg_group.name);
+        let mut arg_group = Self::new(named_arg_group.name);
         if let Some(id) = value.id {
             arg_group = arg_group.id(id);
         }
