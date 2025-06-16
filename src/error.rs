@@ -21,7 +21,7 @@ impl Display for Error {
 
 impl From<anyhow::Error> for Error {
     fn from(err: anyhow::Error) -> Self {
-        Error(Output::Cat(CatCmd::new(
+        Self(Output::Cat(CatCmd::new(
             StyledStr::from(format!("{err}\n")),
             ExitCode::Error,
         )))

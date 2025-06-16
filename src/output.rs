@@ -15,8 +15,8 @@ pub enum Output {
 impl Display for Output {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Output::Cat(cmd) => write!(f, "{cmd}"),
-            Output::Variables(vars) => write!(f, "{}", vars.iter().format("\n")),
+            Self::Cat(cmd) => write!(f, "{cmd}"),
+            Self::Variables(vars) => write!(f, "{}", vars.iter().format("\n")),
         }
     }
 }
@@ -31,9 +31,9 @@ pub enum Var {
 impl Display for Var {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Var::Single(prefix, name, value) => {
+            Self::Single(prefix, name, value) => {
                 if prefix.is_empty() {
-                    write!(f, "{}_{}={}", PREFIX, name, value)
+                    write!(f, "{PREFIX}_{name}={value}")
                 } else {
                     write!(
                         f,
@@ -45,7 +45,7 @@ impl Display for Var {
                     )
                 }
             }
-            Var::Many(prefix, name, values) => {
+            Self::Many(prefix, name, values) => {
                 if prefix.is_empty() {
                     write!(f, "{}_{}=({})", PREFIX, name, values.iter().join(" "))
                 } else {
@@ -86,6 +86,7 @@ pub struct CatCmd {
 }
 
 impl CatCmd {
+    #[must_use]
     pub fn new(cmd: StyledStr, exit_code: ExitCode) -> Self {
         Self {
             data: cmd,

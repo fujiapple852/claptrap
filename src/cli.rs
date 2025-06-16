@@ -89,10 +89,10 @@ pub enum SpecFormat {
 impl Display for SpecFormat {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            SpecFormat::Auto => write!(f, "auto"),
-            SpecFormat::Json => write!(f, "json"),
-            SpecFormat::Yaml => write!(f, "yaml"),
-            SpecFormat::Toml => write!(f, "toml"),
+            Self::Auto => write!(f, "auto"),
+            Self::Json => write!(f, "json"),
+            Self::Yaml => write!(f, "yaml"),
+            Self::Toml => write!(f, "toml"),
         }
     }
 }

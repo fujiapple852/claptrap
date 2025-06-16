@@ -13,6 +13,7 @@ pub struct NamedArg {
 }
 
 impl NamedArg {
+    #[must_use]
     pub fn new(name: String, arg: Arg) -> Self {
         Self { name, arg }
     }
@@ -93,10 +94,15 @@ pub struct Arg {
     typed_value_parser: Option<String>,
 }
 
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    clippy::fallible_impl_from
+)]
 impl From<NamedArg> for clap::Arg {
     fn from(named_arg: NamedArg) -> Self {
         let value = named_arg.arg;
-        let mut arg = clap::Arg::new(named_arg.name);
+        let mut arg = Self::new(named_arg.name);
         if let Some(id) = value.id {
             arg = arg.id(id);
         }
@@ -194,7 +200,7 @@ impl From<NamedArg> for clap::Arg {
             arg = arg.value_names(value_names);
         }
         if let Some(value_hint) = value.value_hint {
-            arg = arg.value_hint(clap::ValueHint::from(value_hint))
+            arg = arg.value_hint(clap::ValueHint::from(value_hint));
         }
         if let Some(ignore_case) = value.ignore_case {
             arg = arg.ignore_case(ignore_case);
@@ -330,15 +336,15 @@ pub enum ArgAction {
 impl From<ArgAction> for clap::ArgAction {
     fn from(action: ArgAction) -> Self {
         match action {
-            ArgAction::Set => clap::ArgAction::Set,
-            ArgAction::Append => clap::ArgAction::Append,
-            ArgAction::Count => clap::ArgAction::Count,
-            ArgAction::SetTrue => clap::ArgAction::SetTrue,
-            ArgAction::SetFalse => clap::ArgAction::SetFalse,
-            ArgAction::Help => clap::ArgAction::Help,
-            ArgAction::HelpShort => clap::ArgAction::HelpShort,
-            ArgAction::HelpLong => clap::ArgAction::HelpLong,
-            ArgAction::Version => clap::ArgAction::Version,
+            ArgAction::Set => Self::Set,
+            ArgAction::Append => Self::Append,
+            ArgAction::Count => Self::Count,
+            ArgAction::SetTrue => Self::SetTrue,
+            ArgAction::SetFalse => Self::SetFalse,
+            ArgAction::Help => Self::Help,
+            ArgAction::HelpShort => Self::HelpShort,
+            ArgAction::HelpLong => Self::HelpLong,
+            ArgAction::Version => Self::Version,
         }
     }
 }
@@ -365,19 +371,19 @@ pub enum ValueHint {
 impl From<ValueHint> for clap::ValueHint {
     fn from(value_hint: ValueHint) -> Self {
         match value_hint {
-            ValueHint::Unknown => clap::ValueHint::Unknown,
-            ValueHint::Other => clap::ValueHint::Other,
-            ValueHint::AnyPath => clap::ValueHint::AnyPath,
-            ValueHint::FilePath => clap::ValueHint::FilePath,
-            ValueHint::DirPath => clap::ValueHint::DirPath,
-            ValueHint::ExecutablePath => clap::ValueHint::ExecutablePath,
-            ValueHint::CommandName => clap::ValueHint::CommandName,
-            ValueHint::CommandString => clap::ValueHint::CommandString,
-            ValueHint::CommandWithArguments => clap::ValueHint::CommandWithArguments,
-            ValueHint::Username => clap::ValueHint::Username,
-            ValueHint::Hostname => clap::ValueHint::Hostname,
-            ValueHint::Url => clap::ValueHint::Url,
-            ValueHint::EmailAddress => clap::ValueHint::EmailAddress,
+            ValueHint::Unknown => Self::Unknown,
+            ValueHint::Other => Self::Other,
+            ValueHint::AnyPath => Self::AnyPath,
+            ValueHint::FilePath => Self::FilePath,
+            ValueHint::DirPath => Self::DirPath,
+            ValueHint::ExecutablePath => Self::ExecutablePath,
+            ValueHint::CommandName => Self::CommandName,
+            ValueHint::CommandString => Self::CommandString,
+            ValueHint::CommandWithArguments => Self::CommandWithArguments,
+            ValueHint::Username => Self::Username,
+            ValueHint::Hostname => Self::Hostname,
+            ValueHint::Url => Self::Url,
+            ValueHint::EmailAddress => Self::EmailAddress,
         }
     }
 }
