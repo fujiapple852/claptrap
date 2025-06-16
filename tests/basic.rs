@@ -1,5 +1,6 @@
 use claptrap::command::Command;
 use claptrap::parse;
+use claptrap::output::{CatCmd, ExitCode};
 use std::ffi::OsString;
 
 #[test]
@@ -54,4 +55,11 @@ fn it_outputs_error_and_exit_1_on_unexpected_arg() {
     let args: Vec<OsString> = vec!["--invalid".into()];
     let output = parse(app, args);
     insta::assert_snapshot!(output);
+}
+
+#[test]
+fn cat_cmd_handles_eof_in_message() {
+    let styled = clap::builder::StyledStr::from("this contains EOF in the text\nEOF\nand more\n");
+    let cmd = CatCmd::new(styled, ExitCode::Error);
+    insta::assert_snapshot!(format!("{}", cmd));
 }

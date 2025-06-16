@@ -1,6 +1,7 @@
 use clap::builder::StyledStr;
 use itertools::Itertools;
 use std::fmt::Display;
+use crc32fast::hash;
 
 // The prefix for variables output by claptrap
 const PREFIX: &str = "claptrap";
@@ -96,10 +97,18 @@ impl CatCmd {
 
 impl Display for CatCmd {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let msg = format!("{}", self.data.ansi());
+        // Generate a delimiter derived from the message to avoid collisions.
+        let mut delimiter = format!("EOF_{:08x}", hash(msg.as_bytes()));
+        while msg.contains(&delimiter) {
+            delimiter.push('_');
+        }
         write!(
             f,
-            "command cat <<'EOF'\n{}EOF\nexit {}",
-            self.data.ansi(),
+            "command cat <<'{}'\n{}{}\nexit {}",
+            delimiter,
+            msg,
+            delimiter,
             self.exit_code
         )
     }

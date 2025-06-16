@@ -2,7 +2,7 @@
 source: tests/basic.rs
 expression: output
 ---
-command cat <<'EOF'
+command cat <<'EOF_89694ea0'
 [1m[4mUsage:[0m [1mmyapp[0m [OPTIONS]
 
 [1m[4mOptions:[0m
@@ -10,5 +10,5 @@ command cat <<'EOF'
   [1m-p[0m, [1m--protocol[0m <protocol>  
   [1m-h[0m, [1m--help[0m                 Print help
   [1m-V[0m, [1m--version[0m              Print version
-EOF
+EOF_89694ea0
 exit 0
