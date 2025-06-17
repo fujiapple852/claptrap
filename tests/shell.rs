@@ -4,7 +4,7 @@ use test_case::test_matrix;
 
 const CLAPTRAP_BIN: &str = env!("CARGO_BIN_EXE_claptrap");
 
-#[test_matrix(["bash", "zsh"], ["yaml", "json", "toml"]; "shell_show_usage")]
+#[test_matrix(["bash", "zsh", "fish"], ["yaml", "json", "toml"]; "shell_show_usage")]
 fn test_show_usage(shell: &str, format: &str) {
     let output = std::process::Command::new(format!("tests/resources/shell/{shell}/file.sh"))
         .env("CLAPTRAP_BIN", CLAPTRAP_BIN)
@@ -21,7 +21,7 @@ fn test_show_usage(shell: &str, format: &str) {
     );
 }
 
-#[test_matrix(["bash", "zsh"], ["yaml", "json", "toml"]; "test_spec_file")]
+#[test_matrix(["bash", "zsh", "fish"], ["yaml", "json", "toml"]; "test_spec_file")]
 fn test_spec_file(shell: &str, format: &str) {
     let output = std::process::Command::new(format!("tests/resources/shell/{shell}/file.sh"))
         .env("CLAPTRAP_BIN", CLAPTRAP_BIN)
@@ -42,7 +42,7 @@ fn test_spec_file(shell: &str, format: &str) {
     );
 }
 
-#[test_matrix(["bash", "zsh"], ["yaml", "json", "toml"]; "test_spec_stdin_redirect")]
+#[test_matrix(["bash", "zsh", "fish"], ["yaml", "json", "toml"]; "test_spec_stdin_redirect")]
 fn test_spec_stdin_redirect(shell: &str, format: &str) {
     let output =
         std::process::Command::new(format!("tests/resources/shell/{shell}/stdin_redirect.sh"))
@@ -65,7 +65,7 @@ fn test_spec_stdin_redirect(shell: &str, format: &str) {
     );
 }
 
-#[test_matrix(["bash", "zsh"]; "test_spec_stdin_heredoc")]
+#[test_matrix(["bash", "zsh", "fish"]; "test_spec_stdin_heredoc")]
 fn test_spec_stdin_heredoc(shell: &str) {
     let output =
         std::process::Command::new(format!("tests/resources/shell/{shell}/stdin_heredoc.sh"))
@@ -83,7 +83,7 @@ fn test_spec_stdin_heredoc(shell: &str) {
     );
 }
 
-#[test_matrix(["bash", "zsh"]; "test_panic")]
+#[test_matrix(["bash", "zsh", "fish"]; "test_panic")]
 fn test_panic(shell: &str) {
     let output = std::process::Command::new(format!("tests/resources/shell/{shell}/panic.sh"))
         .env("CLAPTRAP_BIN", CLAPTRAP_BIN)

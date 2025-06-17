@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use claptrap::shell::Shell;
 use std::ffi::OsString;
 use std::fmt::{Display, Formatter};
 use std::path::PathBuf;
@@ -17,6 +18,10 @@ pub struct Cli {
     /// Do not suppress panic messages
     #[arg(long)]
     pub show_panic: bool,
+
+    /// The shell to format output for
+    #[arg(long, value_enum, env = "CLAPTRAP_SHELL", default_value_t = Shell::Bash)]
+    pub shell: Shell,
 
     #[command(subcommand)]
     pub command: Option<SubCommand>,
@@ -64,21 +69,6 @@ pub enum SubCommand {
         #[arg(short, long, value_name = "FILE")]
         output: Option<PathBuf>,
     },
-}
-
-/// Shell with template script available.
-#[derive(clap::ValueEnum, Debug, Clone)]
-#[non_exhaustive]
-pub enum Shell {
-    /// Bourne Again `SHell` (bash)
-    Bash,
-    /// Friendly Interactive `SHell` (fish)
-    Fish,
-    /// `PowerShell`
-    #[allow(clippy::enum_variant_names)]
-    PowerShell,
-    /// Z `SHell` (zsh)
-    Zsh,
 }
 
 /// Spec file format.

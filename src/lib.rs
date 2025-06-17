@@ -10,6 +10,7 @@ pub mod arg_group;
 pub mod command;
 pub mod num_args;
 pub mod output;
+pub mod shell;
 
 /// Parse the provided arguments and generate output.
 ///

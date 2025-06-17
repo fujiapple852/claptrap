@@ -38,6 +38,17 @@ echo "mode: $claptrap_mode"
 echo "protocol: $claptrap_protocol"
 ```
 
+Use Claptrap in a fish script:
+
+```fish
+#!/usr/bin/env fish
+
+eval (claptrap --shell fish --spec spec.toml -- $argv | string collect)
+
+echo "mode: $claptrap_mode"
+echo "protocol: $claptrap_protocol"
+```
+
 Run your script:
 
 ```bash
