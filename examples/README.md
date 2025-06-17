@@ -18,3 +18,12 @@ A toy `pacman` command with subcommands like `query` and `sync`.
 
 - Shell: `bash`
 - App spec format: `toml` & `yaml`
+
+### Example 3: `docker`
+
+A toy `docker` command with subcommands like `run`.
+
+- Shell: `bash`
+- App spec format: `toml`
+
+This example runs `claptrap` in a Docker container, so you need to have Docker installed and running.
