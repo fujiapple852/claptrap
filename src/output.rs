@@ -1,3 +1,4 @@
+use crate::shell::Shell;
 use clap::builder::StyledStr;
 use crc32fast::hash;
 use itertools::Itertools;
@@ -22,6 +23,23 @@ impl Display for Output {
         match self {
             Self::Cat(cmd) => write!(f, "{cmd}"),
             Self::Variables(vars) => write!(f, "{}", vars.iter().format("\n")),
+        }
+    }
+}
+
+impl Output {
+    #[must_use]
+    pub fn for_shell(&self, shell: Shell) -> String {
+        match shell {
+            Shell::Fish => self.to_fish(),
+            _ => format!("{self}"),
+        }
+    }
+
+    fn to_fish(&self) -> String {
+        match self {
+            Self::Cat(cmd) => cmd.to_fish(),
+            Self::Variables(vars) => vars.iter().map(Var::to_fish).join("\n"),
         }
     }
 }
@@ -59,6 +77,41 @@ impl Display for Var {
                     write!(
                         f,
                         "{}_{}_{}=({})",
+                        PREFIX,
+                        prefix.iter().format("_"),
+                        name,
+                        values
+                    )
+                }
+            }
+        }
+    }
+}
+
+impl Var {
+    fn to_fish(&self) -> String {
+        match self {
+            Self::Single(prefix, name, value) => {
+                let value = shell_quote(value);
+                if prefix.is_empty() {
+                    format!("set -gx {PREFIX}_{name} {value}")
+                } else {
+                    format!(
+                        "set -gx {}_{}_{} {}",
+                        PREFIX,
+                        prefix.iter().format("_"),
+                        name,
+                        value
+                    )
+                }
+            }
+            Self::Many(prefix, name, values) => {
+                let values = values.iter().map(|v| shell_quote(v)).join(" ");
+                if prefix.is_empty() {
+                    format!("set -gx {PREFIX}_{name} {values}")
+                } else {
+                    format!(
+                        "set -gx {}_{}_{} {}",
                         PREFIX,
                         prefix.iter().format("_"),
                         name,
@@ -114,5 +167,13 @@ impl Display for CatCmd {
             "command cat <<'{}'\n{}{}\nexit {}",
             delimiter, msg, delimiter, self.exit_code
         )
+    }
+}
+
+impl CatCmd {
+    fn to_fish(&self) -> String {
+        let msg = format!("{}", self.data.ansi());
+        let msg = shell_quote(&msg);
+        format!("printf %s {msg}\nexit {}", self.exit_code)
     }
 }

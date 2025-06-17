@@ -1,12 +1,13 @@
 #![forbid(unsafe_code)]
 
-use crate::cli::{DocFormat, Shell, SpecFormat, SubCommand};
+use crate::cli::{DocFormat, SpecFormat, SubCommand};
 use anstream::ColorChoice;
 use clap::Parser;
 use clap::builder::StyledStr;
 use claptrap::command::Command;
 use claptrap::output::{CatCmd, ExitCode, Output};
 use claptrap::parse;
+use claptrap::shell::Shell;
 use std::ffi::OsString;
 use std::io::Write;
 use std::panic;
@@ -29,7 +30,7 @@ fn main() -> anyhow::Result<()> {
             exit(0);
         }
         Some(SubCommand::Script { shell, output }) => {
-            run_generate_template(&cli.spec, cli.spec_format, &shell, output)?;
+            run_generate_template(&cli.spec, cli.spec_format, shell, output)?;
             exit(0);
         }
         Some(SubCommand::Doc { format, output }) => {
@@ -54,19 +55,22 @@ fn main() -> anyhow::Result<()> {
             })) {
                 Ok(val) => match val {
                     Ok(output) => {
-                        write!(stdout, "{output}")?;
+                        let out = output.for_shell(cli.shell);
+                        write!(stdout, "{out}")?;
                         stdout.flush()?;
                         exit(0);
                     }
                     Err(err) => {
-                        write!(stdout, "{err}")?;
+                        let out = err.for_shell(cli.shell);
+                        write!(stdout, "{out}")?;
                         stdout.flush()?;
                         exit(0);
                     }
                 },
                 Err(err) => {
                     let panic = panic_output(&err);
-                    write!(stdout, "{panic}")?;
+                    let out = panic.for_shell(cli.shell);
+                    write!(stdout, "{out}")?;
                     stdout.flush()?;
                     exit(0);
                 }
@@ -114,11 +118,12 @@ fn run_generate_man(
 fn run_generate_template(
     _spec_path: &Path,
     _spec_format: SpecFormat,
-    shell: &Shell,
+    shell: Shell,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
     let template = match shell {
         Shell::Bash => Ok(include_str!("../templates/bash_template.sh")),
+        Shell::Fish => Ok(include_str!("../templates/fish_template.sh")),
         Shell::Zsh => Ok(include_str!("../templates/zsh_template.sh")),
         _ => Err(anyhow::anyhow!(
             "Unsupported shell for boilerplate generation: {:?}",

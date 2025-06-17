@@ -21,6 +21,17 @@ echo "mode: $claptrap_mode"
 echo "protocol: $claptrap_protocol"
 ```
 
+`myapp.fish`:
+
+```fish
+#!/usr/bin/env fish
+
+eval (claptrap --shell fish --spec myapp.toml -- $argv | string collect)
+
+echo "mode: $claptrap_mode"
+echo "protocol: $claptrap_protocol"
+```
+
 `myapp.toml`:
 
 ```toml

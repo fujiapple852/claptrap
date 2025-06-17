@@ -19,6 +19,12 @@ impl Display for Error {
     }
 }
 
+impl Error {
+    pub fn for_shell(&self, shell: claptrap::shell::Shell) -> String {
+        self.0.for_shell(shell)
+    }
+}
+
 impl From<anyhow::Error> for Error {
     fn from(err: anyhow::Error) -> Self {
         Self(Output::Cat(CatCmd::new(
