@@ -1,0 +1,13 @@
+name = "docker"
+about = "A self-sufficient runtime for containers"
+version = "Docker version 27.5.1, build 9f9e405"
+arg-required-else-help = true
+
+[[subcommands]]
+name = "run"
+about = "Create and run a new container from an image"
+[subcommands.args]
+interactive = { short = 'i', long = "interactive", help = "Keep STDIN open even if not attached", action = "set-true" }
+tty = { short = 't', long = "tty", help = "Allocate a pseudo-TTY", action = "set-true" }
+volume = { short = 'v', long = "volume", value-name = "list", help = "Bind mount a volume", action = "append", num-args = 1 }
+image = { value-name = "IMAGE", help = "The image to run", required = true, index = 1 }
