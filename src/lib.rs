@@ -24,7 +24,12 @@ pub mod values;
 pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
     let clap_cmd = clap::Command::from(cmd.clone()).no_binary_name(true);
     match clap_cmd.clone().try_get_matches_from(args) {
-        Ok(matches) => Output::Variables(extract_matches(&cmd, &clap_cmd, &matches, &[])),
+        Ok(matches) => Output::Variables(
+            extract_subcommand_path(&matches)
+                .into_iter()
+                .chain(extract_matches(&cmd, &clap_cmd, &matches, &[]))
+                .collect(),
+        ),
         Err(err) => match err.kind() {
             clap::error::ErrorKind::DisplayHelp | clap::error::ErrorKind::DisplayVersion => {
                 Output::Cat(CatCmd::new(err.render(), ExitCode::Success))
@@ -35,6 +40,13 @@ pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
             _ => Output::Cat(CatCmd::new(err.render(), ExitCode::Error)),
         },
     }
+}
+
+fn extract_subcommand_path(matches: &clap::ArgMatches) -> Option<Var> {
+    let path = std::iter::successors(matches.subcommand(), |&(_, sub)| sub.subcommand())
+        .map(|(name, _)| name.to_string())
+        .collect::<Vec<_>>();
+    (!path.is_empty()).then_some(Var::Subcommand(path))
 }
 
 fn extract_matches(

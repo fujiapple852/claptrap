@@ -40,6 +40,7 @@ Query a package:
 
 ```shell
 ./pacman.sh query -s claptrap
+claptrap__subcommand: query
 claptrap_query_search[0]: claptrap
 ```
 
@@ -64,6 +65,7 @@ Sync a package:
 
 ```shell
 /pacman.sh -S claptrap
+claptrap__subcommand: sync
 claptrap_sync_info: false
 claptrap_sync_package[0]: claptrap
 ```
@@ -72,6 +74,7 @@ Show sync info for some packages:
 
 ```shell
 ./pacman.sh --sync -i claptrap trippy
+claptrap__subcommand: sync
 claptrap_sync_info: true
 claptrap_sync_package[0]: claptrap
 claptrap_sync_package[1]: trippy

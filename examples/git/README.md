@@ -27,6 +27,7 @@ Clone a repository:
 
 ```shell
 ./git.sh clone https://github.com/fujiapple852/claptrap.git
+claptrap__subcommand: clone
 claptrap_clone_REMOTE: https://github.com/fujiapple852/claptrap.git
 ```
 
@@ -34,6 +35,7 @@ Diff between two commits for a specific path:
 
 ```shell
 ./git.sh diff 9561142 1dfd1b5 --color=never -- some/path/
+claptrap__subcommand: diff
 claptrap_diff_base: 9561142
 claptrap_diff_color: never
 claptrap_diff_head: 1dfd1b5
@@ -44,6 +46,7 @@ Push:
 
 ```shell
 ./git.sh push origin
+claptrap__subcommand: push
 claptrap_push_REMOTE: origin
 ```
 
@@ -51,6 +54,7 @@ Add:
 
 ```shell
 ./git.sh add main.rs lib.rs error.rs Cargo.toml
+claptrap__subcommand: add
 claptrap_add_PATH[0]: main.rs
 claptrap_add_PATH[1]: lib.rs
 claptrap_add_PATH[2]: error.rs
