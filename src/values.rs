@@ -1,5 +1,4 @@
 use serde::Deserialize;
-use std::str::FromStr;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum ValueParser {
@@ -75,8 +74,8 @@ impl From<ValueParser> for clap::builder::ValueParser {
     }
 }
 
-#[derive(Debug, Clone, strum::EnumString)]
-#[strum(serialize_all = "kebab-case")]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Deserialize)]
+#[serde(rename_all = "kebab-case")]
 enum TypedValueParser {
     Bool,
     Boolish,
@@ -88,7 +87,13 @@ fn parse_typed_value_parser(value: &str) -> Option<TypedValueParser> {
     value
         .strip_prefix(':')
         .and_then(|s| s.strip_suffix(':'))
-        .and_then(|inner| TypedValueParser::from_str(inner).ok())
+        .and_then(|inner| {
+            use serde::de::value::BorrowedStrDeserializer;
+            TypedValueParser::deserialize(BorrowedStrDeserializer::<serde::de::value::Error>::new(
+                inner,
+            ))
+            .ok()
+        })
 }
 
 #[cfg(test)]
