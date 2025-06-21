@@ -6,7 +6,7 @@ use indexmap::IndexMap;
 use serde::Deserialize;
 
 /// Represents a command configuration for a CLI application.
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Default, PartialEq)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 pub struct Command {
@@ -75,6 +75,22 @@ pub struct Command {
     multicall: Option<bool>,
     subcommand_value_name: Option<String>,
     subcommand_help_heading: Option<String>,
+}
+
+impl Command {
+    #[must_use]
+    pub fn new(name: impl Into<String>) -> Self {
+        Self {
+            name: name.into(),
+            ..Self::default()
+        }
+    }
+
+    #[must_use]
+    pub fn arg(mut self, name: impl Into<String>, arg: Arg) -> Self {
+        self.args.get_or_insert_with(IndexMap::new).insert(name.into(), arg);
+        self
+    }
 }
 
 #[expect(clippy::cognitive_complexity, clippy::too_many_lines)]
@@ -287,7 +303,7 @@ impl From<Command> for clap::Command {
     }
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "kebab-case")]
 pub enum ColorChoice {
     Auto,

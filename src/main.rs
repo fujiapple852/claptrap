@@ -1,6 +1,7 @@
 #![forbid(unsafe_code)]
 
 use crate::cli::{DocFormat, Shell, SpecFormat, SubCommand};
+use claptrap::getopts::parse_getopts;
 use anstream::ColorChoice;
 use clap::Parser;
 use clap::builder::StyledStr;
@@ -19,21 +20,22 @@ mod error;
 
 fn main() -> anyhow::Result<()> {
     let cli = cli::Cli::parse();
+    let spec = build_spec(&cli)?;
     match cli.command {
         Some(SubCommand::Completion { shell, output }) => {
-            run_generate_completions(&cli.spec, cli.spec_format, shell, output)?;
+            run_generate_completions(&spec, shell, output)?;
             exit(0);
         }
         Some(SubCommand::Man { output }) => {
-            run_generate_man(&cli.spec, cli.spec_format, output)?;
+            run_generate_man(&spec, output)?;
             exit(0);
         }
         Some(SubCommand::Script { shell, output }) => {
-            run_generate_template(&cli.spec, cli.spec_format, &shell, output)?;
+            run_generate_template(&shell, output)?;
             exit(0);
         }
         Some(SubCommand::Doc { format, output }) => {
-            run_generate_doc(&cli.spec, cli.spec_format, format, output)?;
+            run_generate_doc(&spec, format, output)?;
             exit(0);
         }
         None => {
@@ -49,9 +51,7 @@ fn main() -> anyhow::Result<()> {
             }
             let mut stdout =
                 anstream::AutoStream::new(std::io::stdout().lock(), ColorChoice::Always);
-            match panic::catch_unwind(AssertUnwindSafe(|| {
-                run_app(&cli.spec, cli.spec_format, cli.args)
-            })) {
+            match panic::catch_unwind(AssertUnwindSafe(|| { run_app(&spec, cli.args) })) {
                 Ok(val) => match val {
                     Ok(output) => {
                         write!(stdout, "{output}")?;
@@ -76,13 +76,11 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn run_generate_completions(
-    spec_path: &Path,
-    spec_format: SpecFormat,
+    spec: &Command,
     shell: clap_complete::Shell,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
-    let spec = parse_spec(spec_path, spec_format)?;
-    let mut clap_cmd = clap::Command::from(spec).no_binary_name(true);
+    let mut clap_cmd = clap::Command::from(spec.clone()).no_binary_name(true);
     let name = clap_cmd.get_name().to_string();
     let mut buffer: Vec<u8> = vec![];
     clap_complete::generate(shell, &mut clap_cmd, name, &mut buffer);
@@ -95,12 +93,10 @@ fn run_generate_completions(
 }
 
 fn run_generate_man(
-    spec_path: &Path,
-    spec_format: SpecFormat,
+    spec: &Command,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
-    let spec = parse_spec(spec_path, spec_format)?;
-    let clap_cmd = clap::Command::from(spec).no_binary_name(true);
+    let clap_cmd = clap::Command::from(spec.clone()).no_binary_name(true);
     let mut buffer: Vec<u8> = vec![];
     clap_mangen::Man::new(clap_cmd).render(&mut buffer)?;
     if let Some(output_path) = output {
@@ -112,8 +108,6 @@ fn run_generate_man(
 }
 
 fn run_generate_template(
-    _spec_path: &Path,
-    _spec_format: SpecFormat,
     shell: &Shell,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
@@ -134,13 +128,11 @@ fn run_generate_template(
 }
 
 fn run_generate_doc(
-    spec_path: &Path,
-    spec_format: SpecFormat,
+    spec: &Command,
     doc_format: DocFormat,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
-    let spec = parse_spec(spec_path, spec_format)?;
-    let clap_cmd = clap::Command::from(spec).no_binary_name(true);
+    let clap_cmd = clap::Command::from(spec.clone()).no_binary_name(true);
     let markdown = clap_markdown::help_markdown_command(&clap_cmd);
     let bytes = match doc_format {
         DocFormat::Markdown => markdown.into_bytes(),
@@ -153,12 +145,8 @@ fn run_generate_doc(
     Ok(())
 }
 
-fn run_app(
-    spec_path: &Path,
-    spec_format: SpecFormat,
-    args: Vec<OsString>,
-) -> error::Result<Output> {
-    Ok(parse(parse_spec(spec_path, spec_format)?, args))
+fn run_app(spec: &Command, args: Vec<OsString>) -> error::Result<Output> {
+    Ok(parse(spec.clone(), args))
 }
 
 fn parse_spec(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Command> {
@@ -184,6 +172,16 @@ fn parse_spec(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Comma
         SpecFormat::Yaml => serde_yaml::from_str::<Command>(&spec)?,
         SpecFormat::Toml => toml::from_str::<Command>(&spec)?,
     })
+}
+
+fn build_spec(cli: &cli::Cli) -> anyhow::Result<Command> {
+    if let Some(getopts) = &cli.getopts {
+        parse_getopts(getopts)
+    } else if let Some(ref path) = cli.spec {
+        parse_spec(path, cli.spec_format)
+    } else {
+        Err(anyhow::anyhow!("spec or getopts required"))
+    }
 }
 
 fn panic_output(err: &Box<dyn std::any::Any + Send>) -> Output {
