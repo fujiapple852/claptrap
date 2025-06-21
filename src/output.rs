@@ -1,14 +1,19 @@
 use clap::builder::StyledStr;
 use crc32fast::hash;
 use itertools::Itertools;
-
-fn shell_quote(value: &str) -> String {
-    format!("'{}'", value.replace('\'', "'\\''"))
-}
 use std::fmt::Display;
 
-// The prefix for variables output by claptrap
+// The prefix for variables
 const PREFIX: &str = "claptrap";
+
+// The prefix for the subcommand variable
+const SUBCOMMAND_PREFIX: &str = "subcommand";
+
+// The separator for subcommand paths in the variable value
+const SUBCOMMAND_VALUE_SEPARATOR: &str = "::";
+
+// The separator for subcommand paths in the variable name
+const SUBCOMMAND_PATH_SEPARATOR: &str = "_";
 
 /// Represents the output of a claptrap command.
 #[derive(Debug, Eq, PartialEq)]
@@ -29,38 +34,46 @@ impl Display for Output {
 /// Represents a variable output by claptrap.
 #[derive(Debug, Eq, PartialEq)]
 pub enum Var {
+    /// The path of a subcommand.
+    Subcommand(Vec<String>),
+    /// A single variable with a prefix, name, and value.
     Single(Vec<String>, String, String),
+    /// A variable with a prefix, name, and multiple values.
     Many(Vec<String>, String, Vec<String>),
 }
 
 impl Display for Var {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Single(prefix, name, value) => {
+            Self::Subcommand(path) => {
+                let path = shell_quote(&path.iter().join(SUBCOMMAND_VALUE_SEPARATOR));
+                write!(f, "{PREFIX}__{SUBCOMMAND_PREFIX}={path}")
+            }
+            Self::Single(path, name, value) => {
                 let value = shell_quote(value);
-                if prefix.is_empty() {
+                if path.is_empty() {
                     write!(f, "{PREFIX}_{name}={value}")
                 } else {
                     write!(
                         f,
                         "{}_{}_{}={}",
                         PREFIX,
-                        prefix.iter().format("_"),
+                        path.iter().format(SUBCOMMAND_PATH_SEPARATOR),
                         name,
                         value
                     )
                 }
             }
-            Self::Many(prefix, name, values) => {
+            Self::Many(path, name, values) => {
                 let values = values.iter().map(|v| shell_quote(v)).join(" ");
-                if prefix.is_empty() {
+                if path.is_empty() {
                     write!(f, "{PREFIX}_{name}=({values})")
                 } else {
                     write!(
                         f,
                         "{}_{}_{}=({})",
                         PREFIX,
-                        prefix.iter().format("_"),
+                        path.iter().format(SUBCOMMAND_PATH_SEPARATOR),
                         name,
                         values
                     )
@@ -68,6 +81,10 @@ impl Display for Var {
             }
         }
     }
+}
+
+fn shell_quote(value: &str) -> String {
+    format!("'{}'", value.replace('\'', "'\\''"))
 }
 
 /// Exit code for the `CatCmd`.
