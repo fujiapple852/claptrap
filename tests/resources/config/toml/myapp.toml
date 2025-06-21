@@ -1,6 +1,6 @@
 name = "myapp"
 version = "0.1.0"
-arg-required-else-help = true # TODO should become default
+arg-required-else-help = true
 
 [args]
 mode = { short = "m", long = "mode" }

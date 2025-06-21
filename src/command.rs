@@ -48,7 +48,7 @@ pub struct Command {
     flatten_help: Option<bool>,
     next_help_heading: Option<String>,
     next_display_order: Option<usize>,
-    arg_required_else_help: Option<bool>, // TODO default to true (opinionated!)
+    arg_required_else_help: Option<bool>,
     allow_missing_positional: Option<bool>,
     short_flag: Option<char>,
     long_flag: Option<String>,
@@ -98,7 +98,6 @@ impl From<Command> for clap::Command {
         if let Some(subcommands) = cmd.subcommands {
             command = command.subcommands(subcommands.into_iter().map(Self::from));
         }
-        // TODO: error()
         if let Some(ignore_errors) = cmd.ignore_errors {
             command = command.ignore_errors(ignore_errors);
         }
