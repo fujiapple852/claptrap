@@ -2,6 +2,7 @@
 source: tests/examples.rs
 expression: "String::from_utf8_lossy(&output.stdout)"
 ---
+claptrap_subcommand: sync
 claptrap_sync_info: true
 claptrap_sync_package[0]: claptrap
 claptrap_sync_package[1]: trippy

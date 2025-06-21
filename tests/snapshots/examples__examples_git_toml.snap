@@ -3,3 +3,4 @@ source: tests/examples.rs
 expression: "String::from_utf8_lossy(&output.stdout)"
 ---
 claptrap_clone_REMOTE: origin
+claptrap_subcommand: clone

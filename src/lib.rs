@@ -20,7 +20,16 @@ pub mod values;
 pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
     let clap_app = clap::Command::from(cmd).no_binary_name(true);
     match clap_app.clone().try_get_matches_from(args) {
-        Ok(matches) => Output::Variables(extract_matches(&clap_app, &matches, &mut vec![])),
+        Ok(matches) => {
+            let mut vars = extract_matches(&clap_app, &matches, &mut vec![]);
+            if let Some(path) = extract_subcommand_path(&matches) {
+                vars.insert(
+                    0,
+                    Var::Single(Vec::new(), "subcommand".into(), path.join(" ")),
+                );
+            }
+            Output::Variables(vars)
+        }
         Err(err) => match err.kind() {
             clap::error::ErrorKind::DisplayHelp | clap::error::ErrorKind::DisplayVersion => {
                 Output::Cat(CatCmd::new(err.render(), ExitCode::Success))
@@ -107,4 +116,14 @@ impl IsManyEx for clap::Arg {
             .or_else(|| self.get_value_delimiter().map(|_| true))
             .unwrap_or(false)
     }
+}
+
+fn extract_subcommand_path(matches: &clap::ArgMatches) -> Option<Vec<String>> {
+    matches.subcommand().map(|(name, sub_matches)| {
+        let mut path = vec![name.to_string()];
+        if let Some(mut rest) = extract_subcommand_path(sub_matches) {
+            path.append(&mut rest);
+        }
+        path
+    })
 }
