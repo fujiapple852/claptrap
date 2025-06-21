@@ -34,6 +34,20 @@ fn test_arg() {
 }
 
 #[test]
+fn test_arg_required_else_help() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "myprog"
+            arg-required-else-help = true
+        "#,
+    )
+    .unwrap();
+    let args: Vec<OsString> = vec![];
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn test_group() {
     let app: Command = toml::from_str(
         r#"
