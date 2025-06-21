@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use std::str::FromStr;
+use serde::de::value::BorrowedStrDeserializer;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum ValueParser {
@@ -10,7 +10,7 @@ pub enum ValueParser {
     PossibleValues(Vec<String>),
 }
 
-impl<'de> Deserialize<'de> for ValueParser {
+impl<'de> serde::Deserialize<'de> for ValueParser {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
@@ -75,8 +75,8 @@ impl From<ValueParser> for clap::builder::ValueParser {
     }
 }
 
-#[derive(Debug, Clone, strum::EnumString)]
-#[strum(serialize_all = "kebab-case")]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Deserialize)]
+#[serde(rename_all = "kebab-case")]
 enum TypedValueParser {
     Bool,
     Boolish,
@@ -88,15 +88,18 @@ fn parse_typed_value_parser(value: &str) -> Option<TypedValueParser> {
     value
         .strip_prefix(':')
         .and_then(|s| s.strip_suffix(':'))
-        .and_then(|inner| TypedValueParser::from_str(inner).ok())
+        .and_then(|inner| {
+            TypedValueParser::deserialize(BorrowedStrDeserializer::<serde::de::value::Error>::new(
+                inner,
+            ))
+            .ok()
+        })
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use serde::de::Error;
     use test_case::test_case;
-
     #[test_case(serde_json::json!(":bool:"), Ok(ValueParser::Bool); "bool magic")]
     #[test_case(serde_json::json!(":boolish:"), Ok(ValueParser::Boolish); "boolish magic")]
     #[test_case(serde_json::json!(":falsey:"), Ok(ValueParser::Falsey); "falsey magic")]
@@ -110,7 +113,7 @@ mod tests {
     #[test_case(serde_json::json!([":bool:", ":falsey:"]), Ok(ValueParser::PossibleValues(vec![":bool:".to_string(), ":falsey:".to_string()])); "known multiple magic values")]
     #[test_case(serde_json::json!([":falsey"]), Ok(ValueParser::PossibleValues(vec![":falsey".to_string()])); "prefix possible value")]
     #[test_case(serde_json::json!(["falsey:"]), Ok(ValueParser::PossibleValues(vec!["falsey:".to_string()])); "suffix possible value")]
-    #[test_case(serde_json::json!(false), Err(serde::de::value::Error::custom("invalid type: boolean `false`, expected a value parser type")); "not a sequence")]
+    #[test_case(serde_json::json!(false), Err(serde::de::Error::custom("invalid type: boolean `false`, expected a value parser type")); "not a sequence")]
     fn test_value_parser(
         value: serde_json::Value,
         expected: Result<ValueParser, serde::de::value::Error>,
