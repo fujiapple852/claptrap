@@ -2,29 +2,13 @@ use crate::num_args::NumArgs;
 use crate::values::ValueParser;
 use serde::Deserialize;
 
-/// Represents a named argument with its associated `Arg` configuration.
-///
-/// This struct is used to hold the name of the argument and its configuration,
-/// which is represented by the `Arg` struct.
-#[derive(Debug)]
-pub struct NamedArg {
-    pub name: String,
-    pub arg: Arg,
-}
-
-impl NamedArg {
-    #[must_use]
-    pub fn new(name: String, arg: Arg) -> Self {
-        Self { name, arg }
-    }
-}
-
 /// Represents a command line argument configuration.
 #[derive(Debug, Deserialize, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 pub struct Arg {
-    id: Option<String>,
+    #[serde(skip)]
+    pub(crate) id: String,
     short: Option<char>,
     long: Option<String>,
     alias: Option<String>,
@@ -92,14 +76,21 @@ pub struct Arg {
     overrides_with_all: Option<Vec<String>>,
 }
 
+impl Arg {
+    #[must_use]
+    pub fn get_id(&self) -> &str {
+        self.id.as_ref()
+    }
+    #[must_use]
+    pub fn value_parser(&self) -> Option<&ValueParser> {
+        self.value_parser.as_ref()
+    }
+}
+
 #[expect(clippy::cognitive_complexity, clippy::too_many_lines)]
-impl From<NamedArg> for clap::Arg {
-    fn from(named_arg: NamedArg) -> Self {
-        let value = named_arg.arg;
-        let mut arg = Self::new(named_arg.name);
-        if let Some(id) = value.id {
-            arg = arg.id(id);
-        }
+impl From<Arg> for clap::Arg {
+    fn from(value: Arg) -> Self {
+        let mut arg = Self::new(value.id);
         // TODO: test if the yaml contains a string
         if let Some(short) = value.short {
             arg = arg.short(short);

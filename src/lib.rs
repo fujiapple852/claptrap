@@ -2,8 +2,11 @@
 
 use crate::command::Command;
 use crate::output::{CatCmd, ExitCode, Output, Var};
+use crate::values::ValueParser;
 use clap::ArgAction;
+use clap::parser::ValuesRef;
 use std::ffi::OsString;
+use std::fmt::Display;
 
 pub mod arg;
 pub mod arg_group;
@@ -17,10 +20,11 @@ pub mod values;
 ///
 /// This function does not perform any I/O operations.
 #[must_use]
+#[allow(clippy::needless_pass_by_value)]
 pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
-    let clap_app = clap::Command::from(cmd).no_binary_name(true);
-    match clap_app.clone().try_get_matches_from(args) {
-        Ok(matches) => Output::Variables(extract_matches(&clap_app, &matches, &mut vec![])),
+    let clap_cmd = clap::Command::from(cmd.clone()).no_binary_name(true);
+    match clap_cmd.clone().try_get_matches_from(args) {
+        Ok(matches) => Output::Variables(extract_matches(&cmd, &clap_cmd, &matches, &mut vec![])),
         Err(err) => match err.kind() {
             clap::error::ErrorKind::DisplayHelp | clap::error::ErrorKind::DisplayVersion => {
                 Output::Cat(CatCmd::new(err.render(), ExitCode::Success))
@@ -34,14 +38,16 @@ pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
 }
 
 fn extract_matches(
-    cmd: &clap::Command,
+    cmd: &Command,
+    clap_cmd: &clap::Command,
     matches: &clap::ArgMatches,
     prefix: &mut Vec<String>,
 ) -> Vec<Var> {
     let local_prefix = prefix.clone();
     let iter_args = matches.ids().filter_map(|id| {
-        let arg = cmd.get_arguments().find(|a| a.get_id() == id)?;
-        match arg.get_action() {
+        let arg = cmd.get_arguments().find(|a| a.get_id() == id.as_str())?;
+        let clap_arg = clap_cmd.get_arguments().find(|a| a.get_id() == id)?;
+        match clap_arg.get_action() {
             ArgAction::SetTrue | ArgAction::SetFalse => Some(Var::Single(
                 local_prefix.clone(),
                 id.to_string(),
@@ -52,26 +58,22 @@ fn extract_matches(
                 id.to_string(),
                 matches.get_count(id.as_str()).to_string(),
             )),
-            ArgAction::Append => matches.get_many::<String>(id.as_str()).map(|values| {
-                Var::Many(
-                    local_prefix.clone(),
-                    id.to_string(),
-                    values.into_iter().map(ToOwned::to_owned).collect(),
-                )
-            }),
+            ArgAction::Append => arg
+                .value_parser()
+                .and_then(|value_parser| get_many(value_parser, matches, id.as_str()))
+                .or_else(|| get_many_raw(matches, id.as_str()))
+                .map(|v| Var::Many(local_prefix.clone(), id.to_string(), v)),
             ArgAction::Set => {
-                if arg.is_many() {
-                    matches.get_many::<String>(id.as_str()).map(|values| {
-                        Var::Many(
-                            local_prefix.clone(),
-                            id.to_string(),
-                            values.into_iter().map(ToOwned::to_owned).collect(),
-                        )
-                    })
+                if clap_arg.is_many() {
+                    arg.value_parser()
+                        .and_then(|value_parser| get_many(value_parser, matches, id.as_str()))
+                        .or_else(|| get_many_raw(matches, id.as_str()))
+                        .map(|v| Var::Many(local_prefix.clone(), id.to_string(), v))
                 } else {
-                    matches.get_one::<String>(id.as_str()).map(|value| {
-                        Var::Single(local_prefix.clone(), id.to_string(), value.to_owned())
-                    })
+                    arg.value_parser()
+                        .and_then(|value_parser| get_one(value_parser, matches, id.as_str()))
+                        .or_else(|| get_one_raw(matches, id.as_str()))
+                        .map(|v| Var::Single(local_prefix.clone(), id.to_string(), v))
                 }
             }
             _ => None,
@@ -83,15 +85,91 @@ fn extract_matches(
         .flat_map(|(name, sub_matches)| {
             cmd.get_subcommands()
                 .find(|sc| sc.get_name() == name)
-                .map(|cmd| {
-                    prefix.push(name.to_string());
-                    let it = extract_matches(cmd, sub_matches, prefix).into_iter();
-                    prefix.pop();
-                    it
+                .and_then(|sub_cmd| {
+                    clap_cmd
+                        .get_subcommands()
+                        .find(|sc| sc.get_name() == name)
+                        .map(|clap_sub_cmd| {
+                            prefix.push(name.to_string());
+                            let it = extract_matches(sub_cmd, clap_sub_cmd, sub_matches, prefix)
+                                .into_iter();
+                            prefix.pop();
+                            it
+                        })
                 })
                 .unwrap_or_else(|| vec![].into_iter())
         });
     iter_args.chain(iter_sub).collect()
+}
+
+fn get_one(value_parser: &ValueParser, matches: &clap::ArgMatches, id: &str) -> Option<String> {
+    match value_parser {
+        ValueParser::Falsey | ValueParser::Boolish | ValueParser::Bool => {
+            matches.get_one::<bool>(id).map(ToString::to_string)
+        }
+        ValueParser::String | ValueParser::PossibleValues(_) => {
+            matches.get_one::<String>(id).map(ToString::to_string)
+        }
+        ValueParser::U8 => matches.get_one::<u8>(id).map(ToString::to_string),
+        ValueParser::U16 => matches.get_one::<u16>(id).map(ToString::to_string),
+        ValueParser::U32 => matches.get_one::<u32>(id).map(ToString::to_string),
+        ValueParser::U64 => matches.get_one::<u64>(id).map(ToString::to_string),
+        ValueParser::U128 => matches.get_one::<u128>(id).map(ToString::to_string),
+        ValueParser::Usize => matches.get_one::<usize>(id).map(ToString::to_string),
+        ValueParser::I8 => matches.get_one::<i8>(id).map(ToString::to_string),
+        ValueParser::I16 => matches.get_one::<i16>(id).map(ToString::to_string),
+        ValueParser::I32 => matches.get_one::<i32>(id).map(ToString::to_string),
+        ValueParser::I64 => matches.get_one::<i64>(id).map(ToString::to_string),
+        ValueParser::I128 => matches.get_one::<i128>(id).map(ToString::to_string),
+        ValueParser::Isize => matches.get_one::<isize>(id).map(ToString::to_string),
+        ValueParser::F32 => matches.get_one::<f32>(id).map(ToString::to_string),
+        ValueParser::F64 => matches.get_one::<f64>(id).map(ToString::to_string),
+    }
+}
+
+fn get_many(
+    value_parser: &ValueParser,
+    matches: &clap::ArgMatches,
+    id: &str,
+) -> Option<Vec<String>> {
+    fn to_string<'a, T: Display + 'a>(values: ValuesRef<'a, T>) -> Vec<String> {
+        values.map(ToString::to_string).collect()
+    }
+    match value_parser {
+        ValueParser::Falsey | ValueParser::Boolish | ValueParser::Bool => {
+            matches.get_many::<bool>(id).map(to_string)
+        }
+        ValueParser::String | ValueParser::PossibleValues(_) => {
+            matches.get_many::<String>(id).map(to_string)
+        }
+        ValueParser::U8 => matches.get_many::<u8>(id).map(to_string),
+        ValueParser::U16 => matches.get_many::<u16>(id).map(to_string),
+        ValueParser::U32 => matches.get_many::<u32>(id).map(to_string),
+        ValueParser::U64 => matches.get_many::<u64>(id).map(to_string),
+        ValueParser::U128 => matches.get_many::<u128>(id).map(to_string),
+        ValueParser::Usize => matches.get_many::<usize>(id).map(to_string),
+        ValueParser::I8 => matches.get_many::<i8>(id).map(to_string),
+        ValueParser::I16 => matches.get_many::<i16>(id).map(to_string),
+        ValueParser::I32 => matches.get_many::<i32>(id).map(to_string),
+        ValueParser::I64 => matches.get_many::<i64>(id).map(to_string),
+        ValueParser::I128 => matches.get_many::<i128>(id).map(to_string),
+        ValueParser::Isize => matches.get_many::<isize>(id).map(to_string),
+        ValueParser::F32 => matches.get_many::<f32>(id).map(to_string),
+        ValueParser::F64 => matches.get_many::<f64>(id).map(to_string),
+    }
+}
+
+fn get_one_raw(matches: &clap::ArgMatches, id: &str) -> Option<String> {
+    matches
+        .get_raw(id)
+        .and_then(|mut values| values.next())
+        .map(|value| value.to_string_lossy().into_owned())
+}
+
+fn get_many_raw(matches: &clap::ArgMatches, id: &str) -> Option<Vec<String>> {
+    matches
+        .get_raw(id)
+        .map(|values| values.map(|v| v.to_string_lossy().into_owned()).collect())
 }
 
 /// Extension trait for `clap::Arg` to determine if it is many-valued.

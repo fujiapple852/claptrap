@@ -493,7 +493,6 @@ fn test_action_version() {
     insta::assert_snapshot!(output);
 }
 
-// TODO: does not cover ranges or any types other than string-ish or bool-ish types
 #[test]
 fn test_value_parser() {
     let app: Command = toml::from_str(
