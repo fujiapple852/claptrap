@@ -1,0 +1,7 @@
+---
+source: tests/arg.rs
+expression: output1
+---
+claptrap_config='file.conf'
+claptrap_input='in.txt'
+claptrap_output='out.txt'

@@ -1203,8 +1203,121 @@ fn test_groups() {
     insta::assert_snapshot!(output);
 }
 
-// TODO: default_value_if
-// TODO: default_value_ifs
+#[test]
+fn test_default_value_if_present() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            flag = { long = "flag", action = "set-true" }
+            other = { long = "other", default-value-if = { arg = "flag", default = "default" } }
+        "#,
+    )
+    .unwrap();
+
+    let input = "--flag";
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn test_default_value_if_not_present() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            flag = { long = "flag", action = "set-true" }
+            other = { long = "other", default-value-if = { arg = "flag", value = "true", default = "default" } }
+        "#,
+    )
+    .unwrap();
+    let args: Vec<OsString> = vec![];
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn test_default_value_if_equals() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            opt = { long = "opt", action = "set" }
+            other = { long = "other", default-value-if = { arg = "opt", value = "special", default = "default" } }
+        "#,
+    )
+        .unwrap();
+
+    let input1 = "--opt special";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--opt hahaha";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_default_value_if_unset() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            flag = { long = "flag", action = "set-true" }
+            other = { long = "other", default-value = "default", default-value-if = { arg = "flag", value = "true" } }
+        "#,
+    )
+        .unwrap();
+
+    let input = "--flag";
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn test_default_value_ifs() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            flag = { long = "flag", action = "set-true" }
+            opt = { long = "opt", action = "set" }
+            other = { long = "other", default-value-ifs = [ { arg = "flag", value = "true", default = "default" }, { arg = "opt", value = "channel", default = "chan" } ] }
+        "#,
+    )
+        .unwrap();
+
+    let input1 = "--opt channel";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let args2: Vec<OsString> = vec![];
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_default_value_ifs_order() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            flag = { long = "flag", action = "set-true" }
+            opt = { long = "opt", action = "set" }
+            other = { long = "other", default-value-ifs = [ { arg = "flag", default = "default" }, { arg = "opt", value = "channel", default = "chan" } ] }
+        "#,
+    )
+        .unwrap();
+    let input = "--opt channel --flag";
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
 
 #[test]
 fn test_required_unless_present() {
@@ -1274,11 +1387,183 @@ fn test_required_unless_present_any() {
     insta::assert_snapshot!(output2);
 }
 
-// TODO: required_if_eq
-// TODO: required_if_eq_any
-// TODO: required_if_eq_all
-// TODO: requires_if
-// TODO: requires_ifs
+#[test]
+fn test_required_if_eq() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            cfg = { long = "config", action = "set", required-if-eq = { arg = "other", value = "special" } }
+            other = { long = "other", action = "set" }
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--other not-special";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--other special";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_required_if_eq_case_sensitive() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            cfg = { long = "config", action = "set", required-if-eq = { arg = "other", value = "special" } }
+            other = { long = "other", action = "set" }
+        "#,
+    )
+        .unwrap();
+
+    let input = "--other SPECIAL";
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn test_required_if_eq_case_insensitive() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            cfg = { long = "config", action = "set", required-if-eq = { arg = "other", value = "special" } }
+            other = { long = "other", action = "set", ignore-case = true }
+        "#,
+    )
+        .unwrap();
+
+    let input = "--other SPECIAL";
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn test_required_if_eq_any() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            cfg = { long = "config", action = "set", required-if-eq-any = [ { arg = "extra", value = "val" }, { arg = "option", value = "spec" } ] }
+            extra = { long = "extra", action = "set" }
+            option = { long = "option", action = "set" }
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--option other";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--option spec";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_required_if_eq_all() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            cfg = { long = "config", action = "set", required-if-eq-all = [ { arg = "extra", value = "val" }, { arg = "option", value = "spec" } ] }
+            extra = { long = "extra", action = "set" }
+            option = { long = "option", action = "set" }
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--option spec";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--extra val --option spec";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_requires_if() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            config = { long = "config", action = "set", requires-if = { arg = "other", value = "my.cfg" } }
+            other = {}
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--config some.cfg";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--config my.cfg";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_requires_ifs() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            config = { long = "config", action = "set", requires-ifs = [ { arg = "opt", value = "special.conf" }, { arg = "other", value = "other.conf" } ] }
+            opt = { long = "option", action = "set" }
+            other = {}
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--config other.conf";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--config special.conf";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_requires_ifs_present() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            config = { long = "config", action = "set", requires-ifs = [ { arg = "input" }, { arg = "output" } ] }
+            input = {}
+            output = {}
+        "#,
+    )
+        .unwrap();
+
+    let input1 = "--config file.conf in.txt out.txt";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--config file.conf in.txt";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
 
 #[test]
 fn test_conflicts_with() {
