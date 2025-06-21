@@ -11,6 +11,7 @@ pub mod command;
 pub mod num_args;
 pub mod output;
 pub mod style;
+pub mod values;
 
 /// Parse the provided arguments and generate output.
 ///
