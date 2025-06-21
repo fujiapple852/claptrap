@@ -1275,11 +1275,123 @@ fn test_required_unless_present_any() {
     insta::assert_snapshot!(output2);
 }
 
-// TODO: required_if_eq
-// TODO: required_if_eq_any
-// TODO: required_if_eq_all
-// TODO: requires_if
-// TODO: requires_ifs
+#[test]
+fn test_required_if_eq() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            mode = { long = "mode", action = "set" }
+            out = { long = "out", action = "set", required-if-eq = { arg = "mode", value = "debug" } }
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--mode release";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--mode debug";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_required_if_eq_any() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            mode = { long = "mode", action = "set" }
+            level = { long = "level", action = "set" }
+            out = { long = "out", action = "set", required-if-eq-any = [ { arg = "mode", value = "debug" }, { arg = "level", value = "verbose" } ] }
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--mode debug";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--mode release --level info";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_required_if_eq_all() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            mode = { long = "mode", action = "set" }
+            level = { long = "level", action = "set" }
+            out = { long = "out", action = "set", required-if-eq-all = [ { arg = "mode", value = "debug" }, { arg = "level", value = "verbose" } ] }
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--mode debug --level verbose";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--mode debug";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_requires_if() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            config = { long = "config", action = "set", requires-if = { value = "prod", arg = "cert" } }
+            cert = { long = "cert", action = "set" }
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--config prod";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--config test";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
+
+#[test]
+fn test_requires_ifs() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            config = { long = "config", action = "set", requires-ifs = [ { value = "prod", arg = "cert" }, { value = "debug", arg = "log" } ] }
+            cert = { long = "cert", action = "set" }
+            log = { long = "log", action = "set" }
+        "#,
+    )
+    .unwrap();
+
+    let input1 = "--config prod";
+    let args1: Vec<OsString> = input1.split(' ').map(OsString::from).collect();
+    let output1 = parse(app.clone(), args1);
+    insta::assert_snapshot!(output1);
+
+    let input2 = "--config prod --cert file";
+    let args2: Vec<OsString> = input2.split(' ').map(OsString::from).collect();
+    let output2 = parse(app, args2);
+    insta::assert_snapshot!(output2);
+}
 
 #[test]
 fn test_conflicts_with() {
