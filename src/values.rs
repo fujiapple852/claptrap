@@ -7,6 +7,20 @@ pub enum ValueParser {
     Boolish,
     Falsey,
     String,
+    U8,
+    U16,
+    U32,
+    U64,
+    U128,
+    Usize,
+    I8,
+    I16,
+    I32,
+    I64,
+    I128,
+    Isize,
+    F32,
+    F64,
     PossibleValues(Vec<String>),
 }
 
@@ -29,10 +43,7 @@ impl<'de> Deserialize<'de> for ValueParser {
                 E: serde::de::Error,
             {
                 match parse_typed_value_parser(value) {
-                    Some(TypedValueParser::Bool) => Ok(ValueParser::Bool),
-                    Some(TypedValueParser::Boolish) => Ok(ValueParser::Boolish),
-                    Some(TypedValueParser::Falsey) => Ok(ValueParser::Falsey),
-                    Some(TypedValueParser::String) => Ok(ValueParser::String),
+                    Some(tv) => Ok(ValueParser::from(tv)),
                     None => Ok(ValueParser::PossibleValues(vec![value.to_string()])),
                 }
             }
@@ -47,10 +58,7 @@ impl<'de> Deserialize<'de> for ValueParser {
                 }
                 match values.as_slice() {
                     [magic] => match parse_typed_value_parser(magic) {
-                        Some(TypedValueParser::Bool) => Ok(ValueParser::Bool),
-                        Some(TypedValueParser::Boolish) => Ok(ValueParser::Boolish),
-                        Some(TypedValueParser::Falsey) => Ok(ValueParser::Falsey),
-                        Some(TypedValueParser::String) => Ok(ValueParser::String),
+                        Some(tv) => Ok(ValueParser::from(tv)),
                         None => Ok(ValueParser::PossibleValues(values)),
                     },
                     _ => Ok(ValueParser::PossibleValues(values)),
@@ -68,9 +76,48 @@ impl From<ValueParser> for clap::builder::ValueParser {
             ValueParser::Boolish => Self::new(clap::builder::BoolishValueParser::new()),
             ValueParser::Falsey => Self::new(clap::builder::FalseyValueParser::new()),
             ValueParser::String => Self::new(clap::builder::StringValueParser::new()),
+            ValueParser::U8 => clap::value_parser!(u8).into(),
+            ValueParser::U16 => clap::value_parser!(u16).into(),
+            ValueParser::U32 => clap::value_parser!(u32).into(),
+            ValueParser::U64 => clap::value_parser!(u64).into(),
+            ValueParser::U128 => clap::value_parser!(u128).into(),
+            ValueParser::Usize => clap::value_parser!(usize).into(),
+            ValueParser::I8 => clap::value_parser!(i8).into(),
+            ValueParser::I16 => clap::value_parser!(i16).into(),
+            ValueParser::I32 => clap::value_parser!(i32).into(),
+            ValueParser::I64 => clap::value_parser!(i64).into(),
+            ValueParser::I128 => clap::value_parser!(i128).into(),
+            ValueParser::Isize => clap::value_parser!(isize).into(),
+            ValueParser::F32 => clap::value_parser!(f32).into(),
+            ValueParser::F64 => clap::value_parser!(f64).into(),
             ValueParser::PossibleValues(values) => {
                 Self::new(clap::builder::PossibleValuesParser::new(values))
             }
+        }
+    }
+}
+
+impl From<TypedValueParser> for ValueParser {
+    fn from(tv: TypedValueParser) -> Self {
+        match tv {
+            TypedValueParser::Bool => Self::Bool,
+            TypedValueParser::Boolish => Self::Boolish,
+            TypedValueParser::Falsey => Self::Falsey,
+            TypedValueParser::String => Self::String,
+            TypedValueParser::U8 => Self::U8,
+            TypedValueParser::U16 => Self::U16,
+            TypedValueParser::U32 => Self::U32,
+            TypedValueParser::U64 => Self::U64,
+            TypedValueParser::U128 => Self::U128,
+            TypedValueParser::Usize => Self::Usize,
+            TypedValueParser::I8 => Self::I8,
+            TypedValueParser::I16 => Self::I16,
+            TypedValueParser::I32 => Self::I32,
+            TypedValueParser::I64 => Self::I64,
+            TypedValueParser::I128 => Self::I128,
+            TypedValueParser::Isize => Self::Isize,
+            TypedValueParser::F32 => Self::F32,
+            TypedValueParser::F64 => Self::F64,
         }
     }
 }
@@ -82,6 +129,20 @@ enum TypedValueParser {
     Boolish,
     Falsey,
     String,
+    U8,
+    U16,
+    U32,
+    U64,
+    U128,
+    Usize,
+    I8,
+    I16,
+    I32,
+    I64,
+    I128,
+    Isize,
+    F32,
+    F64,
 }
 
 fn parse_typed_value_parser(value: &str) -> Option<TypedValueParser> {
@@ -101,6 +162,8 @@ mod tests {
     #[test_case(serde_json::json!(":boolish:"), Ok(ValueParser::Boolish); "boolish magic")]
     #[test_case(serde_json::json!(":falsey:"), Ok(ValueParser::Falsey); "falsey magic")]
     #[test_case(serde_json::json!(":string:"), Ok(ValueParser::String); "string magic")]
+    #[test_case(serde_json::json!(":u8:"), Ok(ValueParser::U8); "u8 magic")]
+    #[test_case(serde_json::json!(":i16:"), Ok(ValueParser::I16); "i16 magic")]
     #[test_case(serde_json::json!([":bool:"]), Ok(ValueParser::Bool); "bool magic list")]
     #[test_case(serde_json::json!([":boolish:"]), Ok(ValueParser::Boolish); "boolish magic list")]
     #[test_case(serde_json::json!([":falsey:"]), Ok(ValueParser::Falsey); "falsey magic list")]

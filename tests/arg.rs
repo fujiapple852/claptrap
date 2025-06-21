@@ -511,6 +511,22 @@ fn test_value_parser() {
 }
 
 #[test]
+fn test_value_parser_numeric() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "prog"
+            [args]
+            count = { long = "count", value-parser = [":u8:"] }
+        "#,
+    )
+    .unwrap();
+    let input = "--count 3";
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn test_num_args() {
     let app: Command = toml::from_str(
         r#"

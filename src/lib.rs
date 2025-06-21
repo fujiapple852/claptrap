@@ -52,26 +52,33 @@ fn extract_matches(
                 id.to_string(),
                 matches.get_count(id.as_str()).to_string(),
             )),
-            ArgAction::Append => matches.get_many::<String>(id.as_str()).map(|values| {
+            ArgAction::Append => matches.get_raw(id.as_str()).map(|values| {
                 Var::Many(
                     local_prefix.clone(),
                     id.to_string(),
-                    values.into_iter().map(ToOwned::to_owned).collect(),
+                    values.map(|v| v.to_string_lossy().into_owned()).collect(),
                 )
             }),
             ArgAction::Set => {
                 if arg.is_many() {
-                    matches.get_many::<String>(id.as_str()).map(|values| {
+                    matches.get_raw(id.as_str()).map(|values| {
                         Var::Many(
                             local_prefix.clone(),
                             id.to_string(),
-                            values.into_iter().map(ToOwned::to_owned).collect(),
+                            values.map(|v| v.to_string_lossy().into_owned()).collect(),
                         )
                     })
                 } else {
-                    matches.get_one::<String>(id.as_str()).map(|value| {
-                        Var::Single(local_prefix.clone(), id.to_string(), value.to_owned())
-                    })
+                    matches
+                        .get_raw(id.as_str())
+                        .and_then(|mut values| values.next())
+                        .map(|value| {
+                            Var::Single(
+                                local_prefix.clone(),
+                                id.to_string(),
+                                value.to_string_lossy().into_owned(),
+                            )
+                        })
                 }
             }
             _ => None,
@@ -106,5 +113,30 @@ impl IsManyEx for clap::Arg {
             .map(|r| r.max_values() > 1)
             .or_else(|| self.get_value_delimiter().map(|_| true))
             .unwrap_or(false)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use clap::{Arg, ArgAction, Command, value_parser};
+
+    #[test]
+    fn it_extracts_numeric_values() {
+        let cmd = Command::new("prog").arg(
+            Arg::new("count")
+                .long("count")
+                .action(ArgAction::Set)
+                .value_parser(value_parser!(u8)),
+        );
+        let matches = cmd
+            .clone()
+            .try_get_matches_from(["prog", "--count", "42"])
+            .unwrap();
+        let vars = extract_matches(&cmd, &matches, &mut Vec::new());
+        assert_eq!(
+            vars,
+            vec![Var::Single(vec![], "count".to_string(), "42".to_string())]
+        );
     }
 }
