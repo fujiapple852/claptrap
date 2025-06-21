@@ -1,6 +1,6 @@
 use crate::num_args::NumArgs;
+use crate::values::ValueParser;
 use serde::Deserialize;
-use std::str::FromStr;
 
 /// Represents a named argument with its associated `Arg` configuration.
 ///
@@ -43,7 +43,7 @@ pub struct Arg {
     exclusive: Option<bool>,
     global: Option<bool>,
     action: Option<ArgAction>,
-    value_parser: Option<Vec<String>>,
+    value_parser: Option<ValueParser>,
     num_args: Option<NumArgs>,
     value_name: Option<String>,
     value_names: Option<Vec<String>>,
@@ -157,31 +157,7 @@ impl From<NamedArg> for clap::Arg {
             arg = arg.action(clap::ArgAction::from(action));
         }
         if let Some(value_parser) = value.value_parser {
-            match value_parser.as_slice() {
-                [magic] => match parse_typed_value_parser(magic) {
-                    Some(TypedValueParser::Bool) => {
-                        arg = arg.value_parser(clap::builder::ValueParser::new(
-                            clap::builder::BoolValueParser::new(),
-                        ));
-                    }
-                    Some(TypedValueParser::Boolish) => {
-                        arg = arg.value_parser(clap::builder::ValueParser::new(
-                            clap::builder::BoolishValueParser::new(),
-                        ));
-                    }
-                    Some(TypedValueParser::Falsey) => {
-                        arg = arg.value_parser(clap::builder::ValueParser::new(
-                            clap::builder::FalseyValueParser::new(),
-                        ));
-                    }
-                    None => {
-                        arg = arg.value_parser(value_parser);
-                    }
-                },
-                _ => {
-                    arg = arg.value_parser(value_parser);
-                }
-            }
+            arg = arg.value_parser(clap::builder::ValueParser::from(value_parser));
         }
         if let Some(num_args) = value.num_args {
             arg = arg.num_args(clap::builder::ValueRange::new(
@@ -381,19 +357,4 @@ impl From<ValueHint> for clap::ValueHint {
             ValueHint::EmailAddress => Self::EmailAddress,
         }
     }
-}
-
-#[derive(Debug, Clone, strum::EnumString)]
-#[strum(serialize_all = "kebab-case")]
-enum TypedValueParser {
-    Bool,
-    Boolish,
-    Falsey,
-}
-
-fn parse_typed_value_parser(value: &str) -> Option<TypedValueParser> {
-    value
-        .strip_prefix(':')
-        .and_then(|s| s.strip_suffix(':'))
-        .and_then(|inner| TypedValueParser::from_str(inner).ok())
 }
