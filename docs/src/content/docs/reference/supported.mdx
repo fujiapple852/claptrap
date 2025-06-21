@@ -11,156 +11,163 @@ APIs in `claptrap`.
 | Setter | Supported | Notes |
 | ------ | --------- | ----- |
 | [`args`](https://docs.rs/clap/latest/clap/struct.Command.html#method.args) | ✅ | |
-| [`groups`](https://docs.rs/clap/latest/clap/struct.Command.html#method.groups) |  ✅ | |
-| [`subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommands) |  ✅ | |
-| [`defer`](https://docs.rs/clap/latest/clap/struct.Command.html#method.defer) |  ❌ | |
-| [`debug_assert`](https://docs.rs/clap/latest/clap/struct.Command.html#method.debug_assert) |  ❌ | |
-| [`error`](https://docs.rs/clap/latest/clap/struct.Command.html#method.error) |  ❌ | |
+| [`groups`](https://docs.rs/clap/latest/clap/struct.Command.html#method.groups) | ✅ | |
+| [`subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommands) | ✅ | |
+| [`defer`](https://docs.rs/clap/latest/clap/struct.Command.html#method.defer) | ❌ | |
+| [`debug_assert`](https://docs.rs/clap/latest/clap/struct.Command.html#method.debug_assert) | ❌ | |
+| [`error`](https://docs.rs/clap/latest/clap/struct.Command.html#method.error) | ❌ | |
 | [`no_binary_name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.no_binary_name) |  n/a | always set, not exposed in the spec |
-| [`ignore_errors`](https://docs.rs/clap/latest/clap/struct.Command.html#method.ignore_errors) |  ✅ | |
-| [`args_override_self`](https://docs.rs/clap/latest/clap/struct.Command.html#method.args_override_self) |  ✅ | |
-| [`dont_delimit_trailing_values`](https://docs.rs/clap/latest/clap/struct.Command.html#method.dont_delimit_trailing_values) |  ✅ | added but not working |
-| [`color`](https://docs.rs/clap/latest/clap/struct.Command.html#method.color) |  ✅ | added but not working |
-| [`styles`](https://docs.rs/clap/latest/clap/struct.Command.html#method.styles) |  ❌ | |
-| [`term_width`](https://docs.rs/clap/latest/clap/struct.Command.html#method.term_width) |  ✅ | |
-| [`max_term_width`](https://docs.rs/clap/latest/clap/struct.Command.html#method.max_term_width) |  ✅ | |
-| [`disable_version_flag`](https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_version_flag) |  ✅ | |
-| [`propagate_version`](https://docs.rs/clap/latest/clap/struct.Command.html#method.propagate_version) |  ✅ | |
-| [`next_line_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.next_line_help) |  ✅ | |
-| [`disable_help_flag`](https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_help_flag) |  ✅ | |
-| [`disable_help_subcommand`](https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_help_subcommand) |  ✅ | |
-| [`disable_colored_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_colored_help) |  ✅ | added but not working |
-| [`help_expected`](https://docs.rs/clap/latest/clap/struct.Command.html#method.help_expected) |  ✅ | |
-| [`hide_possible_values`](https://docs.rs/clap/latest/clap/struct.Command.html#method.hide_possible_values) |  ✅ | |
-| [`infer_long_args`](https://docs.rs/clap/latest/clap/struct.Command.html#method.infer_long_args) |  ✅ | |
-| [`infer_subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.infer_subcommands) |  ✅ | |
-| [`name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.name) |  ✅ | |
-| [`bin_name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.bin_name) |  ✅ | |
-| [`display_name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.display_name) |  ✅ | added but not working |
-| [`author`](https://docs.rs/clap/latest/clap/struct.Command.html#method.author) |  ✅ | |
-| [`about`](https://docs.rs/clap/latest/clap/struct.Command.html#method.about) |  ✅ | |
-| [`long_about`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_about) |  ✅ | |
-| [`after_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.after_help) |  ✅ | |
-| [`after_long_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.after_long_help) |  ✅ | |
-| [`before_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.before_help) |  ✅ | |
-| [`before_long_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.before_long_help) |  ✅ | |
-| [`version`](https://docs.rs/clap/latest/clap/struct.Command.html#method.version) |  ✅ | |
-| [`long_version`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_version) |  ✅ | |
-| [`override_usage`](https://docs.rs/clap/latest/clap/struct.Command.html#method.override_usage) |  ✅ | |
-| [`override_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.override_help) |  ✅ | |
-| [`help_template`](https://docs.rs/clap/latest/clap/struct.Command.html#method.help_template) |  ✅ | |
-| [`flatten_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.flatten_help) |  ✅ | |
-| [`next_help_heading`](https://docs.rs/clap/latest/clap/struct.Command.html#method.next_help_heading) |  ✅ | added but not working |
-| [`next_display_order`](https://docs.rs/clap/latest/clap/struct.Command.html#method.next_display_order) |  ✅ | |
-| [`arg_required_else_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.arg_required_else_help) |  ✅ | added but not tested |
-| [`allow_missing_positional`](https://docs.rs/clap/latest/clap/struct.Command.html#method.allow_missing_positional) |  ✅ | |
-| [`short_flag`](https://docs.rs/clap/latest/clap/struct.Command.html#method.short_flag) |  ✅ | |
-| [`long_flag`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_flag) |  ✅ | |
-| [`alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.alias) |  ✅ | |
-| [`short_flag_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.short_flag_alias) |  ✅ | |
-| [`long_flag_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_flag_alias) |  ✅ | |
-| [`aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.aliases) |  ✅ | |
-| [`short_flag_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.short_flag_aliases) |  ✅ | |
-| [`long_flag_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_flag_aliases) |  ✅ | |
-| [`visible_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_alias) |  ✅ | |
-| [`visible_short_flag_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_short_flag_alias) |  ✅ | |
-| [`visible_long_flag_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_long_flag_alias) |  ✅ | |
-| [`visible_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_aliases) |  ✅ | |
-| [`visible_short_flag_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_short_flag_aliases) |  ✅ | |
-| [`visible_long_flag_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_long_flag_aliases) |  ✅ | |
-| [`display_order`](https://docs.rs/clap/latest/clap/struct.Command.html#method.display_order) |  ✅ | |
-| [`hide`](https://docs.rs/clap/latest/clap/struct.Command.html#method.hide) |  ✅ | |
-| [`subcommand_required`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_required) |  ✅ | |
-| [`allow_external_subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.allow_external_subcommands) |  ✅ | |
-| [`external_subcommand_value_parser`](https://docs.rs/clap/latest/clap/struct.Command.html#method.external_subcommand_value_parser) |  ❌ | |
-| [`args_conflicts_with_subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.args_conflicts_with_subcommands) |  ✅ | added but not working |
-| [`subcommand_precedence_over_arg`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_precedence_over_arg) |  ✅ | |
-| [`subcommand_negates_reqs`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_negates_reqs) |  ✅ | not tested |
-| [`multicall`](https://docs.rs/clap/latest/clap/struct.Command.html#method.multicall) |  ✅ | not tested |
-| [`subcommand_value_name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_value_name) |  ✅ | |
-| [`subcommand_help_heading`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_help_heading) |  ✅ | |
+| [`ignore_errors`](https://docs.rs/clap/latest/clap/struct.Command.html#method.ignore_errors) | ✅ | |
+| [`args_override_self`](https://docs.rs/clap/latest/clap/struct.Command.html#method.args_override_self) | ✅ | |
+| [`dont_delimit_trailing_values`](https://docs.rs/clap/latest/clap/struct.Command.html#method.dont_delimit_trailing_values) | ✅ | added but not working |
+| [`color`](https://docs.rs/clap/latest/clap/struct.Command.html#method.color) | ✅ | added but not working |
+| [`styles`](https://docs.rs/clap/latest/clap/struct.Command.html#method.styles) | ✅ | |
+| [`term_width`](https://docs.rs/clap/latest/clap/struct.Command.html#method.term_width) | ✅ | |
+| [`max_term_width`](https://docs.rs/clap/latest/clap/struct.Command.html#method.max_term_width) | ✅ | |
+| [`disable_version_flag`](https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_version_flag) | ✅ | |
+| [`propagate_version`](https://docs.rs/clap/latest/clap/struct.Command.html#method.propagate_version) | ✅ | |
+| [`next_line_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.next_line_help) | ✅ | |
+| [`disable_help_flag`](https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_help_flag) | ✅ | |
+| [`disable_help_subcommand`](https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_help_subcommand) | ✅ | |
+| [`disable_colored_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_colored_help) | ✅ | added but not working |
+| [`help_expected`](https://docs.rs/clap/latest/clap/struct.Command.html#method.help_expected) | ✅ | |
+| [`hide_possible_values`](https://docs.rs/clap/latest/clap/struct.Command.html#method.hide_possible_values) | ✅ | |
+| [`infer_long_args`](https://docs.rs/clap/latest/clap/struct.Command.html#method.infer_long_args) | ✅ | |
+| [`infer_subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.infer_subcommands) | ✅ | |
+| [`name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.name) | ✅ | |
+| [`bin_name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.bin_name) | ✅ | |
+| [`display_name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.display_name) | ✅ | added but not working |
+| [`author`](https://docs.rs/clap/latest/clap/struct.Command.html#method.author) | ✅ | |
+| [`about`](https://docs.rs/clap/latest/clap/struct.Command.html#method.about) | ✅ | |
+| [`long_about`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_about) | ✅ | |
+| [`after_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.after_help) | ✅ | |
+| [`after_long_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.after_long_help) | ✅ | |
+| [`before_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.before_help) | ✅ | |
+| [`before_long_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.before_long_help) | ✅ | |
+| [`version`](https://docs.rs/clap/latest/clap/struct.Command.html#method.version) | ✅ | |
+| [`long_version`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_version) | ✅ | |
+| [`override_usage`](https://docs.rs/clap/latest/clap/struct.Command.html#method.override_usage) | ✅ | |
+| [`override_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.override_help) | ✅ | |
+| [`help_template`](https://docs.rs/clap/latest/clap/struct.Command.html#method.help_template) | ✅ | |
+| [`flatten_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.flatten_help) | ✅ | |
+| [`next_help_heading`](https://docs.rs/clap/latest/clap/struct.Command.html#method.next_help_heading) | ✅ | added but not working |
+| [`next_display_order`](https://docs.rs/clap/latest/clap/struct.Command.html#method.next_display_order) | ✅ | |
+| [`arg_required_else_help`](https://docs.rs/clap/latest/clap/struct.Command.html#method.arg_required_else_help) | ✅ | added but not tested |
+| [`allow_missing_positional`](https://docs.rs/clap/latest/clap/struct.Command.html#method.allow_missing_positional) | ✅ | |
+| [`short_flag`](https://docs.rs/clap/latest/clap/struct.Command.html#method.short_flag) | ✅ | |
+| [`long_flag`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_flag) | ✅ | |
+| [`alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.alias) | ✅ | |
+| [`short_flag_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.short_flag_alias) | ✅ | |
+| [`long_flag_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_flag_alias) | ✅ | |
+| [`aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.aliases) | ✅ | |
+| [`short_flag_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.short_flag_aliases) | ✅ | |
+| [`long_flag_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.long_flag_aliases) | ✅ | |
+| [`visible_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_alias) | ✅ | |
+| [`visible_short_flag_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_short_flag_alias) | ✅ | |
+| [`visible_long_flag_alias`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_long_flag_alias) | ✅ | |
+| [`visible_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_aliases) | ✅ | |
+| [`visible_short_flag_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_short_flag_aliases) | ✅ | |
+| [`visible_long_flag_aliases`](https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_long_flag_aliases) | ✅ | |
+| [`display_order`](https://docs.rs/clap/latest/clap/struct.Command.html#method.display_order) | ✅ | |
+| [`hide`](https://docs.rs/clap/latest/clap/struct.Command.html#method.hide) | ✅ | |
+| [`subcommand_required`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_required) | ✅ | |
+| [`allow_external_subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.allow_external_subcommands) | ✅ | |
+| [`external_subcommand_value_parser`](https://docs.rs/clap/latest/clap/struct.Command.html#method.external_subcommand_value_parser) | ❌ | |
+| [`args_conflicts_with_subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.args_conflicts_with_subcommands) | ✅ | added but not working |
+| [`subcommand_precedence_over_arg`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_precedence_over_arg) | ✅ | |
+| [`subcommand_negates_reqs`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_negates_reqs) | ✅ | not tested |
+| [`multicall`](https://docs.rs/clap/latest/clap/struct.Command.html#method.multicall) | ✅ | not tested |
+| [`subcommand_value_name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_value_name) | ✅ | |
+| [`subcommand_help_heading`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_help_heading) | ✅ | |
 
 ### [Arg](https://docs.rs/clap/latest/clap/struct.Arg.html)
 
 | Setter | Supported | Notes |
 | ------ | --------- | ----- |
-| [`id`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.id) |  ✅ | |
-| [`short`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.short) |  ✅ | |
-| [`long`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.long) |  ✅ | |
-| [`alias`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.alias) |  ✅ | |
-| [`short_alias`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.short_alias) |  ✅ | |
-| [`aliases`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.aliases) |  ✅ | |
-| [`short_aliases`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.short_aliases) |  ✅ | |
-| [`visible_alias`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_alias) |  ✅ | |
-| [`visible_short_alias`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_short_alias) |  ✅ | |
-| [`visible_aliases`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_aliases) |  ✅ | |
-| [`visible_short_aliases`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_short_aliases) |  ✅ | |
-| [`index`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.index) |  ✅ | |
-| [`trailing_var_arg`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.trailing_var_arg) |  ✅ | |
-| [`last`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.last) |  ✅ | |
-| [`required`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required) |  ✅ | |
-| [`requires`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires) |  ✅ | |
-| [`exclusive`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.exclusive) |  ✅ | |
-| [`global`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.global) |  ✅ | not tested |
-| [`action`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.action) |  ✅ | |
-| [`value_parser`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_parser) |  ✅ | support for list of values such as `["foo", "bar"]` and the `:falsey:`, `:bool:` and `:boolish:` typed parsers only |
-| [`num_args`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.num_args) |  ✅ | integer or range syntax string |
-| [`value_name`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_name) |  ✅ | |
-| [`value_names`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_names) |  ✅ | |
-| [`value_hint`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_hint) |  ✅ | |
-| [`ignore_case`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.ignore_case) |  ✅ | |
-| [`allow_hyphen_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.allow_hyphen_values) |  ✅ | |
-| [`allow_negative_numbers`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.allow_negative_numbers) |  ✅ | |
-| [`require_equals`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.require_equals) |  ✅ | |
-| [`value_delimiter`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_delimiter) |  ✅ | |
-| [`value_terminator`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_terminator) |  ✅ | |
-| [`raw`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.raw) |  ✅ | |
-| [`default_value`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value) |  ✅ | |
-| [`default_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_values) |  ✅ | |
-| [`default_missing_value`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_missing_value) |  ✅ | |
-| [`default_missing_value_os`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_missing_value_os) |  ✅ | |
-| [`default_missing_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_missing_values) |  ✅ | |
-| [`default_missing_values_os`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_missing_values_os) |  ✅ | |
-| [`env`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.env) |  ✅ | |
-| [`help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.help) |  ✅ | |
-| [`long_help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.long_help) |  ✅ | |
-| [`display_order`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.display_order) |  ✅ | |
-| [`help_heading`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.help_heading) |  ✅ | |
-| [`next_line_help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.next_line_help) |  ✅ | |
-| [`hide`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide) |  ✅ | |
-| [`hide_possible_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_possible_values) |  ✅ | |
-| [`hide_default_value`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_default_value) |  ✅ | |
-| [`hide_env`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_env) |  ✅ | |
-| [`hide_env_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_env_values) |  ✅ | |
-| [`hide_short_help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_short_help) |  ✅ | |
-| [`hide_long_help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_long_help) |  ✅ | |
-| [`group`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.group) |  ✅ | |
-| [`groups`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.groups) |  ✅ | |
-| [`default_value_if`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_if) |  ❌ | |
-| [`default_value_ifs`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_ifs) |  ❌ | |
-| [`required_unless_present`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present) |  ✅ | |
-| [`required_unless_present_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present_all) |  ✅ | |
-| [`required_unless_present_any`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present_any) |  ✅ | |
-| [`required_if_eq`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq) |  ❌ | |
-| [`required_if_eq_any`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq_any) |  ❌ | |
-| [`required_if_eq_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq_all) |  ❌ | |
-| [`requires_if`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_if) |  ❌ | |
-| [`requires_ifs`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_ifs) |  ❌ | |
-| [`requires_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_all) |  ❌ | missing? |
-| [`conflicts_with`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.conflicts_with) |  ✅ | |
-| [`conflicts_with_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.conflicts_with_all) |  ✅ | |
-| [`overrides_with`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.overrides_with) |  ✅ | |
-| [`overrides_with_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.overrides_with_all) |  ✅ | |
+| [`id`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.id) | ✅ | |
+| [`short`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.short) | ✅ | |
+| [`long`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.long) | ✅ | |
+| [`alias`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.alias) | ✅ | |
+| [`short_alias`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.short_alias) | ✅ | |
+| [`aliases`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.aliases) | ✅ | |
+| [`short_aliases`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.short_aliases) | ✅ | |
+| [`visible_alias`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_alias) | ✅ | |
+| [`visible_short_alias`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_short_alias) | ✅ | |
+| [`visible_aliases`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_aliases) | ✅ | |
+| [`visible_short_aliases`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_short_aliases) | ✅ | |
+| [`index`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.index) | ✅ | |
+| [`trailing_var_arg`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.trailing_var_arg) | ✅ | |
+| [`last`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.last) | ✅ | |
+| [`required`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required) | ✅ | |
+| [`requires`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires) | ✅ | |
+| [`exclusive`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.exclusive) | ✅ | |
+| [`global`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.global) | ✅ | not tested |
+| [`action`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.action) | ✅ | |
+| [`value_parser`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_parser) | ✅ | |
+| [`num_args`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.num_args) | ✅ | integer or range syntax string |
+| [`value_name`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_name) | ✅ | |
+| [`value_names`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_names) | ✅ | |
+| [`value_hint`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_hint) | ✅ | |
+| [`ignore_case`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.ignore_case) | ✅ | |
+| [`allow_hyphen_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.allow_hyphen_values) | ✅ | |
+| [`allow_negative_numbers`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.allow_negative_numbers) | ✅ | |
+| [`require_equals`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.require_equals) | ✅ | |
+| [`value_delimiter`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_delimiter) | ✅ | |
+| [`value_terminator`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_terminator) | ✅ | |
+| [`raw`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.raw) | ✅ | |
+| [`default_value`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value) | ✅ | |
+| [`default_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_values) | ✅ | |
+| [`default_missing_value`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_missing_value) | ✅ | |
+| [`default_missing_value_os`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_missing_value_os) | ✅ | |
+| [`default_missing_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_missing_values) | ✅ | |
+| [`default_missing_values_os`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_missing_values_os) | ✅ | |
+| [`env`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.env) | ✅ | |
+| [`help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.help) | ✅ | |
+| [`long_help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.long_help) | ✅ | |
+| [`display_order`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.display_order) | ✅ | |
+| [`help_heading`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.help_heading) | ✅ | |
+| [`next_line_help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.next_line_help) | ✅ | |
+| [`hide`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide) | ✅ | |
+| [`hide_possible_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_possible_values) | ✅ | |
+| [`hide_default_value`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_default_value) | ✅ | |
+| [`hide_env`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_env) | ✅ | |
+| [`hide_env_values`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_env_values) | ✅ | |
+| [`hide_short_help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_short_help) | ✅ | |
+| [`hide_long_help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_long_help) | ✅ | |
+| [`group`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.group) | ✅ | |
+| [`groups`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.groups) | ✅ | |
+| [`default_value_if`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_if) | ❌ | |
+| [`default_value_ifs`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_ifs) | ❌ | |
+| [`required_unless_present`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present) | ✅ | |
+| [`required_unless_present_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present_all) | ✅ | |
+| [`required_unless_present_any`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present_any) | ✅ | |
+| [`required_if_eq`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq) | ❌ | |
+| [`required_if_eq_any`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq_any) | ❌ | |
+| [`required_if_eq_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq_all) | ❌ | |
+| [`requires_if`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_if) | ❌ | |
+| [`requires_ifs`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_ifs) | ❌ | |
+| [`conflicts_with`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.conflicts_with) | ✅ | |
+| [`conflicts_with_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.conflicts_with_all) | ✅ | |
+| [`overrides_with`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.overrides_with) | ✅ | |
+| [`overrides_with_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.overrides_with_all) | ✅ | |
 
-# [ArgGroup](https://docs.rs/clap/latest/clap/struct.ArgGroup.html)
+### [Typed Value Parser](https://docs.rs/clap/latest/clap/builder/trait.TypedValueParser.html)
+
+| Parser | Supported | Notes |
+| ------ | --------- | ----- |
+| [`bool`](https://docs.rs/clap/latest/clap/builder/struct.BoolValueParser.html) | ✅ | :e.g. `:bool:` |
+| [`boolish`](https://docs.rs/clap/latest/clap/builder/struct.BoolishValueParser.html) | ✅ | e.g. `:boolish:` |
+| [`falsey`](https://docs.rs/clap/latest/clap/builder/struct.FalseyValueParser.html) | ✅ | e.g. `:falsey:` |
+
+### [ArgGroup](https://docs.rs/clap/latest/clap/struct.ArgGroup.html)
 
 | Setter | Supported | Notes |
 | ------ | --------- | ----- |
-| [`id`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.id) |  ✅ | |
-| [`args`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.args) |  ✅ | |
-| [`multiple`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.multiple) |  ✅ | |
-| [`required`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.required) |  ✅ | |
-| [`requires`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.requires) |  ✅ | |
-| [`requires_all`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.requires_all) |  ✅ | |
-| [`conflicts_with`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.conflicts_with) |  ✅ | |
-| [`conflicts_with_all`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.conflicts_with_all) |  ✅ | |
+| [`id`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.id) | ✅ | |
+| [`args`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.args) | ✅ | |
+| [`multiple`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.multiple) | ✅ | |
+| [`required`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.required) | ✅ | |
+| [`requires`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.requires) | ✅ | |
+| [`requires_all`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.requires_all) | ✅ | |
+| [`conflicts_with`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.conflicts_with) | ✅ | |
+| [`conflicts_with_all`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.conflicts_with_all) | ✅ | |
