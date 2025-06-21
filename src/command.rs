@@ -1,6 +1,7 @@
 use crate::arg::{Arg, NamedArg};
 use crate::arg_group::{ArgGroup, NamedArgGroup};
 use crate::style::Styles;
+use crate::values::ValueParser;
 use indexmap::IndexMap;
 use serde::Deserialize;
 
@@ -67,7 +68,7 @@ pub struct Command {
     hide: Option<bool>,
     subcommand_required: Option<bool>,
     allow_external_subcommands: Option<bool>,
-    // TODO external_subcommand_value_parser: Option<String>,
+    external_subcommand_value_parser: Option<ValueParser>,
     args_conflicts_with_subcommands: Option<bool>,
     subcommand_precedence_over_arg: Option<bool>,
     subcommand_negates_reqs: Option<bool>,
@@ -260,7 +261,11 @@ impl From<Command> for clap::Command {
         if let Some(allow_external_subcommands) = cmd.allow_external_subcommands {
             command = command.allow_external_subcommands(allow_external_subcommands);
         }
-        // TODO: external_subcommand_value_parser()
+        if let Some(external_subcommand_value_parser) = cmd.external_subcommand_value_parser {
+            command = command.external_subcommand_value_parser(clap::builder::ValueParser::from(
+                external_subcommand_value_parser,
+            ));
+        }
         if let Some(args_conflicts_with_subcommands) = cmd.args_conflicts_with_subcommands {
             command = command.args_conflicts_with_subcommands(args_conflicts_with_subcommands);
         }
