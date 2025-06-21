@@ -27,7 +27,6 @@ itertools = "0.14.0"
 serde = { version = "1.0.219", features = ["derive"] }
 serde_json = { version = "1.0.140", features = ["preserve_order"] }
 serde_yaml = { version = "=0.9.33", features = [] }
-strum = { version = "0.27.1", features = ["derive"] }
 toml = { version = "0.8.22", features = ["preserve_order"] }
 
 [dev-dependencies]
