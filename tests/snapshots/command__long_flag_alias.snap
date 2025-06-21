@@ -2,4 +2,5 @@
 source: tests/command.rs
 expression: output
 ---
+claptrap_subcommand='test'
 claptrap_test_search='true'

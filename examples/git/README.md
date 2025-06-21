@@ -28,6 +28,7 @@ Clone a repository:
 ```shell
 ./git.sh clone https://github.com/fujiapple852/claptrap.git
 claptrap_clone_REMOTE: https://github.com/fujiapple852/claptrap.git
+claptrap_subcommand: clone
 ```
 
 Diff between two commits for a specific path:
