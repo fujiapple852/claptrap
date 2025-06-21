@@ -13,9 +13,6 @@ APIs in `claptrap`.
 | [`args`](https://docs.rs/clap/latest/clap/struct.Command.html#method.args) | ✅ | |
 | [`groups`](https://docs.rs/clap/latest/clap/struct.Command.html#method.groups) | ✅ | |
 | [`subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommands) | ✅ | |
-| [`defer`](https://docs.rs/clap/latest/clap/struct.Command.html#method.defer) | ❌ | |
-| [`debug_assert`](https://docs.rs/clap/latest/clap/struct.Command.html#method.debug_assert) | ❌ | |
-| [`error`](https://docs.rs/clap/latest/clap/struct.Command.html#method.error) | ❌ | |
 | [`no_binary_name`](https://docs.rs/clap/latest/clap/struct.Command.html#method.no_binary_name) |  n/a | always set, not exposed in the spec |
 | [`ignore_errors`](https://docs.rs/clap/latest/clap/struct.Command.html#method.ignore_errors) | ✅ | |
 | [`args_override_self`](https://docs.rs/clap/latest/clap/struct.Command.html#method.args_override_self) | ✅ | |
@@ -72,7 +69,7 @@ APIs in `claptrap`.
 | [`hide`](https://docs.rs/clap/latest/clap/struct.Command.html#method.hide) | ✅ | |
 | [`subcommand_required`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_required) | ✅ | |
 | [`allow_external_subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.allow_external_subcommands) | ✅ | |
-| [`external_subcommand_value_parser`](https://docs.rs/clap/latest/clap/struct.Command.html#method.external_subcommand_value_parser) | ❌ | |
+| [`external_subcommand_value_parser`](https://docs.rs/clap/latest/clap/struct.Command.html#method.external_subcommand_value_parser) | ✅ | |
 | [`args_conflicts_with_subcommands`](https://docs.rs/clap/latest/clap/struct.Command.html#method.args_conflicts_with_subcommands) | ✅ | added but not working |
 | [`subcommand_precedence_over_arg`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_precedence_over_arg) | ✅ | |
 | [`subcommand_negates_reqs`](https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_negates_reqs) | ✅ | not tested |
@@ -136,16 +133,16 @@ APIs in `claptrap`.
 | [`hide_long_help`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_long_help) | ✅ | |
 | [`group`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.group) | ✅ | |
 | [`groups`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.groups) | ✅ | |
-| [`default_value_if`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_if) | ❌ | |
-| [`default_value_ifs`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_ifs) | ❌ | |
+| [`default_value_if`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_if) | ✅ | |
+| [`default_value_ifs`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_ifs) | ✅ | |
 | [`required_unless_present`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present) | ✅ | |
 | [`required_unless_present_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present_all) | ✅ | |
 | [`required_unless_present_any`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present_any) | ✅ | |
-| [`required_if_eq`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq) | ❌ | |
-| [`required_if_eq_any`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq_any) | ❌ | |
-| [`required_if_eq_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq_all) | ❌ | |
-| [`requires_if`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_if) | ❌ | |
-| [`requires_ifs`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_ifs) | ❌ | |
+| [`required_if_eq`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq) | ✅ | |
+| [`required_if_eq_any`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq_any) | ✅ | |
+| [`required_if_eq_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq_all) | ✅ | |
+| [`requires_if`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_if) | ✅ | |
+| [`requires_ifs`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_ifs) | ✅ | |
 | [`conflicts_with`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.conflicts_with) | ✅ | |
 | [`conflicts_with_all`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.conflicts_with_all) | ✅ | |
 | [`overrides_with`](https://docs.rs/clap/latest/clap/struct.Arg.html#method.overrides_with) | ✅ | |

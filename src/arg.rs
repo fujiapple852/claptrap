@@ -60,16 +60,16 @@ pub struct Arg {
     hide_long_help: Option<bool>,
     group: Option<String>,
     groups: Option<Vec<String>>,
-    // default_value_if // TODO
-    // default_value_ifs // TODO
+    default_value_if: Option<DefaultIf>,
+    default_value_ifs: Option<Vec<DefaultIf>>,
     required_unless_present: Option<String>,
     required_unless_present_all: Option<Vec<String>>,
     required_unless_present_any: Option<Vec<String>>,
-    // required_if_eq // TODO
-    // required_if_eq_any // TODO
-    // required_if_eq_all // TODO
-    // requires_if // TODO
-    // requires_ifs // TODO
+    required_if_eq: Option<IfEq>,
+    required_if_eq_any: Option<Vec<IfEq>>,
+    required_if_eq_all: Option<Vec<IfEq>>,
+    requires_if: Option<RequiresIf>,
+    requires_ifs: Option<Vec<RequiresIf>>,
     conflicts_with: Option<String>,
     conflicts_with_all: Option<Vec<String>>,
     overrides_with: Option<String>,
@@ -91,7 +91,6 @@ impl Arg {
 impl From<Arg> for clap::Arg {
     fn from(value: Arg) -> Self {
         let mut arg = Self::new(value.id);
-        // TODO: test if the yaml contains a string
         if let Some(short) = value.short {
             arg = arg.short(short);
         }
@@ -122,7 +121,6 @@ impl From<Arg> for clap::Arg {
         if let Some(visible_short_aliases) = value.visible_short_aliases {
             arg = arg.visible_short_aliases(visible_short_aliases);
         }
-        // TODO can panic, check clap docs and add tests
         if let Some(index) = value.index {
             arg = arg.index(index);
         }
@@ -248,8 +246,85 @@ impl From<Arg> for clap::Arg {
         if let Some(groups) = value.groups {
             arg = arg.groups(groups);
         }
-        // TODO: default_value_if
-        // TODO: default_value_ifs
+        if let Some(default_if) = value.default_value_if {
+            if let Some(default) = default_if.default {
+                if let Some(val) = default_if.value {
+                    arg = arg.default_value_if(
+                        default_if.arg,
+                        clap::builder::ArgPredicate::Equals(val.into()),
+                        default,
+                    );
+                } else {
+                    arg = arg.default_value_if(
+                        default_if.arg,
+                        clap::builder::ArgPredicate::IsPresent,
+                        default,
+                    );
+                }
+            } else if let Some(val) = default_if.value {
+                arg = arg.default_value_if(
+                    default_if.arg,
+                    clap::builder::ArgPredicate::Equals(val.into()),
+                    None,
+                );
+            } else {
+                arg = arg.default_value_if(
+                    default_if.arg,
+                    clap::builder::ArgPredicate::IsPresent,
+                    None,
+                );
+            }
+        }
+        if let Some(default_value_ifs) = value.default_value_ifs {
+            let with_default = default_value_ifs
+                .clone()
+                .into_iter()
+                .filter_map(|default_value_if| {
+                    if let Some(default) = default_value_if.default {
+                        if let Some(val) = default_value_if.value {
+                            Some((
+                                default_value_if.arg,
+                                clap::builder::ArgPredicate::Equals(val.into()),
+                                default,
+                            ))
+                        } else {
+                            Some((
+                                default_value_if.arg,
+                                clap::builder::ArgPredicate::IsPresent,
+                                default,
+                            ))
+                        }
+                    } else {
+                        None
+                    }
+                })
+                .collect::<Vec<_>>();
+            arg = arg.default_value_ifs(with_default);
+            let without_default = default_value_ifs
+                .into_iter()
+                .filter_map(|default_value_if| {
+                    if default_value_if.default.is_none() {
+                        if let Some(val) = default_value_if.value {
+                            Some((
+                                default_value_if.arg,
+                                clap::builder::ArgPredicate::Equals(val.into()),
+                                None,
+                            ))
+                        } else {
+                            Some((
+                                default_value_if.arg,
+                                clap::builder::ArgPredicate::IsPresent,
+                                None,
+                            ))
+                        }
+                    } else {
+                        None
+                    }
+                })
+                .collect::<Vec<_>>();
+            arg = arg.default_value_ifs(without_default);
+        }
+
         if let Some(required_unless_present) = value.required_unless_present {
             arg = arg.required_unless_present(required_unless_present);
         }
@@ -259,11 +334,30 @@ impl From<Arg> for clap::Arg {
         if let Some(required_unless_present_any) = value.required_unless_present_any {
             arg = arg.required_unless_present_any(required_unless_present_any);
         }
-        // TODO: required_if_eq
-        // TODO: required_if_eq_any
-        // TODO: required_if_eq_all
-        // TODO: requires_if
-        // TODO: requires_ifs
+        if let Some(if_eq) = value.required_if_eq {
+            arg = arg.required_if_eq(if_eq.arg, if_eq.value);
+        }
+        if let Some(if_eqs) = value.required_if_eq_any {
+            arg = arg.required_if_eq_any(if_eqs.into_iter().map(|v| (v.arg, v.value)));
+        }
+        if let Some(if_eqs) = value.required_if_eq_all {
+            arg = arg.required_if_eq_all(if_eqs.into_iter().map(|v| (v.arg, v.value)));
+        }
+        if let Some(req_if) = value.requires_if {
+            match req_if.value {
+                Some(val) => {
+                    arg = arg
+                        .requires_if(clap::builder::ArgPredicate::Equals(val.into()), req_if.arg);
+                }
+                None => arg = arg.requires_if(clap::builder::ArgPredicate::IsPresent, req_if.arg),
+            }
+        }
+        if let Some(req_ifs) = value.requires_ifs {
+            arg = arg.requires_ifs(req_ifs.into_iter().map(|req_if| match req_if.value {
+                Some(val) => (clap::builder::ArgPredicate::Equals(val.into()), req_if.arg),
+                None => (clap::builder::ArgPredicate::IsPresent, req_if.arg),
+            }));
+        }
         if let Some(conflicts_with) = value.conflicts_with {
             arg = arg.conflicts_with(conflicts_with);
         }
@@ -348,4 +442,29 @@ impl From<ValueHint> for clap::ValueHint {
             ValueHint::EmailAddress => Self::EmailAddress,
         }
     }
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(deny_unknown_fields)]
+#[serde(rename_all = "kebab-case")]
+pub struct DefaultIf {
+    arg: String,
+    value: Option<String>,
+    default: Option<String>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(deny_unknown_fields)]
+#[serde(rename_all = "kebab-case")]
+pub struct RequiresIf {
+    arg: String,
+    value: Option<String>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(deny_unknown_fields)]
+#[serde(rename_all = "kebab-case")]
+pub struct IfEq {
+    arg: String,
+    value: String,
 }
