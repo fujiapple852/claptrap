@@ -81,11 +81,11 @@ pub struct Arg {
     required_unless_present: Option<String>,
     required_unless_present_all: Option<Vec<String>>,
     required_unless_present_any: Option<Vec<String>>,
-    // required_if_eq // TODO
-    // required_if_eq_any // TODO
-    // required_if_eq_all // TODO
-    // requires_if // TODO
-    // requires_ifs // TODO
+    required_if_eq: Option<IfEq>,
+    required_if_eq_any: Option<Vec<IfEq>>,
+    required_if_eq_all: Option<Vec<IfEq>>,
+    requires_if: Option<RequiresIf>,
+    requires_ifs: Option<Vec<RequiresIf>>,
     conflicts_with: Option<String>,
     conflicts_with_all: Option<Vec<String>>,
     overrides_with: Option<String>,
@@ -268,11 +268,25 @@ impl From<NamedArg> for clap::Arg {
         if let Some(required_unless_present_any) = value.required_unless_present_any {
             arg = arg.required_unless_present_any(required_unless_present_any);
         }
-        // TODO: required_if_eq
-        // TODO: required_if_eq_any
-        // TODO: required_if_eq_all
-        // TODO: requires_if
-        // TODO: requires_ifs
+        if let Some(if_eq) = value.required_if_eq {
+            arg = arg.required_if_eq(if_eq.arg, if_eq.value);
+        }
+        if let Some(if_eqs) = value.required_if_eq_any {
+            arg = arg.required_if_eq_any(if_eqs.into_iter().map(|v| (v.arg, v.value)));
+        }
+        if let Some(if_eqs) = value.required_if_eq_all {
+            arg = arg.required_if_eq_all(if_eqs.into_iter().map(|v| (v.arg, v.value)));
+        }
+        if let Some(req_if) = value.requires_if {
+            arg = arg.requires_if(clap::builder::ArgPredicate::from(req_if.value), req_if.arg);
+        }
+        if let Some(req_ifs) = value.requires_ifs {
+            arg = arg.requires_ifs(
+                req_ifs
+                    .into_iter()
+                    .map(|v| (clap::builder::ArgPredicate::from(v.value), v.arg)),
+            );
+        }
         if let Some(conflicts_with) = value.conflicts_with {
             arg = arg.conflicts_with(conflicts_with);
         }
@@ -357,4 +371,62 @@ impl From<ValueHint> for clap::ValueHint {
             ValueHint::EmailAddress => Self::EmailAddress,
         }
     }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub enum ArgPredicate {
+    IsPresent,
+    Equals(String),
+}
+
+impl<'de> serde::Deserialize<'de> for ArgPredicate {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        struct ArgPredicateVisitor;
+
+        impl serde::de::Visitor<'_> for ArgPredicateVisitor {
+            type Value = ArgPredicate;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("`:present:` or a string value")
+            }
+
+            fn visit_str<E>(self, value: &str) -> Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                Ok(match value {
+                    ":present:" => ArgPredicate::IsPresent,
+                    val => ArgPredicate::Equals(val.to_string()),
+                })
+            }
+        }
+
+        deserializer.deserialize_any(ArgPredicateVisitor)
+    }
+}
+
+impl From<ArgPredicate> for clap::builder::ArgPredicate {
+    fn from(pred: ArgPredicate) -> Self {
+        match pred {
+            ArgPredicate::IsPresent => Self::IsPresent,
+            ArgPredicate::Equals(val) => Self::Equals(val.into()),
+        }
+    }
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "kebab-case")]
+pub struct RequiresIf {
+    value: ArgPredicate,
+    arg: String,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "kebab-case")]
+pub struct IfEq {
+    arg: String,
+    value: String,
 }

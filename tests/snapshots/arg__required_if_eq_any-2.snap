@@ -1,0 +1,6 @@
+---
+source: tests/arg.rs
+expression: output2
+---
+claptrap_mode='release'
+claptrap_level='info'

@@ -47,3 +47,21 @@ protocol: http
 ```
 
 That's it! You're now ready to clap 👏 and trap 🪤 your arguments!
+
+## Conditional Requirements
+
+Arguments can depend on the value of other arguments using the `required-if-eq`
+and `requires-if` options:
+
+```toml
+name = "myapp"
+
+[args]
+mode = { long = "mode", action = "set" }
+out  = { long = "out",  action = "set", required-if-eq = { arg = "mode", value = "debug" } }
+config = { long = "config", action = "set", requires-if = { value = "prod", arg = "cert" } }
+cert   = { long = "cert", action = "set" }
+```
+
+With this configuration `--out <val>` is required when `--mode debug` and
+`--cert <val>` is required when `--config prod`.
