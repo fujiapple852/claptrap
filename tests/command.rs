@@ -216,7 +216,29 @@ fn test_color() {
     insta::assert_snapshot!(output);
 }
 
-// TODO styles
+#[test]
+fn test_styles() {
+    let app: Command = toml::from_str(
+        r##"
+            name = "myprog"
+            [styles]
+            header = { fg = "blue", bg = "#f0f0f0", underline = 7, effects = ["bold", "italic"] }
+            error = { fg = "bright-red" }
+            usage = { fg = "green" }
+            literal = { fg = "magenta" }
+            placeholder = { fg = "white" }
+            valid = { fg = "bright-green" }
+            invalid = { fg = "#ff0000" }
+            [args]
+            foo = { help = "It does foo stuff", short = 'f', long = "foo", value-name = "FOO" }
+        "##,
+    )
+    .unwrap();
+    let input = "--help";
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
 
 #[test]
 fn test_term_width() {
