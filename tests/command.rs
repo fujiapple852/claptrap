@@ -1194,6 +1194,22 @@ fn test_allow_external_subcommands() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn test_external_subcommand_value_parser() {
+    let app: Command = toml::from_str(
+        r#"
+            name = "myprog"
+            allow-external-subcommands = true
+            external-subcommand-value-parser = ":string:"
+        "#,
+    )
+    .unwrap();
+    let input = "subcmd --option value -fff --flag";
+    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
+    let output = parse(app, args);
+    insta::assert_snapshot!(output);
+}
+
 // TODO this does not seem to work, it does allow
 //
 // see https://docs.rs/clap/latest/clap/struct.Command.html#method.args_conflicts_with_subcommands
