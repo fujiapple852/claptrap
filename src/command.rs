@@ -1,5 +1,6 @@
 use crate::arg::{Arg, NamedArg};
 use crate::arg_group::{ArgGroup, NamedArgGroup};
+use crate::style::Styles;
 use indexmap::IndexMap;
 use serde::Deserialize;
 
@@ -16,7 +17,7 @@ pub struct Command {
     args_override_self: Option<bool>,
     dont_delimit_trailing_values: Option<bool>,
     color: Option<ColorChoice>,
-    // TODO styles
+    styles: Option<Styles>,
     term_width: Option<usize>,
     max_term_width: Option<usize>,
     disable_version_flag: Option<bool>,
@@ -109,7 +110,9 @@ impl From<Command> for clap::Command {
         if let Some(color) = cmd.color {
             command = command.color(clap::ColorChoice::from(color));
         }
-        // TODO: styles()
+        if let Some(styles) = cmd.styles {
+            command = command.styles(clap::builder::Styles::from(styles));
+        }
         if let Some(term_width) = cmd.term_width {
             command = command.term_width(term_width);
         }
