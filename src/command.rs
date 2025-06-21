@@ -1,9 +1,9 @@
-use crate::arg::{Arg, NamedArg};
+use crate::arg::Arg;
 use crate::arg_group::{ArgGroup, NamedArgGroup};
 use crate::style::Styles;
 use crate::values::ValueParser;
 use indexmap::IndexMap;
-use serde::Deserialize;
+use serde::{Deserialize, Deserializer};
 
 /// Represents a command configuration for a CLI application.
 #[derive(Debug, Deserialize, Clone)]
@@ -11,8 +11,10 @@ use serde::Deserialize;
 #[serde(rename_all = "kebab-case")]
 pub struct Command {
     name: String,
+    #[serde(default, deserialize_with = "deserialize_args")]
     args: Option<IndexMap<String, Arg>>,
-    subcommands: Option<Vec<Command>>,
+    #[serde(default)]
+    subcommands: Vec<Command>,
     groups: Option<IndexMap<String, ArgGroup>>,
     ignore_errors: Option<bool>,
     args_override_self: Option<bool>,
@@ -77,14 +79,42 @@ pub struct Command {
     subcommand_help_heading: Option<String>,
 }
 
+impl Command {
+    #[must_use]
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn get_subcommands(&self) -> impl Iterator<Item = &Self> {
+        self.subcommands.iter()
+    }
+}
+
+fn deserialize_args<'de, D>(de: D) -> Result<Option<IndexMap<String, Arg>>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let mut args = Option::<IndexMap<String, Arg>>::deserialize(de)?;
+    if let Some(map) = &mut args {
+        map.iter_mut().for_each(|(id, arg)| arg.id.clone_from(id));
+    }
+    Ok(args)
+}
+
+impl Command {
+    pub fn get_arguments(&self) -> impl Iterator<Item = &Arg> {
+        self.args
+            .as_ref()
+            .into_iter()
+            .flat_map(|args| args.values())
+    }
+}
+
 #[expect(clippy::cognitive_complexity, clippy::too_many_lines)]
 impl From<Command> for clap::Command {
     fn from(cmd: Command) -> Self {
         let mut command = Self::new(cmd.name);
         command = command.args(if let Some(args) = cmd.args {
-            args.into_iter()
-                .map(|(name, arg)| clap::Arg::from(NamedArg::new(name, arg)))
-                .collect::<Vec<_>>()
+            args.into_values().map(clap::Arg::from).collect::<Vec<_>>()
         } else {
             Vec::new()
         });
@@ -95,9 +125,7 @@ impl From<Command> for clap::Command {
                     .map(|(name, group)| clap::ArgGroup::from(NamedArgGroup::new(name, group))),
             );
         }
-        if let Some(subcommands) = cmd.subcommands {
-            command = command.subcommands(subcommands.into_iter().map(Self::from));
-        }
+        command = command.subcommands(cmd.subcommands);
         if let Some(ignore_errors) = cmd.ignore_errors {
             command = command.ignore_errors(ignore_errors);
         }

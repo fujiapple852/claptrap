@@ -1,0 +1,5 @@
+---
+source: tests/values.rs
+expression: output
+---
+claptrap_foo='-170141183460469231731687303715884105728'
