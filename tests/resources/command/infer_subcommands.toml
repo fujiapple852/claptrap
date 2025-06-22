@@ -1,0 +1,6 @@
+name = "myprog"
+infer-subcommands = true
+[[subcommands]]
+name = "test"
+[subcommands.args]
+arg1 = { long = "arg1", action = "set-true" }

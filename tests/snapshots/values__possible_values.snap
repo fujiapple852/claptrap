@@ -1,5 +1,0 @@
----
-source: tests/values.rs
-expression: output
----
-claptrap_foo='auto'

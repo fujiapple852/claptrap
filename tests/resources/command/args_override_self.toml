@@ -1,0 +1,5 @@
+name = "cmd"
+args-override-self = true
+[args]
+foo = { long = "foo" }
+bar = { long = "bar" }

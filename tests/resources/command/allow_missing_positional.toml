@@ -1,0 +1,5 @@
+name = "myprog"
+allow-missing-positional = true
+[args]
+arg1 = {}
+arg2 = { required = true }

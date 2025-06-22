@@ -1,0 +1,4 @@
+name = "myprog"
+author = "Me, me@mymain.com"
+help-template = "{name} ({version}) {author} - {usage}"
+[args]

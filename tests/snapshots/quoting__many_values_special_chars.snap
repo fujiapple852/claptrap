@@ -1,5 +1,0 @@
----
-source: tests/quoting.rs
-expression: output
----
-claptrap_opt=('val1' 'val'\''2')

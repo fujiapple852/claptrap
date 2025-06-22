@@ -1,0 +1,7 @@
+name = "myprog"
+[[subcommands]]
+name = "test"
+short-flag = 't'
+short-flag-alias = 'd'
+[subcommands.args]
+search = { short = 's', long = "search", action = "set-true" }

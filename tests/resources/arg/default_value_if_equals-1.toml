@@ -1,0 +1,4 @@
+name = "prog"
+[args]
+opt = { long = "opt", action = "set" }
+other = { long = "other", default-value-if = { arg = "opt", value = "special", default = "default" } }

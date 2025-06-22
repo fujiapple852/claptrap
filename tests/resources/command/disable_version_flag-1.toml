@@ -1,0 +1,5 @@
+name = "myprog"
+version = "1.0.0"
+disable-version-flag = true
+[args]
+version = { long = "version", action = "version", help = "Print version" }

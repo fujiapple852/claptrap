@@ -1,0 +1,5 @@
+name = "prog"
+[args]
+first = {}
+second = {}
+third = { action = "set", last = true }

@@ -1,5 +1,0 @@
----
-source: tests/arg.rs
-expression: output2
----
-claptrap_flag='false'

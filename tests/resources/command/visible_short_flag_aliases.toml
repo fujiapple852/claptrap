@@ -1,0 +1,6 @@
+name = "myprog"
+[[subcommands]]
+name = "test"
+visible-short-flag-aliases = ['a', 'b', 'c']
+[subcommands.args]
+input = { required = false, help = "the file to add" }

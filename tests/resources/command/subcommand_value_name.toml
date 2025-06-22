@@ -1,0 +1,4 @@
+name = "myprog"
+subcommand-value-name = "THING"
+[[subcommands]]
+name = "sub"

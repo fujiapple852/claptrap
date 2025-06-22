@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+flag = { long = "flag", action = "set-true" }

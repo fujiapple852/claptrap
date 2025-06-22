@@ -1,0 +1,7 @@
+name = "myprog"
+[[subcommands]]
+name = "test"
+long-flag = "test"
+visible-long-flag-alias = "testing"
+[subcommands.args]
+input = { required = false, help = "the file to add" }

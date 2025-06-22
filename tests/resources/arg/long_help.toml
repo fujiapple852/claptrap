@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+cfg = { long = "config", long-help = "The config file used by the myprog must be in JSON format with only valid keys and may not contain other nonsense that cannot be read by this program. Obviously I'm going on and on, so I'll stop now." }

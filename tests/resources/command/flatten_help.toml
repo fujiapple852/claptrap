@@ -1,0 +1,20 @@
+name = "myprog"
+flatten-help = true
+[args]
+arg1 = {}
+[[subcommands]]
+name = "subcommand"
+about = "a sub command"
+flatten-help = true
+[subcommands.args]
+arg2 = {}
+[[subcommands.subcommands]]
+name = "nested"
+about = "A nested sub command"
+[subcommands.subcommands.args]
+arg3 = { long = "arg3" }
+[[subcommands]]
+name = "subcommand2"
+about = "another sub command"
+[subcommands.args]
+arg4 = {}

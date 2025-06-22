@@ -1,0 +1,6 @@
+name = "myprog"
+[[subcommands]]
+name = "test"
+alias = "do-stuff"
+[subcommands.args]
+search = { short = 's', long = "search", action = "set-true" }

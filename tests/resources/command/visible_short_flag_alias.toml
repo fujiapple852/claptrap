@@ -1,0 +1,7 @@
+name = "myprog"
+[[subcommands]]
+name = "test"
+short-flag = 't'
+visible-short-flag-alias = 'd'
+[subcommands.args]
+input = { required = false, help = "the file to add" }

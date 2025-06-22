@@ -1,8 +1,0 @@
----
-source: tests/arg.rs
-expression: output
----
-command cat <<'EOF_bdec613a'
-prog 1.0.0
-EOF_bdec613a
-exit 0

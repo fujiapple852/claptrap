@@ -1,0 +1,4 @@
+name = "prog"
+[args]
+debug = { long = "debug", action = "set-true", group = "mode" }
+verbose = { long = "verbose", action = "set-true", group = "mode" }

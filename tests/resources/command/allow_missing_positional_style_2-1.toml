@@ -1,0 +1,6 @@
+name = "myprog"
+allow-missing-positional = true
+[args]
+foo = {}
+bar = {}
+baz = { action = "set", num-args = "1.." }
