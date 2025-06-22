@@ -1,0 +1,11 @@
+name = "cmd"
+[groups]
+vers = { args = ["set-ver", "major", "minor", "patch"], required = true }
+input = { args = ["config", "iface"] }
+[args]
+set-ver = { long = "set-ver", help = "set the version manually", required = false }
+major = { long = "major", help = "auto increase major" }
+minor = { long = "minor", help = "auto increase minor" }
+patch = { long = "patch", help = "auto increase patch" }
+config = { short = 'c', help = "a config file", required = false }
+iface = { short = 'i', help = "an interface", required = false }

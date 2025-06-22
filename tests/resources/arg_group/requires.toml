@@ -1,0 +1,7 @@
+name = "myprog"
+[groups]
+req_flags = { args = ["flag", "color"], requires = "debug" }
+[args]
+flag = { short = 'f', action = "set-true" }
+color = { short = 'c', action = "set-true" }
+debug = { short = 'd', action = "set-true" }

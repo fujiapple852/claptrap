@@ -1,0 +1,5 @@
+name = "prog"
+[args]
+flag = { short = 'f', long = "flag", action = "set-true", help = "some flag", conflicts-with = "color" }
+debug = { short = 'd', long = "debug", action = "set-true", help = "other flag" }
+color = { short = 'c', long = "color", action = "set-true", help = "third flag", overrides-with-all = ["flag", "debug"] }

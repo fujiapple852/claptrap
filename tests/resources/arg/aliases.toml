@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+test = { long = "test", aliases = ["do-tests", "tests"], action = "set-true", required = false, help = "the file to add" }

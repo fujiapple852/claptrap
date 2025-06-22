@@ -1,0 +1,9 @@
+name = "myprog"
+[[subcommands]]
+name = "beta"
+display-order = 0
+about = "Some help and text"
+[[subcommands]]
+name = "alpha"
+display-order = 0
+about = "I should be first!"

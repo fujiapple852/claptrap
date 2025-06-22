@@ -1,0 +1,4 @@
+name = "prog"
+[args]
+mode = { index = 1 }
+debug = { long = "debug", action = "set-true" }

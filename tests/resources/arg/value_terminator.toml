@@ -1,0 +1,4 @@
+name = "prog"
+[args]
+cmds = { action = "set", num-args = "..", allow-hyphen-values = true, value-terminator = ";" }
+location = {}

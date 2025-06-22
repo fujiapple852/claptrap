@@ -1,0 +1,8 @@
+name = "cmd"
+[groups]
+vers = { args = ["set-ver", "major", "minor", "patch"], required = true }
+[args]
+set-ver = { long = "set-ver", help = "set the version manually", required = false }
+major = { long = "major", help = "auto increase major" }
+minor = { long = "minor", help = "auto increase minor" }
+patch = { long = "patch", help = "auto increase patch" }

@@ -1,0 +1,2 @@
+name = "myprog"
+allow-external-subcommands = true

@@ -1,0 +1,5 @@
+name = "myprog"
+infer-long-args = true
+[args]
+test = { long = "test", action = "set-true" }
+temp = { long = "temp", action = "set-true" }

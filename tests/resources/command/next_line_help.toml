@@ -1,0 +1,4 @@
+name = "prog"
+next-line-help = true
+[args]
+opt = { short = 'o', long = "long-option-flag", action = "set", value-names = ["value1", "value2"], help = "Some really long help and complex\nhelp that makes more sense to be\non a line after the option" }

@@ -1,6 +1,0 @@
----
-source: tests/command.rs
-expression: output
----
-claptrap_major='1'
-claptrap_iface='eth0'

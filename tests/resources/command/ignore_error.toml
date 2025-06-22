@@ -1,0 +1,6 @@
+name = "cmd"
+ignore-errors = true
+[args]
+config = { short = 'c', long = "config", value-name = "FILE", help = "Sets a custom config file" }
+stuff = { short = 's', long = "stuff", value-name = "FILE", help = "Sets a custom stuff file" }
+f = { short = 'f', help = "Flag" }

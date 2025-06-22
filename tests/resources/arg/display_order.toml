@@ -1,0 +1,5 @@
+name = "prog"
+[args]
+boat = { short = 'b', long = "boat", action = "set", display-order = 0, help = "Some help and text" }
+airplane = { short = 'a', long = "airplane", action = "set", display-order = 0, help = "I should be first!" }
+custom-help = { short = '?', action = "help", display-order = 100, help = "Alt help" }

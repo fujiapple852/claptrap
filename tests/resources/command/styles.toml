@@ -1,0 +1,11 @@
+name = "myprog"
+[styles]
+header = { fg = "blue", bg = "#f0f0f0", underline = 7, effects = ["bold", "italic"] }
+error = { fg = "bright-red" }
+usage = { fg = "green" }
+literal = { fg = "magenta" }
+placeholder = { fg = "white" }
+valid = { fg = "bright-green" }
+invalid = { fg = "#ff0000" }
+[args]
+foo = { help = "It does foo stuff", short = 'f', long = "foo", value-name = "FOO" }

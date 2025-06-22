@@ -1,0 +1,4 @@
+name = "myprog"
+[args]
+debug = { short = 'd', help = "turns on debugging mode" }
+config = { short = 'c', long = "config", value-name = "CONFIG", help = "Optionally sets a config file to use" }

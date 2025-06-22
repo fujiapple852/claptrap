@@ -1,0 +1,4 @@
+name = "myprog"
+color = "never"
+[args]
+cfg = { long = "config" }

@@ -1,0 +1,5 @@
+name = "prog"
+[args]
+cfg = { long = "config", action = "set", required-if-eq-any = [{ arg = "extra", value = "val" }, { arg = "option", value = "spec" }] }
+extra = { long = "extra", action = "set" }
+option = { long = "option", action = "set" }

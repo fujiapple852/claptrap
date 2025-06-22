@@ -1,0 +1,4 @@
+name = "prog"
+[args]
+file = { short = 'F', action = "append" }
+word = {}

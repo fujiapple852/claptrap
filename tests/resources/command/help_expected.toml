@@ -1,0 +1,4 @@
+name = "myprog"
+help-expected = true
+[args]
+foo = { help = "It does foo stuff" }

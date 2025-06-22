@@ -1,0 +1,4 @@
+name = "myprog"
+disable-help-flag = true
+[args]
+help = { long = "help", action = "help", help = "Print version" }

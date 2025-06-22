@@ -1,6 +1,0 @@
----
-source: tests/arg.rs
-expression: output
----
-claptrap_flag='true'
-claptrap_other='default'

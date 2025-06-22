@@ -1,0 +1,11 @@
+---
+source: tests/tests.rs
+expression: "super::run(spec, args)"
+---
+command cat <<'EOF_7638c95c'
+myprog v0.1.24 commit: abcdef89726d
+revision: 123
+release: 2
+binary: myprog
+EOF_7638c95c
+exit 0

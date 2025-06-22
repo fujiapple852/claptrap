@@ -1,0 +1,5 @@
+name = "prog"
+[args]
+flag = { long = "flag", action = "set-true" }
+opt = { long = "opt", action = "set" }
+other = { long = "other", default-value-ifs = [{ arg = "flag", value = "true", default = "default" }, { arg = "opt", value = "channel", default = "chan" }] }

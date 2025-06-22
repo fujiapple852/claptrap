@@ -1,0 +1,4 @@
+name = "myprog"
+disable-help-subcommand = true
+[[subcommands]]
+name = "test"

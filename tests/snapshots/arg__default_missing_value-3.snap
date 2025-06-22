@@ -1,5 +1,0 @@
----
-source: tests/arg.rs
-expression: output3
----
-claptrap_color='always'

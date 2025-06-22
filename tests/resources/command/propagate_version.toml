@@ -1,0 +1,5 @@
+name = "myprog"
+version = "v1.1"
+propagate-version = true
+[[subcommands]]
+name = "test"

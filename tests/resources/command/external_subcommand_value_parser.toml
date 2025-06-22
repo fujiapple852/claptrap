@@ -1,0 +1,3 @@
+name = "myprog"
+allow-external-subcommands = true
+external-subcommand-value-parser = ":string:"

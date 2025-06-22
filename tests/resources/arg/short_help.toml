@@ -1,0 +1,5 @@
+name = "prog"
+disable-help-flag = true
+[args]
+host = { short = 'h', long = "host" }
+help = { long = "help", global = true, action = "help" }

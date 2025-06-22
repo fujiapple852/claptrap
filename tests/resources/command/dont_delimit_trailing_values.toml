@@ -1,0 +1,5 @@
+name = "prog"
+dont-delimit-trailing-values = true
+[args]
+cmd = {}
+rest = { trailing-var-arg = true, num-args = "1.." }

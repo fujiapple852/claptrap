@@ -1,0 +1,5 @@
+name = "prog"
+[args]
+cfg = { long = "config", action = "set", conflicts-with-all = ["debug", "input"] }
+debug = { long = "debug", action = "set-true" }
+input = {}

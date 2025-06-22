@@ -1,0 +1,6 @@
+name = "myprog"
+[[subcommands]]
+name = "sync"
+long-flag = "sync"
+[subcommands.args]
+search = { short = 's', long = "search", action = "set-true", help = "search remote repositories for matching stringsg" }

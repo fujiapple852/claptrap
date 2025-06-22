@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+test = { short = 't', short-alias = 'e', action = "set" }

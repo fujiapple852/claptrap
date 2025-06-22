@@ -1,0 +1,4 @@
+name = "prog"
+
+[args]
+foo = { long = "foo", value-parser = ":i16:", allow-negative-numbers = true }
