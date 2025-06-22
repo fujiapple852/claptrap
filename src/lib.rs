@@ -20,11 +20,11 @@ pub mod values;
 ///
 /// This function does not perform any I/O operations.
 #[must_use]
-#[allow(clippy::needless_pass_by_value)]
+#[expect(clippy::needless_pass_by_value)]
 pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
     let clap_cmd = clap::Command::from(cmd.clone()).no_binary_name(true);
     match clap_cmd.clone().try_get_matches_from(args) {
-        Ok(matches) => Output::Variables(extract_matches(&cmd, &clap_cmd, &matches, &mut vec![])),
+        Ok(matches) => Output::Variables(extract_matches(&cmd, &clap_cmd, &matches, &[])),
         Err(err) => match err.kind() {
             clap::error::ErrorKind::DisplayHelp | clap::error::ErrorKind::DisplayVersion => {
                 Output::Cat(CatCmd::new(err.render(), ExitCode::Success))
@@ -41,65 +41,62 @@ fn extract_matches(
     cmd: &Command,
     clap_cmd: &clap::Command,
     matches: &clap::ArgMatches,
-    prefix: &mut Vec<String>,
+    prefix: &[String],
 ) -> Vec<Var> {
-    let local_prefix = prefix.clone();
-    let iter_args = matches.ids().filter_map(|id| {
+    let vars = matches.ids().filter_map(|id| {
         let arg = cmd.get_arguments().find(|a| a.get_id() == id.as_str())?;
         let clap_arg = clap_cmd.get_arguments().find(|a| a.get_id() == id)?;
         match clap_arg.get_action() {
             ArgAction::SetTrue | ArgAction::SetFalse => Some(Var::Single(
-                local_prefix.clone(),
+                prefix.to_vec(),
                 id.to_string(),
                 matches.get_flag(id.as_str()).to_string(),
             )),
             ArgAction::Count => Some(Var::Single(
-                local_prefix.clone(),
+                prefix.to_vec(),
                 id.to_string(),
                 matches.get_count(id.as_str()).to_string(),
             )),
             ArgAction::Append => arg
                 .value_parser()
-                .and_then(|value_parser| get_many(value_parser, matches, id.as_str()))
+                .and_then(|v| get_many(v, matches, id.as_str()))
                 .or_else(|| get_many_raw(matches, id.as_str()))
-                .map(|v| Var::Many(local_prefix.clone(), id.to_string(), v)),
+                .map(|vals| Var::Many(prefix.to_vec(), id.to_string(), vals)),
             ArgAction::Set => {
                 if clap_arg.is_many() {
                     arg.value_parser()
-                        .and_then(|value_parser| get_many(value_parser, matches, id.as_str()))
+                        .and_then(|v| get_many(v, matches, id.as_str()))
                         .or_else(|| get_many_raw(matches, id.as_str()))
-                        .map(|v| Var::Many(local_prefix.clone(), id.to_string(), v))
+                        .map(|vals| Var::Many(prefix.to_vec(), id.to_string(), vals))
                 } else {
                     arg.value_parser()
-                        .and_then(|value_parser| get_one(value_parser, matches, id.as_str()))
+                        .and_then(|v| get_one(v, matches, id.as_str()))
                         .or_else(|| get_one_raw(matches, id.as_str()))
-                        .map(|v| Var::Single(local_prefix.clone(), id.to_string(), v))
+                        .map(|val| Var::Single(prefix.to_vec(), id.to_string(), val))
                 }
             }
             _ => None,
         }
     });
-    let iter_sub = matches
-        .subcommand()
-        .into_iter()
-        .flat_map(|(name, sub_matches)| {
-            cmd.get_subcommands()
-                .find(|sc| sc.get_name() == name)
-                .and_then(|sub_cmd| {
-                    clap_cmd
-                        .get_subcommands()
-                        .find(|sc| sc.get_name() == name)
-                        .map(|clap_sub_cmd| {
-                            prefix.push(name.to_string());
-                            let it = extract_matches(sub_cmd, clap_sub_cmd, sub_matches, prefix)
-                                .into_iter();
-                            prefix.pop();
-                            it
-                        })
-                })
-                .unwrap_or_else(|| vec![].into_iter())
-        });
-    iter_args.chain(iter_sub).collect()
+
+    let sub = matches.subcommand().into_iter().flat_map(|(name, sub_m)| {
+        cmd.get_subcommands()
+            .find(|sc| sc.get_name() == name)
+            .into_iter()
+            .filter_map(move |sub_cmd| {
+                clap_cmd
+                    .get_subcommands()
+                    .find(|sc| sc.get_name() == name)
+                    .map(|clap_sub| {
+                        let mut sub_prefix = prefix.to_vec();
+                        sub_prefix.push(name.to_string());
+                        extract_matches(sub_cmd, clap_sub, sub_m, &sub_prefix)
+                    })
+            })
+            .flatten()
+    });
+
+    vars.chain(sub).collect()
 }
 
 fn get_one(value_parser: &ValueParser, matches: &clap::ArgMatches, id: &str) -> Option<String> {
