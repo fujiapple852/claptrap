@@ -1,0 +1,4 @@
+name = "myprog"
+subcommand-required = true
+[[subcommands]]
+name = "test"

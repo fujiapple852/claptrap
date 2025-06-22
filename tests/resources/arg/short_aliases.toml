@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+test = { short = 't', short-aliases = ['e', 's'], action = "set-true", required = false, help = "the file to add" }

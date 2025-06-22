@@ -1,0 +1,5 @@
+name = "prog"
+[args]
+config = { long = "config", action = "set", requires-ifs = [{ arg = "input" }, { arg = "output" }] }
+input = {}
+output = {}

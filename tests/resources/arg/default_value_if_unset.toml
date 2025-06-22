@@ -1,0 +1,4 @@
+name = "prog"
+[args]
+flag = { long = "flag", action = "set-true" }
+other = { long = "other", default-value = "default", default-value-if = { arg = "flag", value = "true" } }

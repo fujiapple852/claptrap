@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+cfg = { long = "config", action = "set" }

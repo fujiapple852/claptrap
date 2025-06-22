@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+file = { short = 'F', num-args = 2, action = "set" }

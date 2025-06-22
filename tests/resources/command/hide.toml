@@ -1,0 +1,8 @@
+name = "myprog"
+[[subcommands]]
+name = "beta"
+about = "Some help and text"
+[[subcommands]]
+name = "alpha"
+about = "I should be hidden!"
+hide = true

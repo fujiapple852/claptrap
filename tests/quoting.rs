@@ -1,33 +1,14 @@
-use claptrap::command::Command;
-use claptrap::parse;
-use std::ffi::OsString;
+#[path = "util.rs"]
+mod util;
+use test_case::test_case;
 
-#[test]
-fn single_value_with_quote() {
-    let app: Command = toml::from_str(
-        r#"name = "prog"
-            [args]
-            val = { long = "val" }
-        "#,
-    )
-    .unwrap();
-    let input = "--val foo'bar";
-    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
-    let output = parse(app, args);
-    insta::assert_snapshot!(output);
+fn run(spec: &str, args: &str) -> claptrap::output::Output {
+    util::run(spec, args)
 }
 
-#[test]
-fn many_values_special_chars() {
-    let app: Command = toml::from_str(
-        r#"name = "prog"
-            [args]
-            opt = { long = "opt", action = "append" }
-        "#,
-    )
-    .unwrap();
-    let input = "--opt val1 --opt val'2";
-    let args: Vec<OsString> = input.split(' ').map(OsString::from).collect();
-    let output = parse(app, args);
-    insta::assert_snapshot!(output);
+#[test_case("single_value_with_quote", include_str!("resources/quoting/single_value.toml"), include_str!("resources/quoting/single_value.args"))]
+#[test_case("many_values_special_chars", include_str!("resources/quoting/many_values.toml"), include_str!("resources/quoting/many_values.args"))]
+fn test_quoting(name: &str, spec: &str, args: &str) {
+    let output = run(spec, args);
+    insta::assert_snapshot!(name, output);
 }

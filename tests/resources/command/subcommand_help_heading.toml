@@ -1,0 +1,4 @@
+name = "myprog"
+subcommand-help-heading = "Things"
+[[subcommands]]
+name = "sub"

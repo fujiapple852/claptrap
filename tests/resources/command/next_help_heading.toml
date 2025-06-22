@@ -1,0 +1,4 @@
+name = "prog"
+next-help-heading = "Configuration Options"
+[args]
+cfg = { long = "config", help = "Some help text describing the --config arg" }

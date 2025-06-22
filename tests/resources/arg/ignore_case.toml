@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+option = { long = "option", action = "set", ignore-case = true, value-parser = ["test123"] }

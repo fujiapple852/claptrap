@@ -1,0 +1,6 @@
+name = "myprog"
+[groups]
+req_flags = { args = ["flag", "color"], multiple = true }
+[args]
+flag = { short = 'f', action = "set-true" }
+color = { short = 'c', action = "set-true" }

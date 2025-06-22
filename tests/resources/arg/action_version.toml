@@ -1,0 +1,4 @@
+name = "prog"
+version = "1.0.0"
+[args]
+flag = { long = "flag", action = "version" }

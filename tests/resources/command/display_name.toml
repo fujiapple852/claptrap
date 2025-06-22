@@ -1,0 +1,4 @@
+name = "myprog"
+display-name = "my_program"
+[args]
+cfg = { long = "config" }

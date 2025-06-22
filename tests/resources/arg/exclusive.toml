@@ -1,0 +1,5 @@
+name = "prog"
+[args]
+exclusive = { long = "exclusive", action = "set", exclusive = true }
+debug = { long = "debug" }
+input = {}

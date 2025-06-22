@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+mode = { long = "mode", num-args = 1 }

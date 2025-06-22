@@ -1,0 +1,6 @@
+name = "myprog"
+[[subcommands]]
+name = "test"
+visible-aliases = ["do-stuff", "tests"]
+[subcommands.args]
+input = { required = false, help = "the file to add" }

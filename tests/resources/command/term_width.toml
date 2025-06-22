@@ -1,0 +1,4 @@
+name = "myprog"
+term-width = 80
+[args]
+cfg = { long = "config", help = "This is a very long help message that is longer than 80 characters and so will wrap" }

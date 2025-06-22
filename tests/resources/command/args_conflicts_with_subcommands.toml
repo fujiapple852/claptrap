@@ -1,0 +1,13 @@
+name = "myprog"
+[args]
+foo = { short = 'f' }
+[[subcommands]]
+name = "test"
+args-conflicts-with-subcommands = true
+[subcommands.args]
+input = { help = "the file to add" }
+[[subcommands.subcommands]]
+name = "nested"
+about = "A nested sub command"
+[subcommands.subcommands.args]
+arg3 = { long = "arg3" }

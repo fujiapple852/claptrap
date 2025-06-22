@@ -1,0 +1,4 @@
+name = "prog"
+hide-possible-values = true
+[args]
+mode = { long = "mode", value-parser = ["fast", "slow"], action = "set" }

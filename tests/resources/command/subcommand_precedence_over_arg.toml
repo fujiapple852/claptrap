@@ -1,0 +1,6 @@
+name = "myprog"
+subcommand-precedence-over-arg = true
+[args]
+arg = { long = "arg", num-args = "1..", action = "set" }
+[[subcommands]]
+name = "sub"

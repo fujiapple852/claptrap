@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+mode = { long = "mode", default-missing-value = "slow", default-value = "plaid", num-args = "optional" }

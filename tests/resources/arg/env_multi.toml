@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+flag = { long = "flag", env = "MY_FLAG_MULTI", action = "set", num-args = "1..", value-delimiter = "," }
