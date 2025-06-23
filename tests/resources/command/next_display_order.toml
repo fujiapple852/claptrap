@@ -1,5 +1,5 @@
 name = "prog"
-next-display-order = 200
+next-display-order = 1
 [args]
 custom-help = { short = '?', action = "help", display-order = 100, help = "Alt help" }
 airplane = { short = 'a', long = "airplane", action = "set", help = "I should be first!" }

@@ -113,19 +113,6 @@ impl Command {
 impl From<Command> for clap::Command {
     fn from(cmd: Command) -> Self {
         let mut command = Self::new(cmd.name);
-        command = command.args(if let Some(args) = cmd.args {
-            args.into_values().map(clap::Arg::from).collect::<Vec<_>>()
-        } else {
-            Vec::new()
-        });
-        if let Some(groups) = cmd.groups {
-            command = command.groups(
-                groups
-                    .into_iter()
-                    .map(|(name, group)| clap::ArgGroup::from(NamedArgGroup::new(name, group))),
-            );
-        }
-        command = command.subcommands(cmd.subcommands);
         if let Some(ignore_errors) = cmd.ignore_errors {
             command = command.ignore_errors(ignore_errors);
         }
@@ -311,6 +298,19 @@ impl From<Command> for clap::Command {
         if let Some(subcommand_help_heading) = cmd.subcommand_help_heading {
             command = command.subcommand_help_heading(subcommand_help_heading);
         }
+        command = command.args(if let Some(args) = cmd.args {
+            args.into_values().map(clap::Arg::from).collect::<Vec<_>>()
+        } else {
+            Vec::new()
+        });
+        if let Some(groups) = cmd.groups {
+            command = command.groups(
+                groups
+                    .into_iter()
+                    .map(|(name, group)| clap::ArgGroup::from(NamedArgGroup::new(name, group))),
+            );
+        }
+        command = command.subcommands(cmd.subcommands);
         command
     }
 }
