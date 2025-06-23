@@ -1,6 +1,6 @@
 ---
 source: tests/command.rs
-expression: output
+expression: "util::run(spec, args)"
 ---
 command cat <<'EOF_49562373'
 Some verbose and long info I'd like to appear before the help info

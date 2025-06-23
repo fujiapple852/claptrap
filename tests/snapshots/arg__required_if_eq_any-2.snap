@@ -1,6 +1,6 @@
 ---
 source: tests/arg.rs
-expression: output2
+expression: "util::run(spec, args)"
 ---
 command cat <<'EOF_9327a8e3'
 [1m[31merror:[0m the following required arguments were not provided:

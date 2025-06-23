@@ -1,6 +1,6 @@
 ---
 source: tests/arg_group.rs
-expression: output
+expression: "util::run(spec, args)"
 ---
 command cat <<'EOF_224b398c'
 [1m[31merror:[0m the argument '[33m-c[0m' cannot be used with '[33m-d[0m'

@@ -1,6 +1,6 @@
 ---
 source: tests/arg.rs
-expression: output2
+expression: "util::run(spec, args)"
 ---
 command cat <<'EOF_0d82cede'
 [1m[31merror:[0m equal sign is needed when assigning values to '[33m--config=<cfg>[0m'

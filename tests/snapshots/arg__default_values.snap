@@ -1,5 +1,0 @@
----
-source: tests/arg.rs
-expression: output1
----
-claptrap_opt=('myval1' 'myval2')

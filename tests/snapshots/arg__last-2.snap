@@ -1,6 +1,6 @@
 ---
 source: tests/arg.rs
-expression: output2
+expression: "util::run(spec, args)"
 ---
 command cat <<'EOF_daf2159a'
 [1m[31merror:[0m unexpected argument '[33mthree[0m' found

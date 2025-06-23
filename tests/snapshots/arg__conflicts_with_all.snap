@@ -1,6 +1,6 @@
 ---
 source: tests/arg.rs
-expression: output
+expression: "util::run(spec, args)"
 ---
 command cat <<'EOF_a72bcec1'
 [1m[31merror:[0m the argument '[33m--config <cfg>[0m' cannot be used with '[33m[input][0m'

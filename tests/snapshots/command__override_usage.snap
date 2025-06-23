@@ -1,6 +1,6 @@
 ---
 source: tests/command.rs
-expression: output
+expression: "util::run(spec, args)"
 ---
 command cat <<'EOF_e8422258'
 [1m[4mUsage:[0m myapp -X [-a] [-b] <file>

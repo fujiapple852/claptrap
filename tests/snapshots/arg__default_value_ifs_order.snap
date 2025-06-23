@@ -1,6 +1,6 @@
 ---
 source: tests/arg.rs
-expression: output
+expression: "util::run(spec, args)"
 ---
 claptrap_opt='channel'
 claptrap_flag='true'

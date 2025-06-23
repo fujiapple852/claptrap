@@ -1,6 +1,6 @@
 ---
 source: tests/command.rs
-expression: output
+expression: "util::run(spec, args)"
 ---
 command cat <<'EOF_cba21254'
 [1m[31merror:[0m '[33mmyprog[0m' requires a subcommand but one was not provided

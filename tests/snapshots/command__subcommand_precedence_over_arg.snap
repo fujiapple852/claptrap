@@ -1,5 +1,5 @@
 ---
 source: tests/command.rs
-expression: output
+expression: "util::run(spec, args)"
 ---
 claptrap_arg=('1' '2' '3')

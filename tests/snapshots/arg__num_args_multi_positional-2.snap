@@ -1,6 +1,6 @@
 ---
 source: tests/arg.rs
-expression: output2
+expression: "util::run(spec, args)"
 ---
 claptrap_word='word'
 claptrap_file=('file1' 'file2' 'file3')
