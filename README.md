@@ -4,7 +4,7 @@
 
 # Claptrap 👏🪤
 
-Bring the power of [`clap`](https://crates.io/crates/clap) command line parsing to shell scripts.
+Bring the power of [Clap](https://crates.io/crates/clap) to shell scripts.
 
 ## Examples
 

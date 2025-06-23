@@ -1,6 +1,6 @@
 [package]
 name = "claptrap"
-description = "Bring the power of clap command line parsing to shell scripts."
+description = "Bring the power of Clap to shell scripts."
 version = "0.1.0"
 authors = ["FujiApple <fujiapple852@gmail.com>"]
 documentation = "https://github.com/fujiapple852/claptrap"
