@@ -1,0 +1,6 @@
+---
+source: tests/arg.rs
+expression: "util::run(spec, args)"
+---
+claptrap_dbg='true'
+claptrap_infile='file'

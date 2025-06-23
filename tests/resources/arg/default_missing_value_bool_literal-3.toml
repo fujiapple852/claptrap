@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+create = { long = "create", value-name = "BOOL", num-args = "optional", require-equals = true, default-missing-value = "true" }

@@ -1,6 +1,6 @@
 ---
 source: tests/command.rs
-expression: output1
+expression: "util::run(spec, args)"
 ---
 command cat <<'EOF_e261705d'
 [1m[31merror:[0m unexpected argument '[33m-V[0m' found

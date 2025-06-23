@@ -1,0 +1,6 @@
+---
+source: tests/basic.rs
+expression: "util::run(spec, args)"
+---
+claptrap_mode='stream'
+claptrap_protocol='udp'

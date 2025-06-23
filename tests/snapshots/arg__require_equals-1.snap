@@ -1,0 +1,5 @@
+---
+source: tests/arg.rs
+expression: "util::run(spec, args)"
+---
+claptrap_cfg='file.conf'

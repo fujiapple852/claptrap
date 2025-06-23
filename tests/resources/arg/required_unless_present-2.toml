@@ -1,0 +1,4 @@
+name = "prog"
+[args]
+cfg = { long = "config", required-unless-present = "dbg", action = "set" }
+dbg = { long = "debug", action = "set-true" }

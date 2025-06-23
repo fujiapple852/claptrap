@@ -1,0 +1,6 @@
+---
+source: tests/arg.rs
+expression: "util::run(spec, args)"
+---
+claptrap_first='one'
+claptrap_third='three'

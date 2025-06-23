@@ -1,0 +1,4 @@
+name = "prog"
+[args]
+config = { long = "config", action = "set", requires-if = { arg = "other", value = "my.cfg" } }
+other = {}

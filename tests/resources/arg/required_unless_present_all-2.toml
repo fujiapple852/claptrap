@@ -1,0 +1,5 @@
+name = "prog"
+[args]
+cfg = { long = "config", required-unless-present-all = ["dbg", "infile"], action = "set" }
+dbg = { long = "debug", action = "set-true" }
+infile = { short = 'i', action = "set" }
