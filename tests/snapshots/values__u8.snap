@@ -1,5 +1,0 @@
----
-source: tests/values.rs
-expression: "util::run(spec, args)"
----
-claptrap_foo='255'

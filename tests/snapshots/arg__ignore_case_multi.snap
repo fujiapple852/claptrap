@@ -1,5 +1,0 @@
----
-source: tests/arg.rs
-expression: "util::run(spec, args)"
----
-claptrap_option=('TeSt123' 'teST123' 'tESt321')

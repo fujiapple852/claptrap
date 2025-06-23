@@ -1,8 +1,0 @@
----
-source: tests/command.rs
-expression: "util::run(spec, args)"
----
-command cat <<'EOF_61e9d487'
-myprog-test v1.1
-EOF_61e9d487
-exit 0

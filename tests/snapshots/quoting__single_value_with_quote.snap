@@ -1,5 +1,0 @@
----
-source: tests/quoting.rs
-expression: "util::run(spec, args)"
----
-claptrap_val='foo'\''bar'

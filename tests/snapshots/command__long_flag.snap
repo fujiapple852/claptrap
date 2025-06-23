@@ -1,5 +1,0 @@
----
-source: tests/command.rs
-expression: "util::run(spec, args)"
----
-claptrap_sync_search='true'

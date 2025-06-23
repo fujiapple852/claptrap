@@ -1,0 +1,5 @@
+---
+source: tests/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap_baz=('baz1' 'baz2' 'baz3')

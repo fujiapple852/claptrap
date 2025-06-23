@@ -1,6 +1,0 @@
----
-source: tests/arg_group.rs
-expression: "util::run(spec, args)"
----
-claptrap_flag='true'
-claptrap_color='false'
