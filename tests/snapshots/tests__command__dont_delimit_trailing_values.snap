@@ -2,5 +2,5 @@
 source: tests/tests.rs
 expression: "super::run(spec, args)"
 ---
-claptrap_cmd='cmd'
-claptrap_rest=('foo' '--' 'arg1' '-r' 'val1')
+claptrap_cmd='foo'
+claptrap_rest=('arg1,arg2,arg3')
