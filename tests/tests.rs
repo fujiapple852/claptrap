@@ -180,6 +180,7 @@ mod arg {
     #[test_case(case!("arg", "default_values-2"))]
     #[test_case(case!("arg", "display_order"))]
     #[test_case(case!("arg", "exclusive"))]
+    #[test_case(case!("arg", "global"))]
     #[test_case(case!("arg", "group"))]
     #[test_case(case!("arg", "groups"))]
     #[test_case(case!("arg", "help"))]

@@ -1,0 +1,7 @@
+name = "prog"
+[args]
+verb = { long = "verbose", short = 'v', action = "set-true", global = true }
+[[subcommands]]
+name = "test"
+[[subcommands]]
+name = "do-stuff"
