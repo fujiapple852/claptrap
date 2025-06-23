@@ -1,1 +1,1 @@
-cmd foo -- arg1 -r val1
+foo -- arg1,arg2,arg3
