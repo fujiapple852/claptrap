@@ -1,0 +1,8 @@
+name = "myprog"
+subcommand-negates-reqs = true
+[args]
+opt = { long = "opt", required = true, action = "set" }
+[[subcommands]]
+name = "test"
+[subcommands.args]
+arg = { long = "arg", action = "set" }
