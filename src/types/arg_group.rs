@@ -1,26 +1,11 @@
 use serde::Deserialize;
 
-#[derive(Debug)]
-pub struct NamedArgGroup {
-    pub name: String,
-    pub arg_group: ArgGroup,
-}
-
-impl NamedArgGroup {
-    #[must_use]
-    pub fn new(name: String, arg: ArgGroup) -> Self {
-        Self {
-            name,
-            arg_group: arg,
-        }
-    }
-}
-
 #[derive(Debug, Deserialize, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 pub struct ArgGroup {
-    id: Option<String>,
+    #[serde(skip)]
+    pub(crate) id: String,
     args: Option<Vec<String>>,
     multiple: Option<bool>,
     required: Option<bool>,
@@ -30,13 +15,9 @@ pub struct ArgGroup {
     conflicts_with_all: Option<Vec<String>>,
 }
 
-impl From<NamedArgGroup> for clap::ArgGroup {
-    fn from(named_arg_group: NamedArgGroup) -> Self {
-        let value = named_arg_group.arg_group;
-        let mut arg_group = Self::new(named_arg_group.name);
-        if let Some(id) = value.id {
-            arg_group = arg_group.id(id);
-        }
+impl From<ArgGroup> for clap::ArgGroup {
+    fn from(value: ArgGroup) -> Self {
+        let mut arg_group = Self::new(value.id);
         if let Some(args) = value.args {
             arg_group = arg_group.args(args);
         }
