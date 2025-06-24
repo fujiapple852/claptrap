@@ -1,7 +1,7 @@
-use crate::arg::Arg;
-use crate::arg_group::{ArgGroup, NamedArgGroup};
-use crate::style::Styles;
-use crate::values::ValueParser;
+use crate::types::arg::Arg;
+use crate::types::arg_group::{ArgGroup, NamedArgGroup};
+use crate::types::style::Styles;
+use crate::types::values::ValueParser;
 use indexmap::IndexMap;
 use serde::{Deserialize, Deserializer};
 
@@ -79,16 +79,6 @@ pub struct Command {
     subcommand_help_heading: Option<String>,
 }
 
-impl Command {
-    #[must_use]
-    pub fn get_name(&self) -> &str {
-        &self.name
-    }
-    pub fn get_subcommands(&self) -> impl Iterator<Item = &Self> {
-        self.subcommands.iter()
-    }
-}
-
 fn deserialize_args<'de, D>(de: D) -> Result<Option<IndexMap<String, Arg>>, D::Error>
 where
     D: Deserializer<'de>,
@@ -101,6 +91,15 @@ where
 }
 
 impl Command {
+    #[must_use]
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn get_subcommands(&self) -> impl Iterator<Item = &Self> {
+        self.subcommands.iter()
+    }
+
     pub fn get_arguments(&self) -> impl Iterator<Item = &Arg> {
         self.args
             .as_ref()
