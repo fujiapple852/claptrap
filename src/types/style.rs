@@ -45,6 +45,7 @@ impl From<Styles> for clap::builder::Styles {
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "kebab-case")]
+#[serde(deny_unknown_fields)]
 struct Style {
     fg: Option<Color>,
     bg: Option<Color>,
@@ -245,7 +246,7 @@ enum Effect {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::style::Effect;
+    use crate::types::style::Effect;
     use test_case::test_case;
 
     #[test_case(serde_json::json!("black"), Ok(Color::Ansi(AnsiColor::Black)); "black")]

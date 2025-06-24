@@ -119,7 +119,7 @@ impl<'de> serde::Deserialize<'de> for NumArgs {
 }
 
 fn parse_num_args(value: &str) -> Result<NumArgs, String> {
-    pub fn parse(value: &str) -> Result<NumArgs, String> {
+    fn parse(value: &str) -> Result<NumArgs, String> {
         if value.contains("..")
             && !value.contains("..=")
             && !value.ends_with("..")

@@ -1,5 +1,5 @@
-use crate::num_args::NumArgs;
-use crate::values::ValueParser;
+use crate::types::num_args::NumArgs;
+use crate::types::values::ValueParser;
 use serde::Deserialize;
 
 /// Represents a command line argument configuration.
