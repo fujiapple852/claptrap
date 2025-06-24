@@ -6,7 +6,68 @@
 
 Bring the power of [Clap](https://crates.io/crates/clap) to shell scripts.
 
-Claptrap is a tool that allows you to parse complex command line arguments in shell scripts from a specification file.
+Claptrap is a tool that allows you to parse complex command line arguments in shell scripts using a declarative
+specification.
+
+## Example
+
+`hello.sh`:
+
+```bash
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+eval "$(claptrap --spec - -- "$@" <<'SPEC'
+  name = "hello"
+  version = "0.1.0"
+  arg-required-else-help = true
+  [args]
+  format = { short = "f", long = "format", required = true, value-parser = ["toml", "yaml", "json"] }
+  exts = { long = "extensions", num-args = "1..", default-values = ["txt", "sh", "rs"] }
+SPEC
+)"
+
+echo "format: $claptrap_format"
+for i in "${!claptrap_exts[@]}"; do
+  echo "extensions[$i]: ${claptrap_exts[$i]}"
+done
+```
+
+Show usage:
+
+```shell
+$ ./hello.sh
+Usage: hello [OPTIONS] --format <format>
+
+Options:
+  -f, --format <format>       [possible values: toml, yaml, json]
+      --extensions <exts>...  [default: txt sh rs]
+  -h, --help                  Print help
+  -V, --version               Print version
+```
+
+Parse arguments:
+
+```shell
+$ ./hello.sh -f json
+protocol: json
+extensions[0]: txt
+extensions[1]: sh
+extensions[2]: rs
+```
+
+Error handling:
+
+```shell
+$ ./hello.sh -f yml --extensions md ts js
+error: invalid value 'yml' for '--format <format>'
+  [possible values: toml, yaml, json]
+
+  tip: a similar value exists: 'yaml'
+
+For more information, try '--help'.
+```
 
 ## Features
 
@@ -35,73 +96,6 @@ Claptrap supports the full range of Clap features, including:
 
 See the full list of [supported](https://claptrap.cli.rs/reference/supported/) Clap features.
 
-## Example
-
-`myapp.sh`:
-
-```bash
-#!/usr/bin/env bash
-
-set -euo pipefail
-
-eval "$(claptrap --spec myapp.toml -- "$@")"
-
-echo "mode: $claptrap_mode"
-echo "protocol: $claptrap_protocol"
-```
-
-`myapp.toml`:
-
-```toml
-name = "myapp"
-version = "0.1.0"
-
-[args]
-mode = { short = "m", long = "mode" }
-protocol = { short = "p", long = "protocol" }
-```
-
-Show usage (also `-h` or `--help`):
-
-```shell
-$ ./myapp.sh
-Usage: myapp [OPTIONS]
-
-Options:
-  -m, --mode <mode>
-  -p, --protocol <protocol>
-  -h, --help                 Print help
-  -V, --version              Print version
-```
-
-Show version:
-
-```shell
-$ ./myapp.sh -V
-myapp 0.1.0
-```
-
-Parse arguments:
-
-```shell
-$ ./myapp.sh -m normal --protocol http
-mode: normal
-protocol: http
-```
-
-Error handling:
-
-```shell
-$ ./myapp.sh -m normal --protocl http
-error: unexpected argument '--protocl' found
-
-  tip: a similar argument exists: '--protocol'
-
-Usage: myapp --mode <mode> --protocol <protocol>
-
-For more information, try '--help'.
-```
-
 ## Installation
 
 ### Cargo
@@ -112,23 +106,23 @@ For more information, try '--help'.
 cargo install claptrap --locked
 ```
 
-## Status
-
-Incomplete WIP, unpublished, experimental.
-
 ## Goals and non-goals
 
-Claptrap is not an argument parser, but rather a command line tool that wraps the `clap` library and provides
-integration with shell scripts. The goal is to expose the full power of Clap to shell scripts, allowing you to define
-your command line interface in a declarative way.
+Claptrap is a command line tool that wraps the `clap` library and provides integration with shell scripts. The goal is
+to expose the full power of Clap to shell scripts, allowing you to define your command line interface in a declarative
+way.
 
-If you are unable to install the `claptrap` binary, or you prefer to parse command line arguments using native shell
-scripts, you should consider using alternative tools, see the [alternatives](#alternatives) section. Adding support for
-generating shell scripts that parse command line arguments is a non-goal Claptrap.
+If you prefer to parse command line arguments using native shell scripts then you should consider using
+an [alternative](#alternatives) tools. Adding support for generating shell scripts that parse command line arguments is
+a non-goal for Claptrap.
 
 ## Alternatives
 
 - [Argc](https://crates.io/crates/argc)
+
+## Status
+
+Incomplete WIP, unpublished, experimental.
 
 ## License
 
