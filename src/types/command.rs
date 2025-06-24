@@ -1,5 +1,5 @@
 use crate::types::arg::Arg;
-use crate::types::arg_group::{ArgGroup, NamedArgGroup};
+use crate::types::arg_group::ArgGroup;
 use crate::types::style::Styles;
 use crate::types::values::ValueParser;
 use indexmap::IndexMap;
@@ -15,6 +15,7 @@ pub struct Command {
     args: Option<IndexMap<String, Arg>>,
     #[serde(default)]
     subcommands: Vec<Command>,
+    #[serde(default, deserialize_with = "deserialize_groups")]
     groups: Option<IndexMap<String, ArgGroup>>,
     ignore_errors: Option<bool>,
     args_override_self: Option<bool>,
@@ -88,6 +89,18 @@ where
         map.iter_mut().for_each(|(id, arg)| arg.id.clone_from(id));
     }
     Ok(args)
+}
+
+fn deserialize_groups<'de, D>(de: D) -> Result<Option<IndexMap<String, ArgGroup>>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let mut groups = Option::<IndexMap<String, ArgGroup>>::deserialize(de)?;
+    if let Some(map) = &mut groups {
+        map.iter_mut()
+            .for_each(|(name, group)| group.id.clone_from(name));
+    }
+    Ok(groups)
 }
 
 impl Command {
@@ -303,11 +316,7 @@ impl From<Command> for clap::Command {
             Vec::new()
         });
         if let Some(groups) = cmd.groups {
-            command = command.groups(
-                groups
-                    .into_iter()
-                    .map(|(name, group)| clap::ArgGroup::from(NamedArgGroup::new(name, group))),
-            );
+            command = command.groups(groups.into_values().map(clap::ArgGroup::from));
         }
         command = command.subcommands(cmd.subcommands);
         command
