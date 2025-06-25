@@ -5,7 +5,29 @@ use crate::types::values::ValueParser;
 use indexmap::IndexMap;
 use serde::{Deserialize, Deserializer};
 
-/// Represents a command configuration for a CLI application.
+/// A deserializable representation of a Clap command.
+///
+/// # Example
+///
+/// ```rust
+/// use claptrap::types::Command;
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// let spec = r#"
+///     name = "myapp"
+///     version = "1.0.0"
+///     about = "An example application"
+///     [args]
+///     cfg = { short = 'c', long = "config", required = true }
+///  "#;
+/// let cmd: Command = toml::from_str(spec)?;
+/// let clap_cmd = clap::Command::from(cmd);
+/// let matches = clap_cmd.try_get_matches_from(vec!["myapp", "--config", "config.toml"])?;
+/// assert_eq!(matches.get_one::<String>("cfg"), Some(&"config.toml".to_string()));
+/// # Ok(())
+/// # }
+/// ```
+///
+/// See the Clap [`Command`](https://docs.rs/clap/latest/clap/struct.Command.html) documentation.
 #[derive(Debug, Deserialize, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
