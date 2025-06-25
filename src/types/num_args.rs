@@ -27,6 +27,7 @@ use std::ops::{Range, RangeFrom, RangeInclusive, RangeTo, RangeToInclusive};
 /// num-args = "..=3" # Represents at most 3 arguments (inclusive upper)
 /// ```
 #[derive(Debug, Clone, Eq, PartialEq)]
+#[non_exhaustive]
 pub enum NumArgs {
     /// Represents a specific number of arguments.
     ///

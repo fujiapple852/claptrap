@@ -5,8 +5,8 @@ use clap::ArgAction;
 use clap::parser::ValuesRef;
 use std::ffi::OsString;
 use std::fmt::Display;
-use types::command::Command;
-use types::values::ValueParser;
+use types::Command;
+use types::ValueParser;
 
 pub mod output;
 pub mod types;

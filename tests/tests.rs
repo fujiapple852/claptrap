@@ -1,5 +1,5 @@
 use claptrap::parse;
-use claptrap::types::command::Command;
+use claptrap::types::Command;
 use std::ffi::OsString;
 
 macro_rules! case {

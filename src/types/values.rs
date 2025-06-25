@@ -2,6 +2,7 @@ use serde::Deserialize;
 use serde::de::value::BorrowedStrDeserializer;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
+#[non_exhaustive]
 pub enum ValueParser {
     Bool,
     Boolish,
@@ -109,6 +110,7 @@ impl From<ValueParser> for clap::builder::ValueParser {
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Deserialize)]
 #[serde(rename_all = "kebab-case")]
+#[non_exhaustive]
 enum TypedValueParser {
     Bool,
     Boolish,

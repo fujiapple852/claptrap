@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer};
 #[derive(Debug, Deserialize, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
+#[non_exhaustive]
 pub struct Command {
     name: String,
     #[serde(default, deserialize_with = "deserialize_args")]
@@ -105,15 +106,15 @@ where
 
 impl Command {
     #[must_use]
-    pub fn get_name(&self) -> &str {
+    pub(crate) fn get_name(&self) -> &str {
         &self.name
     }
 
-    pub fn get_subcommands(&self) -> impl Iterator<Item = &Self> {
+    pub(crate) fn get_subcommands(&self) -> impl Iterator<Item = &Self> {
         self.subcommands.iter()
     }
 
-    pub fn get_arguments(&self) -> impl Iterator<Item = &Arg> {
+    pub(crate) fn get_arguments(&self) -> impl Iterator<Item = &Arg> {
         self.args
             .as_ref()
             .into_iter()
@@ -325,7 +326,8 @@ impl From<Command> for clap::Command {
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "kebab-case")]
-pub enum ColorChoice {
+#[non_exhaustive]
+enum ColorChoice {
     Auto,
     Always,
     Never,

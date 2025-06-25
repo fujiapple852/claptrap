@@ -5,6 +5,8 @@ use std::fmt::Formatter;
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "kebab-case")]
+#[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct Styles {
     header: Option<Style>,
     error: Option<Style>,
@@ -46,6 +48,7 @@ impl From<Styles> for clap::builder::Styles {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "kebab-case")]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 struct Style {
     fg: Option<Color>,
     bg: Option<Color>,
@@ -64,6 +67,7 @@ impl From<Style> for anstyle::Style {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
+#[non_exhaustive]
 enum Color {
     Ansi(AnsiColor),
     Ansi256(Ansi256Color),
@@ -138,6 +142,7 @@ impl From<Color> for anstyle::Color {
 
 #[derive(Debug, Clone, Eq, PartialEq, Deserialize)]
 #[serde(rename_all = "kebab-case")]
+#[non_exhaustive]
 enum AnsiColor {
     Black,
     Red,
@@ -181,6 +186,7 @@ impl From<AnsiColor> for anstyle::AnsiColor {
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[non_exhaustive]
 struct Ansi256Color(u8);
 
 impl From<Ansi256Color> for anstyle::Ansi256Color {
@@ -190,6 +196,7 @@ impl From<Ansi256Color> for anstyle::Ansi256Color {
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[non_exhaustive]
 struct RgbColor(u8, u8, u8);
 
 impl From<RgbColor> for anstyle::RgbColor {
@@ -199,6 +206,7 @@ impl From<RgbColor> for anstyle::RgbColor {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq, Deserialize)]
+#[non_exhaustive]
 struct Effects(Vec<Effect>);
 
 impl From<Effects> for anstyle::Effects {
@@ -228,6 +236,7 @@ impl From<Effects> for anstyle::Effects {
 
 #[derive(Debug, Clone, Eq, PartialEq, Deserialize)]
 #[serde(rename_all = "kebab-case")]
+#[non_exhaustive]
 enum Effect {
     Bold,
     Dimmed,
