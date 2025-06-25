@@ -3,6 +3,7 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
+#[non_exhaustive]
 pub struct ArgGroup {
     #[serde(skip)]
     pub(crate) id: String,

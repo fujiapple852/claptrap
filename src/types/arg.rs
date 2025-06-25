@@ -6,6 +6,7 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
+#[non_exhaustive]
 pub struct Arg {
     #[serde(skip)]
     pub(crate) id: String,
@@ -78,11 +79,11 @@ pub struct Arg {
 
 impl Arg {
     #[must_use]
-    pub fn get_id(&self) -> &str {
+    pub(crate) fn get_id(&self) -> &str {
         self.id.as_ref()
     }
     #[must_use]
-    pub fn value_parser(&self) -> Option<&ValueParser> {
+    pub(crate) fn value_parser(&self) -> Option<&ValueParser> {
         self.value_parser.as_ref()
     }
 }
@@ -376,7 +377,8 @@ impl From<Arg> for clap::Arg {
 
 #[derive(Debug, Deserialize, Default, Clone)]
 #[serde(rename_all = "kebab-case")]
-pub enum ArgAction {
+#[non_exhaustive]
+enum ArgAction {
     #[default]
     Set,
     Append,
@@ -407,7 +409,8 @@ impl From<ArgAction> for clap::ArgAction {
 
 #[derive(Debug, Deserialize, Default, Clone)]
 #[serde(rename_all = "kebab-case")]
-pub enum ValueHint {
+#[non_exhaustive]
+enum ValueHint {
     #[default]
     Unknown,
     Other,
@@ -447,7 +450,8 @@ impl From<ValueHint> for clap::ValueHint {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
-pub struct DefaultIf {
+#[non_exhaustive]
+struct DefaultIf {
     arg: String,
     value: Option<String>,
     default: Option<String>,
@@ -456,7 +460,8 @@ pub struct DefaultIf {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
-pub struct RequiresIf {
+#[non_exhaustive]
+struct RequiresIf {
     arg: String,
     value: Option<String>,
 }
@@ -464,7 +469,8 @@ pub struct RequiresIf {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
-pub struct IfEq {
+#[non_exhaustive]
+struct IfEq {
     arg: String,
     value: String,
 }

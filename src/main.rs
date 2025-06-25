@@ -6,7 +6,7 @@ use clap::Parser;
 use clap::builder::StyledStr;
 use claptrap::output::{CatCmd, ExitCode, Output};
 use claptrap::parse;
-use claptrap::types::command::Command;
+use claptrap::types::Command;
 use std::ffi::OsString;
 use std::io::Write;
 use std::panic;
