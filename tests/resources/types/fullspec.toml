@@ -1,0 +1,164 @@
+name = "fullspec"
+version = "1.0.0"
+long-version = "1.0.0 (build abcdef)"
+author = "Example <example@example.com>"
+about = "Example spec with every field"
+long-about = "Detailed description"
+ignore-errors = true
+args-override-self = true
+dont-delimit-trailing-values = true
+color = "auto"
+term-width = 80
+max-term-width = 120
+disable-version-flag = true
+propagate-version = true
+next-line-help = true
+disable-help-flag = true
+disable-help-subcommand = true
+disable-colored-help = true
+help-expected = true
+hide-possible-values = true
+infer-long-args = true
+infer-subcommands = true
+bin-name = "fullspec"
+display-name = "Full Spec CLI"
+after-help = "after"
+after-long-help = "after long"
+before-help = "before"
+before-long-help = "before long"
+override-usage = "USAGE"
+override-help = "OVERRIDE HELP"
+help-template = "{usage}\n{all-args}"
+flatten-help = true
+next-help-heading = "NEXT"
+next-display-order = 42
+arg-required-else-help = true
+allow-missing-positional = true
+short-flag = 'f'
+long-flag = "full"
+alias = "fs"
+short-flag-alias = 's'
+long-flag-alias = "fullspec"
+aliases = ["f1", "f2"]
+short-flag-aliases = ['x', 'y']
+long-flag-aliases = ["lx", "ly"]
+visible-alias = "visible"
+visible-short-flag-alias = 'v'
+visible-long-flag-alias = "vis-long"
+visible-aliases = ["va1", "va2"]
+visible-short-flag-aliases = ['a', 'b']
+visible-long-flag-aliases = ["vl1", "vl2"]
+display-order = 1
+hide = false
+subcommand-required = true
+allow-external-subcommands = true
+external-subcommand-value-parser = ":string:"
+args-conflicts-with-subcommands = true
+subcommand-precedence-over-arg = true
+subcommand-negates-reqs = true
+multicall = true
+subcommand-value-name = "CMD"
+subcommand-help-heading = "COMMANDS"
+
+[styles]
+header = { fg = "green", effects = ["bold"] }
+error = { fg = "red" }
+usage = { fg = "yellow" }
+literal = { fg = "magenta" }
+placeholder = { fg = "white" }
+valid = { fg = "bright-green" }
+invalid = { fg = "#ff0000" }
+
+[groups]
+
+[groups.all_flags]
+args = ["flag1", "flag2"]
+multiple = true
+required = true
+requires = "debug"
+requires-all = ["debug"]
+conflicts-with = "conflict"
+conflicts-with-all = ["c1", "c2"]
+
+[args]
+flag2 = { short = 'b', long = "flag2", action = "set-true" }
+debug = { long = "debug", action = "set-true" }
+conflict = { long = "conflict", action = "set-true" }
+flag3 = { long = "flag3", action = "set" }
+
+[args.flag1]
+short = 'a'
+long = "flag1"
+alias = "aflag"
+short-alias = 'A'
+aliases = ["fa1", "fa2"]
+short-aliases = ['b', 'c']
+visible-alias = "vflag"
+visible-short-alias = 'V'
+visible-aliases = ["vf1", "vf2"]
+visible-short-aliases = ['d', 'e']
+index = 1
+trailing-var-arg = false
+last = false
+required = true
+requires = "flag2"
+exclusive = true
+global = true
+action = "set"
+value-parser = ["one", "two"]
+num-args = "1..=2"
+value-name = "VAL"
+value-names = ["V1", "V2"]
+value-hint = "file-path"
+ignore-case = true
+allow-hyphen-values = true
+allow-negative-numbers = true
+require-equals = true
+value-delimiter = ','
+value-terminator = "!"
+raw = true
+default-value = "def"
+default-values = ["d1", "d2"]
+default-missing-value = "dmv"
+default-missing-value-os = "dmvos"
+default-missing-values = ["dm1", "dm2"]
+default-missing-values-os = ["dm3", "dm4"]
+env = "FLAG1_ENV"
+help = "help text"
+long-help = "long help"
+display-order = 1
+help-heading = "FLAGS"
+next-line-help = true
+hide = false
+hide-possible-values = false
+hide-default-value = false
+hide-env = false
+hide-env-values = false
+hide-short-help = false
+hide-long-help = false
+group = "all_flags"
+groups = ["all_flags"]
+default-value-if = { arg = "flag2", value = "special", default = "df" }
+default-value-ifs = [
+  { arg = "flag2", value = "s1", default = "d1" },
+  { arg = "flag2", value = "s2", default = "d2" },
+]
+required-unless-present = "flag2"
+required-unless-present-all = ["flag2"]
+required-unless-present-any = ["flag3"]
+required-if-eq = { arg = "flag2", value = "yes" }
+required-if-eq-any = [{ arg = "flag3", value = "v1" }]
+required-if-eq-all = [{ arg = "flag3", value = "v2" }]
+requires-if = { arg = "flag2", value = "on" }
+requires-ifs = [{ arg = "flag3", value = "on" }]
+conflicts-with = "debug"
+conflicts-with-all = ["other1"]
+overrides-with = "flag2"
+overrides-with-all = ["flag3"]
+
+[[subcommands]]
+name = "serve"
+about = "serve things"
+version = "1.0"
+[subcommands.args]
+port = { long = "port", value-parser = ":u16:", required = true }
