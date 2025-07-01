@@ -1,0 +1,22 @@
+name = "myprog"
+[args]
+arg1 = {}
+multi1 = { long = "multi1", num-args = "..", action = "set" }
+[[subcommands]]
+name = "first"
+about = "a first sub command"
+[subcommands.args]
+arg2 = {}
+multi2 = { long = "multi2", num-args = "..", action = "set" }
+[[subcommands.subcommands]]
+name = "nested"
+about = "A nested sub command under first"
+[subcommands.subcommands.args]
+arg3 = { long = "arg3", action = "append" }
+multi3 = { long = "multi3", num-args = "..", action = "set" }
+[[subcommands]]
+name = "another"
+about = "another sub command"
+[subcommands.args]
+arg4 = {}
+multi4 = { long = "multi4", num-args = "..", action = "set" }

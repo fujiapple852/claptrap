@@ -7,7 +7,9 @@ use clap::Parser;
 use clap::builder::StyledStr;
 use claptrap::output::{CatCmd, ExitCode, Output};
 use claptrap::parse;
+use claptrap::template::template_values;
 use claptrap::types::Command;
+use minijinja::{Environment, context};
 use std::ffi::OsString;
 use std::io::Write;
 use std::panic;
@@ -131,23 +133,32 @@ fn run_generate_man(
 }
 
 fn run_generate_template(
-    _spec_path: &Path,
-    _spec_format: SpecFormat,
+    spec_path: &Path,
+    spec_format: SpecFormat,
     shell: &Shell,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
+    let spec = parse_spec(spec_path, spec_format)?;
+    let clap_cmd = clap::Command::from(spec).no_binary_name(true);
     let template = match shell {
-        Shell::Bash => Ok(include_str!("../templates/bash_template.sh")),
-        Shell::Zsh => Ok(include_str!("../templates/zsh_template.sh")),
+        Shell::Bash => Ok(include_str!("../templates/bash_template.sh.j2")),
+        Shell::Zsh => Ok(include_str!("../templates/zsh_template.sh.j2")),
         _ => Err(anyhow::anyhow!(
-            "Unsupported shell for boilerplate generation: {:?}",
+            "Unsupported shell for script generation: {:?}",
             shell
         )),
     }?;
+    let values = template_values(&clap_cmd);
+    let mut env = Environment::new();
+    env.set_trim_blocks(true);
+    env.set_lstrip_blocks(true);
+    env.add_template("script", template)?;
+    let template = env.get_template("script")?;
+    let rendered = template.render(context! { spec => spec_path, values => values })?;
     if let Some(output_path) = output {
-        std::fs::write(output_path, template)?;
+        std::fs::write(output_path, rendered)?;
     } else {
-        std::io::stdout().write_all(template.as_bytes())?;
+        std::io::stdout().write_all(rendered.as_bytes())?;
     }
     Ok(())
 }

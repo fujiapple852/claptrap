@@ -154,6 +154,7 @@ dependencies = [
  "indexmap",
  "insta",
  "itertools",
+ "minijinja",
  "serde",
  "serde_json",
  "serde_yaml",
@@ -288,6 +289,15 @@ name = "memchr"
 version = "2.7.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "32a282da65faaf38286cf3be983213fcf1d2e2a58700e808f83f4ea9a4804bc0"
+
+[[package]]
+name = "minijinja"
+version = "2.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4e60ac08614cc09062820e51d5d94c2fce16b94ea4e5003bb81b99a95f84e876"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "once_cell"
