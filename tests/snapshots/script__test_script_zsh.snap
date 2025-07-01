@@ -1,0 +1,51 @@
+---
+source: tests/script.rs
+expression: "String::from_utf8_lossy(&output.stdout)"
+---
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+if ! command -v claptrap &> /dev/null; then
+    echo "claptrap command not found. Please install it first, see https://claptrap.cli.rs for instructions."
+    exit 1
+fi
+
+eval "$(claptrap --spec tests/resources/script/zsh/spec.toml -- "$@")"
+
+if [ -z "${claptrap__subcommand+x}" ]; then
+  if [ -n "${claptrap_arg1+x}" ]; then
+    echo "claptrap_arg1: ${claptrap_arg1}"
+  fi
+  if [ -n "${claptrap_multi1+x}" ]; then
+    echo "claptrap_multi1: ${claptrap_multi1}"
+  fi
+else
+  echo "claptrap__subcommand: ${claptrap__subcommand}"
+  case "${claptrap__subcommand}" in
+    "first")
+      if [ -n "${claptrap_first_arg2+x}" ]; then
+        echo "claptrap_first_arg2: ${claptrap_first_arg2}"
+      fi
+      if [ -n "${claptrap_first_multi2+x}" ]; then
+        echo "claptrap_first_multi2: ${claptrap_first_multi2}"
+      fi
+      ;;
+    "another")
+      if [ -n "${claptrap_another_arg4+x}" ]; then
+        echo "claptrap_another_arg4: ${claptrap_another_arg4}"
+      fi
+      if [ -n "${claptrap_another_multi4+x}" ]; then
+        echo "claptrap_another_multi4: ${claptrap_another_multi4}"
+      fi
+      ;;
+    "first::nested")
+      if [ -n "${claptrap_first_nested_arg3+x}" ]; then
+        echo "claptrap_first_nested_arg3: ${claptrap_first_nested_arg3}"
+      fi
+      if [ -n "${claptrap_first_nested_multi3+x}" ]; then
+        echo "claptrap_first_nested_multi3: ${claptrap_first_nested_multi3}"
+      fi
+      ;;
+  esac
+fi

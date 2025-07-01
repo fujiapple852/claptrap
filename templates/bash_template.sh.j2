@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v claptrap &> /dev/null; then
+    echo "claptrap command not found. Please install it first, see https://claptrap.cli.rs for instructions."
+    exit 1
+fi
+
+eval "$(claptrap --spec {{spec}} -- "$@")"
+
+{% macro dump_arg(arg) -%}
+{% if arg.multiple %}
+for i in "${{ '{!' }}{{ arg.name }}[@]{{ '}' }}"; do
+  echo "{{ arg.name }}[$i]: ${{ '{' }}{{ arg.name }}[$i]{{ '}' }}"
+done
+{% else %}
+echo "{{ arg.name }}: ${{ '{' }}{{ arg.name }}{{ '}' }}"
+{% endif %}
+{% endmacro -%}
+
+{% if values.subcommands|length == 0 %}
+{% for arg in values.args %}
+if [ -n "{{ '${' ~ arg.name ~ '+x}' }}" ]; then
+{{ dump_arg(arg)|indent(2, true) }}
+fi
+{% endfor %}
+{% else %}
+if [ -z "${claptrap__subcommand+x}" ]; then
+  {% for arg in values.args %}
+  if [ -n "{{ '${' ~ arg.name ~ '+x}' }}" ]; then
+{{ dump_arg(arg)|indent(4, true) }}
+  fi
+  {% endfor %}
+else
+  echo "claptrap__subcommand: ${claptrap__subcommand}"
+  case "${claptrap__subcommand}" in
+    {% for sub in values.subcommands %}
+    "{{ sub.name }}")
+      {% for arg in sub.args %}
+      if [ -n "{{ '${' ~ arg.name ~ '+x}' }}" ]; then
+{{ dump_arg(arg)|indent(8, true) }}
+      fi
+      {% endfor %}
+      ;;
+    {% endfor %}
+  esac
+fi
+{% endif %}
+
