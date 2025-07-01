@@ -1,7 +1,8 @@
 #![forbid(unsafe_code)]
 
-use crate::cli::{DocFormat, Shell, SpecFormat, SubCommand};
+use crate::cli::{DocFormat, Shell, SpecFormat, SpecInfo, SubCommand};
 use anstream::ColorChoice;
+use anyhow::anyhow;
 use clap::Parser;
 use clap::builder::StyledStr;
 use claptrap::output::{CatCmd, ExitCode, Output};
@@ -20,20 +21,35 @@ mod error;
 fn main() -> anyhow::Result<()> {
     let cli = cli::Cli::parse();
     match cli.command {
-        Some(SubCommand::Completion { shell, output }) => {
-            run_generate_completions(&cli.spec, cli.spec_format, shell, output)?;
+        Some(SubCommand::Completion {
+            spec: SpecInfo { spec, spec_format },
+            shell,
+            output,
+        }) => {
+            run_generate_completions(&spec, spec_format, shell, output)?;
             exit(0);
         }
-        Some(SubCommand::Man { output }) => {
-            run_generate_man(&cli.spec, cli.spec_format, output)?;
+        Some(SubCommand::Man {
+            spec: SpecInfo { spec, spec_format },
+            output,
+        }) => {
+            run_generate_man(&spec, spec_format, output)?;
             exit(0);
         }
-        Some(SubCommand::Script { shell, output }) => {
-            run_generate_template(&cli.spec, cli.spec_format, &shell, output)?;
+        Some(SubCommand::Script {
+            spec: SpecInfo { spec, spec_format },
+            shell,
+            output,
+        }) => {
+            run_generate_template(&spec, spec_format, &shell, output)?;
             exit(0);
         }
-        Some(SubCommand::Doc { format, output }) => {
-            run_generate_doc(&cli.spec, cli.spec_format, format, output)?;
+        Some(SubCommand::Doc {
+            spec: SpecInfo { spec, spec_format },
+            format,
+            output,
+        }) => {
+            run_generate_doc(&spec, spec_format, format, output)?;
             exit(0);
         }
         None => {
@@ -50,7 +66,10 @@ fn main() -> anyhow::Result<()> {
             let mut stdout =
                 anstream::AutoStream::new(std::io::stdout().lock(), ColorChoice::Always);
             match panic::catch_unwind(AssertUnwindSafe(|| {
-                run_app(&cli.spec, cli.spec_format, cli.args)
+                let spec = cli
+                    .spec
+                    .ok_or_else(|| anyhow!("internal error: spec was None"))?;
+                run_app(&spec, cli.spec_format, cli.args)
             })) {
                 Ok(val) => match val {
                     Ok(output) => {
