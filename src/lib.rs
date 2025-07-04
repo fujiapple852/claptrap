@@ -9,6 +9,7 @@ use types::Command;
 use types::ValueParser;
 
 pub mod output;
+pub mod template;
 pub mod types;
 
 /// Parse the provided arguments and generate output.

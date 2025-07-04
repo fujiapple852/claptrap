@@ -5,8 +5,9 @@ use anstream::ColorChoice;
 use anyhow::anyhow;
 use clap::Parser;
 use clap::builder::StyledStr;
-use claptrap::output::{CatCmd, ExitCode, Output, PREFIX};
+use claptrap::output::{CatCmd, ExitCode, Output};
 use claptrap::parse;
+use claptrap::template::template_values;
 use claptrap::types::Command;
 use minijinja::{Environment, context};
 use std::ffi::OsString;
@@ -137,25 +138,23 @@ fn run_generate_template(
     shell: &Shell,
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
+    let spec = parse_spec(spec_path, spec_format)?;
+    let clap_cmd = clap::Command::from(spec).no_binary_name(true);
     let template = match shell {
         Shell::Bash => Ok(include_str!("../templates/bash_template.sh.j2")),
+        Shell::Zsh => Ok(include_str!("../templates/zsh_template.sh.j2")),
         _ => Err(anyhow::anyhow!(
             "Unsupported shell for script generation: {:?}",
             shell
         )),
     }?;
-    let spec = parse_spec(spec_path, spec_format)?;
-    let clap_cmd = clap::Command::from(spec).no_binary_name(true);
-    let args = clap_cmd
-        .get_arguments()
-        .map(|arg| format!("{}_{}", PREFIX, arg.get_id()))
-        .collect::<Vec<_>>();
+    let values = template_values(&clap_cmd);
     let mut env = Environment::new();
     env.set_trim_blocks(true);
     env.set_lstrip_blocks(true);
     env.add_template("script", template)?;
     let template = env.get_template("script")?;
-    let rendered = template.render(context! { args => args, spec => spec_path })?;
+    let rendered = template.render(context! { spec => spec_path, values => values })?;
     if let Some(output_path) = output {
         std::fs::write(output_path, rendered)?;
     } else {

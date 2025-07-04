@@ -4,7 +4,7 @@ use test_case::test_matrix;
 
 const CLAPTRAP_BIN: &str = env!("CARGO_BIN_EXE_claptrap");
 
-#[test_matrix(["bash"]; "test_script")]
+#[test_matrix(["bash", "zsh"]; "test_script")]
 fn test_script(shell: &str) {
     let output = std::process::Command::new(CLAPTRAP_BIN)
         .arg("script")

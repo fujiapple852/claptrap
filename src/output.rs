@@ -6,13 +6,13 @@ use std::fmt::Display;
 /// The prefix for variables.
 pub const PREFIX: &str = "claptrap";
 
-/// The prefix for the subcommand variable/
+/// The prefix for the subcommand variable.
 pub const SUBCOMMAND_PREFIX: &str = "subcommand";
 
-/// The separator for subcommand paths in the variable value/
+/// The separator for subcommand paths in the variable value.
 pub const SUBCOMMAND_VALUE_SEPARATOR: &str = "::";
 
-/// The separator for subcommand paths in the variable name/
+/// The separator for subcommand paths in the variable name.
 pub const SUBCOMMAND_PATH_SEPARATOR: &str = "_";
 
 /// Represents the output of a claptrap command.

@@ -2,7 +2,7 @@
 source: tests/script.rs
 expression: "String::from_utf8_lossy(&output.stdout)"
 ---
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 set -euo pipefail
 
@@ -11,7 +11,7 @@ if ! command -v claptrap &> /dev/null; then
     exit 1
 fi
 
-eval "$(claptrap --spec tests/resources/script/bash/spec.toml -- "$@")"
+eval "$(claptrap --spec tests/resources/script/zsh/spec.toml -- "$@")"
 
 if [ -z "${claptrap__subcommand+x}" ]; then
   if [ -n "${claptrap_arg1+x}" ]; then
