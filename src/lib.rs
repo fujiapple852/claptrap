@@ -22,7 +22,7 @@ pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
         Ok(matches) => Output::Variables(
             extract_subcommand_path(&matches)
                 .into_iter()
-                .chain(extract_matches(&cmd, &clap_cmd, &matches, &[]))
+                .chain(extract_matches(&cmd, &clap_cmd, &matches))
                 .collect(),
         ),
         Err(err) => match err.kind() {
@@ -48,11 +48,14 @@ fn extract_matches(
     cmd: &Command,
     clap_cmd: &clap::Command,
     matches: &clap::ArgMatches,
-    prefix: &[String],
 ) -> Vec<Var> {
-    let vars = matches.ids().filter_map(|id| {
-        let arg = cmd.get_arguments().find(|a| a.get_id() == id.as_str())?;
-        let clap_arg = clap_cmd.get_arguments().find(|a| a.get_id() == id)?;
+    fn extract_arg(
+        arg: &types::Arg,
+        clap_arg: &clap::Arg,
+        id: &clap::Id,
+        matches: &clap::ArgMatches,
+        prefix: &[String],
+    ) -> Option<Var> {
         match clap_arg.get_action() {
             ArgAction::SetTrue | ArgAction::SetFalse => Some(Var::Single(
                 prefix.to_vec(),
@@ -84,26 +87,8 @@ fn extract_matches(
             }
             _ => None,
         }
-    });
-
-    let sub = matches.subcommand().into_iter().flat_map(|(name, sub_m)| {
-        cmd.get_subcommands()
-            .find(|sc| sc.get_name() == name)
-            .into_iter()
-            .filter_map(move |sub_cmd| {
-                clap_cmd
-                    .get_subcommands()
-                    .find(|sc| sc.get_name() == name)
-                    .map(|clap_sub| {
-                        let mut sub_prefix = prefix.to_vec();
-                        sub_prefix.push(name.to_string());
-                        extract_matches(sub_cmd, clap_sub, sub_m, &sub_prefix)
-                    })
-            })
-            .flatten()
-    });
-
-    vars.chain(sub).collect()
+    }
+    extract(cmd, clap_cmd, matches, &[], &extract_arg)
 }
 
 fn get_one(value_parser: &ValueParser, matches: &clap::ArgMatches, id: &str) -> Option<String> {
@@ -174,6 +159,43 @@ fn get_many_raw(matches: &clap::ArgMatches, id: &str) -> Option<Vec<String>> {
     matches
         .get_raw(id)
         .map(|values| values.map(|v| v.to_string_lossy().into_owned()).collect())
+}
+
+fn extract<F, T>(
+    cmd: &Command,
+    clap_cmd: &clap::Command,
+    matches: &clap::ArgMatches,
+    prefix: &[String],
+    func: &F,
+) -> Vec<T>
+where
+    F: Fn(&types::Arg, &clap::Arg, &clap::Id, &clap::ArgMatches, &[String]) -> Option<T>,
+{
+    let vars = matches.ids().fold(Vec::new(), |mut acc, id| {
+        if let (Some(arg), Some(clap_arg)) = (
+            cmd.get_arguments().find(|a| a.get_id() == id.as_str()),
+            clap_cmd.get_arguments().find(|a| a.get_id() == id),
+        ) {
+            if let Some(v) = func(arg, clap_arg, id, matches, prefix) {
+                acc.push(v);
+            }
+        }
+        acc
+    });
+    matches
+        .subcommand()
+        .into_iter()
+        .fold(vars, |mut acc, (name, sub_m)| {
+            if let (Some(sub_cmd), Some(clap_sub)) = (
+                cmd.get_subcommands().find(|sc| sc.get_name() == name),
+                clap_cmd.get_subcommands().find(|sc| sc.get_name() == name),
+            ) {
+                let mut sub_prefix = prefix.to_vec();
+                sub_prefix.push(name.to_string());
+                acc.extend(extract(sub_cmd, clap_sub, sub_m, &sub_prefix, func));
+            }
+            acc
+        })
 }
 
 /// Extension trait for `clap::Arg` to determine if it is many-valued.
