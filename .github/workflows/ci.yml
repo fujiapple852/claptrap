@@ -164,7 +164,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: Swatinem/rust-cache@v2
       - name: install cargo-msrv
-        run: cargo install --git https://github.com/foresterre/cargo-msrv.git cargo-msrv
+        run: cargo install --git https://github.com/foresterre/cargo-msrv.git --tag v0.18.4 cargo-msrv
       - name: check msrv
         run: cargo msrv verify --output-format json --manifest-path Cargo.toml -- cargo check
 
