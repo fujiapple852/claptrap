@@ -1,4 +1,4 @@
-use crate::IsManyEx;
+use crate::clap_ext::IsManyEx;
 use crate::output::{CatCmd, ExitCode, Output, Var};
 use crate::types::{Command, ValueParser};
 use clap::ArgAction;
