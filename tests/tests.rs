@@ -1,4 +1,4 @@
-use claptrap::parse;
+use claptrap::parse::parse;
 use claptrap::types::Command;
 use std::ffi::OsString;
 

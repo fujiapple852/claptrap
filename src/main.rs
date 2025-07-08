@@ -177,7 +177,7 @@ fn run_app(
     spec_format: SpecFormat,
     args: Vec<OsString>,
 ) -> error::Result<Output> {
-    Ok(parse(parse_spec(spec_path, spec_format)?, args))
+    Ok(parse::parse(parse_spec(spec_path, spec_format)?, args))
 }
 
 fn parse_spec(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Command> {
