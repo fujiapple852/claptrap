@@ -7,5 +7,7 @@ literal = { fg = "magenta" }
 placeholder = { fg = "white" }
 valid = { fg = "bright-green" }
 invalid = { fg = "#ff0000" }
+context = { fg = "yellow", bg = "#000000", effects = ["bold"] }
+context-value = { fg = "cyan", bg = "#000000", effects = ["bold"] }
 [args]
-foo = { help = "It does foo stuff", short = 'f', long = "foo", value-name = "FOO" }
+foo = { help = "It does foo stuff", short = 'f', long = "foo", value-name = "FOO", default-value = "bar", env = "MY_FOO", action = "set" }

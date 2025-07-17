@@ -15,6 +15,8 @@ pub struct Styles {
     placeholder: Option<Style>,
     valid: Option<Style>,
     invalid: Option<Style>,
+    context: Option<Style>,
+    context_value: Option<Style>,
 }
 
 impl From<Styles> for clap::builder::Styles {
@@ -40,6 +42,12 @@ impl From<Styles> for clap::builder::Styles {
         }
         if let Some(invalid) = styles.invalid {
             builder = builder.invalid(anstyle::Style::from(invalid));
+        }
+        if let Some(context) = styles.context {
+            builder = builder.context(anstyle::Style::from(context));
+        }
+        if let Some(context_value) = styles.context_value {
+            builder = builder.context_value(anstyle::Style::from(context_value));
         }
         builder
     }

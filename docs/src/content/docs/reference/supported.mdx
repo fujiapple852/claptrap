@@ -3,8 +3,8 @@ title: "Supported Clap APIs"
 description: "The status of Command, Arg and ArgGroup Clap APIs support in Claptrap"
 ---
 
-The following tables list the status of [clap](https://docs.rs/clap/latest/clap)'s `Command`, `Arg` and `ArgGroup`
-APIs in `claptrap`.
+The following tables list the status of [clap](https://docs.rs/clap/latest/clap)'s `Command`, `Arg`, `ArgGroup` and
+`Styles` APIs in `claptrap`.
 
 ### [Command](https://docs.rs/clap/latest/clap/struct.Command.html)
 
@@ -168,3 +168,17 @@ APIs in `claptrap`.
 | [`requires_all`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.requires_all) | ✅ | |
 | [`conflicts_with`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.conflicts_with) | ✅ | |
 | [`conflicts_with_all`](https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.conflicts_with_all) | ✅ | |
+
+### [Styles](https://docs.rs/clap/latest/clap/builder/struct.Styles.html)
+
+| Setter | Supported | Notes |
+| ------ | --------- | ----- |
+| [`header`](https://docs.rs/clap/latest/clap/builder/struct.Styles.html#method.header) | ✅ | |
+| [`error`](https://docs.rs/clap/latest/clap/builder/struct.Styles.html#method.error) | ✅ | |
+| [`usage`](https://docs.rs/clap/latest/clap/builder/struct.Styles.html#method.usage) | ✅ | |
+| [`literal`](https://docs.rs/clap/latest/clap/builder/struct.Styles.html#method.literal) | ✅ | |
+| [`placeholder`](https://docs.rs/clap/latest/clap/builder/struct.Styles.html#method.placeholder) | ✅ | |
+| [`valid`](https://docs.rs/clap/latest/clap/builder/struct.Styles.html#method.valid) | ✅ | |
+| [`invalid`](https://docs.rs/clap/latest/clap/builder/struct.Styles.html#method.invalid) | ✅ | |
+| [`context`](https://docs.rs/clap/latest/clap/builder/struct.Styles.html#method.context) | ✅ | since Clap 4.5.41 |
+| [`context_value`](https://docs.rs/clap/latest/clap/builder/struct.Styles.html#method.context_value) | ✅ | since Clap 4.5.41 |
