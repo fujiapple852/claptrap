@@ -62,7 +62,7 @@ For more information, try '--help'.
 
 ## Features
 
-Claptrap supports the full range of CLap features, including short and long flags, default values, subcommands, argument
+Claptrap supports the full range of Clap features, including short and long flags, default values, subcommands, argument
 groups, typed parsing, value hints, environment variables, color and styles and many more. See the full list
 of [supported](https://claptrap.cli.rs/reference/supported/) Clap features.
 
