@@ -1,1 +1,1 @@
--F in-file out-file
+prog -F in-file out-file

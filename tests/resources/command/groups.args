@@ -1,1 +1,1 @@
---major 1 -i eth0
+cmd --major 1 -i eth0

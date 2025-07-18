@@ -1,1 +1,1 @@
---myopt non_default another_value
+prog --myopt non_default another_value

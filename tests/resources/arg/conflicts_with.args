@@ -1,1 +1,1 @@
---debug --config file.conf
+prog --debug --config file.conf

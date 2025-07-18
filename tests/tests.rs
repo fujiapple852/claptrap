@@ -55,6 +55,7 @@ mod command {
     #[test_case(case!("command", "groups"))]
     #[test_case(case!("command", "subcommand"))]
     #[test_case(case!("command", "subcommand_many"))]
+    #[test_case(case!("command", "no_binary_name"))]
     #[test_case(case!("command", "ignore_error"))]
     #[test_case(case!("command", "args_override_self"))]
     #[test_case(case!("command", "dont_delimit_trailing_values"))]

@@ -1,1 +1,1 @@
-do-stuff file.txt
+prog do-stuff file.txt

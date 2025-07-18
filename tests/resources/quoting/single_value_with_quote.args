@@ -1,1 +1,1 @@
---val foo'bar
+prog --val foo'bar

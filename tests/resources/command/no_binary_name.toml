@@ -1,0 +1,4 @@
+name = "myprog"
+no-binary-name = true
+[args]
+cmd = { num-args = "1..", help = "commands to run" }

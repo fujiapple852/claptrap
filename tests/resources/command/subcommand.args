@@ -1,1 +1,1 @@
-subcommand nested --arg3 value
+prog subcommand nested --arg3 value

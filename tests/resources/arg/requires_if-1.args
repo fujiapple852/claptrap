@@ -1,1 +1,1 @@
---config some.cfg
+prog --config some.cfg

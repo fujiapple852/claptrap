@@ -1,1 +1,1 @@
---arg 1 2 3 sub
+myprog --arg 1 2 3 sub

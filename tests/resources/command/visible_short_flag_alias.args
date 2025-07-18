@@ -1,1 +1,1 @@
--d file.txt
+prog -d file.txt
