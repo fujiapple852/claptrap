@@ -151,7 +151,7 @@ jobs:
         if: startsWith(matrix.build, 'x86_64-linux-gnu')
         run: |
           cargo install cargo-generate-rpm
-          cargo generate-rpm -p crates/claptrap --target ${{ matrix.target }} -o target/${{ matrix.target }}/generate-rpm/claptrap-${{ needs.create-release.outputs.claptrap_version }}-x86_64.rpm
+          cargo generate-rpm --target ${{ matrix.target }} -o target/${{ matrix.target }}/generate-rpm/claptrap-${{ needs.create-release.outputs.claptrap_version }}-x86_64.rpm
 
       - name: Upload RPM package
         if: startsWith(matrix.build, 'x86_64-linux-gnu')
