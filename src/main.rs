@@ -55,6 +55,10 @@ fn main() -> anyhow::Result<()> {
             run_generate_doc(&spec, spec_format, format, output)?;
             exit(0);
         }
+        Some(SubCommand::Schema { output }) => {
+            run_generate_schema(output)?;
+            exit(0);
+        }
         None => {
             // As we are being called from an 'eval' in a shell, we have to be
             // careful that everything we output is "eval safe". This includes
@@ -176,6 +180,17 @@ fn run_generate_doc(
     let bytes = match doc_format {
         DocFormat::Markdown => markdown.into_bytes(),
     };
+    if let Some(output_path) = output {
+        std::fs::write(output_path, bytes)?;
+    } else {
+        std::io::stdout().write_all(&bytes)?;
+    }
+    Ok(())
+}
+
+fn run_generate_schema(output: Option<PathBuf>) -> anyhow::Result<()> {
+    let schema = schemars::schema_for!(Command);
+    let bytes = serde_json::to_vec_pretty(&schema)?;
     if let Some(output_path) = output {
         std::fs::write(output_path, bytes)?;
     } else {
