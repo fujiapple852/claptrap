@@ -3,7 +3,8 @@ use crate::types::values::ValueParser;
 use serde::Deserialize;
 
 /// Represents a command line argument configuration.
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 #[non_exhaustive]
@@ -375,7 +376,8 @@ impl From<Arg> for clap::Arg {
     }
 }
 
-#[derive(Debug, Deserialize, Default, Clone)]
+#[derive(Debug, Clone, Default, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "kebab-case")]
 #[non_exhaustive]
 enum ArgAction {
@@ -407,7 +409,8 @@ impl From<ArgAction> for clap::ArgAction {
     }
 }
 
-#[derive(Debug, Deserialize, Default, Clone)]
+#[derive(Debug, Clone, Default, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "kebab-case")]
 #[non_exhaustive]
 enum ValueHint {
@@ -447,7 +450,8 @@ impl From<ValueHint> for clap::ValueHint {
     }
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 #[non_exhaustive]
@@ -457,7 +461,8 @@ struct DefaultIf {
     default: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 #[non_exhaustive]
@@ -466,7 +471,8 @@ struct RequiresIf {
     value: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 #[non_exhaustive]
