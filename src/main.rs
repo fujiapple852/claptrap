@@ -1,15 +1,11 @@
-#![forbid(unsafe_code)]
-
-use crate::cli::{DocFormat, Shell, SpecFormat, SpecInfo, SubCommand};
 use anstream::ColorChoice;
 use anyhow::anyhow;
 use clap::Parser;
 use clap::builder::StyledStr;
-use claptrap::output::{CatCmd, ExitCode, Output};
-use claptrap::parse;
-use claptrap::template::template_values;
-use claptrap::types::Command;
+use claptrap::Command;
+use cli::{DocFormat, Shell, SpecFormat, SpecInfo, SubCommand};
 use minijinja::{Environment, context};
+use output::{CatCmd, ExitCode, Output};
 use std::ffi::OsString;
 use std::io::Write;
 use std::iter::once;
@@ -17,9 +13,15 @@ use std::panic;
 use std::panic::AssertUnwindSafe;
 use std::path::{Path, PathBuf};
 use std::process::exit;
+use template::template_values;
 
+mod clap_ext;
 mod cli;
 mod error;
+mod output;
+mod parse;
+mod template;
+mod tests;
 
 fn main() -> anyhow::Result<()> {
     let cli = cli::Cli::parse();

@@ -1,5 +1,5 @@
 use clap::builder::StyledStr;
-use claptrap::types::Command;
+use claptrap::Command;
 
 #[test]
 fn it_can_deserialize_command_and_convert() {

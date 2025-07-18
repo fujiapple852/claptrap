@@ -1,7 +1,6 @@
 #![forbid(unsafe_code)]
+#![allow(rustdoc::broken_intra_doc_links)]
+#![doc = include_str!("../README.md")]
 
-mod clap_ext;
-pub mod output;
-pub mod parse;
-pub mod template;
-pub mod types;
+mod types;
+pub use types::{Command, ValueParser};

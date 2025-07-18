@@ -1,6 +1,0 @@
----
-source: tests/tests.rs
-expression: "super::run(spec, args)"
----
-claptrap_cmds=('find' 'type' 'f' '-name' 'special')
-claptrap_location='/home/clap'

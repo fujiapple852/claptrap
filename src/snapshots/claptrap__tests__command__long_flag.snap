@@ -1,0 +1,6 @@
+---
+source: src/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap__subcommand='sync'
+claptrap_sync_search='true'

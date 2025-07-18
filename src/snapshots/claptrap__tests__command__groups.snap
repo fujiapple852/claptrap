@@ -1,0 +1,6 @@
+---
+source: src/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap_major='1'
+claptrap_iface='eth0'

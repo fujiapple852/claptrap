@@ -1,6 +1,6 @@
+use crate::output::ExitCode;
 use crate::{CatCmd, Output};
 use clap::builder::StyledStr;
-use claptrap::output::ExitCode;
 use std::fmt::{Display, Formatter};
 
 pub type Result<T> = std::result::Result<T, Error>;

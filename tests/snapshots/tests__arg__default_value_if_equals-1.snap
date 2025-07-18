@@ -1,6 +1,0 @@
----
-source: tests/tests.rs
-expression: "super::run(spec, args)"
----
-claptrap_opt='special'
-claptrap_other='default'

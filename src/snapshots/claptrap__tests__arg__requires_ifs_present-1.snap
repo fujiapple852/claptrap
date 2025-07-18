@@ -1,0 +1,7 @@
+---
+source: src/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap_config='file.conf'
+claptrap_input='in.txt'
+claptrap_output='out.txt'

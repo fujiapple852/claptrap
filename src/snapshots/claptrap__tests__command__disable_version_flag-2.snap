@@ -1,0 +1,8 @@
+---
+source: src/tests.rs
+expression: "super::run(spec, args)"
+---
+command cat <<'EOF_29239711'
+myprog 1.0.0
+EOF_29239711
+exit 0

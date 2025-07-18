@@ -1,0 +1,8 @@
+---
+source: src/tests.rs
+expression: "super::run(spec, args)"
+---
+command cat <<'EOF_da707e63'
+myapp 0.1.0
+EOF_da707e63
+exit 0
