@@ -1,0 +1,5 @@
+---
+source: src/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap_file=('file1' 'file2' 'file3' 'word')

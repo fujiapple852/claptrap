@@ -1,0 +1,7 @@
+---
+source: src/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap_opt='channel'
+claptrap_flag='false'
+claptrap_other='chan'

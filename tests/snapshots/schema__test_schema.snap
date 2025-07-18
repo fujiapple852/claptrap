@@ -5,7 +5,7 @@ expression: "String::from_utf8_lossy(&output.stdout)"
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Command",
-  "description": "A deserializable representation of a Clap command.\n\n# Example\n\n```rust\nuse claptrap::types::Command;\n# fn main() -> Result<(), Box<dyn std::error::Error>> {\nlet spec = r#\"\n    name = \"myapp\"\n    version = \"1.0.0\"\n    about = \"An example application\"\n    [args]\n    cfg = { short = 'c', long = \"config\", required = true }\n \"#;\nlet cmd: Command = toml::from_str(spec)?;\nlet clap_cmd = clap::Command::from(cmd);\nlet matches = clap_cmd.try_get_matches_from(vec![\"myapp\", \"--config\", \"config.toml\"])?;\nassert_eq!(matches.get_one::<String>(\"cfg\"), Some(&\"config.toml\".to_string()));\n# Ok(())\n# }\n```\n\nSee the Clap [`Command`](https://docs.rs/clap/latest/clap/struct.Command.html) documentation.",
+  "description": "A deserializable representation of a Clap command.\n\n# Example\n\n```rust\nuse claptrap::Command;\n# fn main() -> Result<(), Box<dyn std::error::Error>> {\nlet spec = r#\"\n    name = \"myapp\"\n    version = \"1.0.0\"\n    about = \"An example application\"\n    [args]\n    cfg = { short = 'c', long = \"config\", required = true }\n \"#;\nlet cmd: Command = toml::from_str(spec)?;\nlet clap_cmd = clap::Command::from(cmd);\nlet matches = clap_cmd.try_get_matches_from(vec![\"myapp\", \"--config\", \"config.toml\"])?;\nassert_eq!(matches.get_one::<String>(\"cfg\"), Some(&\"config.toml\".to_string()));\n# Ok(())\n# }\n```\n\nSee the Clap [`Command`](https://docs.rs/clap/latest/clap/struct.Command.html) documentation.",
   "type": "object",
   "properties": {
     "name": {

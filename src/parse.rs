@@ -1,8 +1,8 @@
 use crate::clap_ext::IsManyEx;
 use crate::output::{CatCmd, ExitCode, Output, Var};
-use crate::types::{Command, ValueParser};
 use clap::ArgAction;
 use clap::parser::ValuesRef;
+use claptrap::{Command, ValueParser};
 use std::ffi::OsString;
 use std::fmt::Display;
 
@@ -127,6 +127,7 @@ fn get_one(value_parser: &ValueParser, matches: &clap::ArgMatches, id: &str) -> 
         ValueParser::Isize => matches.get_one::<isize>(id).map(ToString::to_string),
         ValueParser::F32 => matches.get_one::<f32>(id).map(ToString::to_string),
         ValueParser::F64 => matches.get_one::<f64>(id).map(ToString::to_string),
+        _ => None,
     }
 }
 
@@ -159,6 +160,7 @@ fn get_many(
         ValueParser::Isize => matches.get_many::<isize>(id).map(to_string),
         ValueParser::F32 => matches.get_many::<f32>(id).map(to_string),
         ValueParser::F64 => matches.get_many::<f64>(id).map(to_string),
+        _ => None,
     }
 }
 

@@ -1,0 +1,6 @@
+---
+source: src/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap__subcommand='test'
+claptrap_test_arg1='true'

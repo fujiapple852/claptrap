@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer};
 /// # Example
 ///
 /// ```rust
-/// use claptrap::types::Command;
+/// use claptrap::Command;
 /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
 /// let spec = r#"
 ///     name = "myapp"
@@ -134,11 +134,11 @@ impl Command {
         &self.name
     }
 
-    pub(crate) fn get_subcommands(&self) -> impl Iterator<Item = &Self> {
+    pub fn get_subcommands(&self) -> impl Iterator<Item = &Self> {
         self.subcommands.iter()
     }
 
-    pub(crate) fn get_arguments(&self) -> impl Iterator<Item = &Arg> {
+    pub fn get_arguments(&self) -> impl Iterator<Item = &Arg> {
         self.args
             .as_ref()
             .into_iter()

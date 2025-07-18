@@ -1,0 +1,10 @@
+---
+source: src/tests.rs
+expression: "format!(\"{}\", cmd)"
+---
+command cat <<'EOF_16726ae4'
+this contains EOF in the text
+EOF
+and more
+EOF_16726ae4
+exit 1

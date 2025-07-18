@@ -1,0 +1,6 @@
+---
+source: src/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap_debug='true'
+claptrap_verbose='false'

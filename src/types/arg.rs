@@ -80,11 +80,11 @@ pub struct Arg {
 
 impl Arg {
     #[must_use]
-    pub(crate) fn get_id(&self) -> &str {
+    pub fn get_id(&self) -> &str {
         self.id.as_ref()
     }
     #[must_use]
-    pub(crate) fn value_parser(&self) -> Option<&ValueParser> {
+    pub fn value_parser(&self) -> Option<&ValueParser> {
         self.value_parser.as_ref()
     }
 }
