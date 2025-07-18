@@ -88,6 +88,12 @@ pub enum SubCommand {
         #[arg(short, long, value_name = "FILE")]
         output: Option<PathBuf>,
     },
+    /// Generate a JSON schema for the spec
+    Schema {
+        /// The output file for the schema
+        #[arg(short, long, value_name = "FILE")]
+        output: Option<PathBuf>,
+    },
 }
 
 #[derive(Args, Debug, Clone)]
