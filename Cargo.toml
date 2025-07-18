@@ -51,3 +51,8 @@ cast_possible_truncation = "allow"
 map_unwrap_or = "allow"
 missing_const_for_fn = "allow"
 struct_field_names = "allow"
+
+[package.metadata.generate-rpm]
+assets = [
+  { source = "target/release/claptrap", dest = "/usr/bin/claptrap", mode = "755" },
+]
