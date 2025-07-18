@@ -117,6 +117,9 @@ mod command {
     #[test_case(case!("command", "args_conflicts_with_subcommands"))]
     #[test_case(case!("command", "subcommand_precedence_over_arg"))]
     #[test_case(case!("command", "subcommand_negates_reqs"))]
+    #[test_case(case!("command", "multicall_error"))]
+    #[test_case(case!("command", "multicall_busybox-1"))]
+    #[test_case(case!("command", "multicall_busybox-2"))]
     #[test_case(case!("command", "subcommand_value_name"))]
     #[test_case(case!("command", "subcommand_help_heading"))]
     fn test_command((name, spec, args): (&str, &str, &str)) {

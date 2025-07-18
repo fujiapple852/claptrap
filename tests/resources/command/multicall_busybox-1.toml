@@ -1,0 +1,11 @@
+name = "busybox"
+multicall = true
+[args]
+[[subcommands]]
+name = "busybox"
+subcommand-value-name = "APPLET"
+subcommand-help-heading = "APPLETS"
+[[subcommands.subcommands]]
+name = "true"
+[[subcommands.subcommands]]
+name = "false"

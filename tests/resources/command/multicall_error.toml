@@ -1,0 +1,7 @@
+name = "hostname"
+multicall = true
+[args]
+[[subcommands]]
+name = "hostname"
+[[subcommands]]
+name = "dnsdomainname"
