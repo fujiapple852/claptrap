@@ -2,6 +2,7 @@ use serde::Deserialize;
 use serde::de::value::BorrowedStrDeserializer;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[non_exhaustive]
 pub enum ValueParser {
     Bool,

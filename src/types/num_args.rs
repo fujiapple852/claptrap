@@ -119,6 +119,22 @@ impl<'de> serde::Deserialize<'de> for NumArgs {
     }
 }
 
+#[cfg(feature = "schema")]
+impl schemars::JsonSchema for NumArgs {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
+        "NumArgs".into()
+    }
+
+    fn json_schema(_gen: &mut schemars::SchemaGenerator) -> schemars::Schema {
+        schemars::json_schema!({
+            "anyOf": [
+                {"type": "integer"},
+                {"type": "string"}
+            ]
+        })
+    }
+}
+
 fn parse_num_args(value: &str) -> Result<NumArgs, String> {
     fn parse(value: &str) -> Result<NumArgs, String> {
         if value.contains("..")

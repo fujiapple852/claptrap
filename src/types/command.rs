@@ -28,7 +28,8 @@ use serde::{Deserialize, Deserializer};
 /// ```
 ///
 /// See the Clap [`Command`](https://docs.rs/clap/latest/clap/struct.Command.html) documentation.
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "kebab-case")]
 #[non_exhaustive]
@@ -350,7 +351,8 @@ impl From<Command> for clap::Command {
     }
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "kebab-case")]
 #[non_exhaustive]
 enum ColorChoice {
