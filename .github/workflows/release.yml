@@ -1,0 +1,201 @@
+name: release
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+jobs:
+  create-release:
+    name: create-release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.release.outputs.upload_url }}
+      claptrap_version: ${{ env.claptrap_version }}
+    steps:
+      - name: Get the release version from the tag
+        shell: bash
+        if: env.claptrap_version == ''
+        run: |
+          echo "claptrap_version=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          echo "version is: ${{ env.claptrap_version }}"
+      - name: Create GitHub release
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.claptrap_version }}
+          release_name: Claptrap ${{ env.claptrap_version }}
+          body: See [CHANGELOG.md](https://github.com/fujiapple852/claptrap/blob/master/CHANGELOG.md) for details.
+          prerelease: false
+
+  build-release:
+    name: build-release
+    needs: ['create-release']
+    runs-on: ${{ matrix.os }}
+    env:
+      CARGO: cargo
+      TARGET_FLAGS: ""
+      TARGET_DIR: ./target
+      CROSS_NO_WARNINGS: 0
+      RUST_BACKTRACE: 1
+    strategy:
+      matrix:
+        build: [
+          x86_64-linux-gnu, x86_64-linux-musl, aarch64-linux-gnu, aarch64-linux-musl,
+          armv7-linux-gnueabihf, armv7-linux-musleabihf, armv7-linux-musleabi,
+          x86_64-apple-darwin, aarch64-apple-darwin,
+          x86_64-pc-windows-msvc, x86_64-pc-windows-gnu, aarch64-pc-windows-msvc,
+          x86_64-netbsd, x86_64-freebsd
+        ]
+        include:
+          # Linux (x86_64 & aarch64)
+          - build: x86_64-linux-gnu
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+          - build: x86_64-linux-musl
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-musl
+          - build: aarch64-linux-gnu
+            os: ubuntu-22.04
+            target: aarch64-unknown-linux-gnu
+          - build: aarch64-linux-musl
+            os: ubuntu-22.04
+            target: aarch64-unknown-linux-musl
+
+          # Linux (armv7)
+          - build: armv7-linux-gnueabihf
+            os: ubuntu-22.04
+            target: armv7-unknown-linux-gnueabihf
+          - build: armv7-linux-musleabihf
+            os: ubuntu-22.04
+            target: armv7-unknown-linux-musleabihf
+          - build: armv7-linux-musleabi
+            os: ubuntu-22.04
+            target: armv7-unknown-linux-musleabi
+
+          # macOS (x86_64 & aarch64)
+          - build: x86_64-apple-darwin
+            os: macos-13
+            target: x86_64-apple-darwin
+          - build: aarch64-apple-darwin
+            os: macos-14
+            target: aarch64-apple-darwin
+
+          # Windows (x86_64 & aarch64)
+          - build: x86_64-pc-windows-msvc
+            os: windows-2022
+            target: x86_64-pc-windows-msvc
+          - build: x86_64-pc-windows-gnu
+            os: ubuntu-22.04
+            target: x86_64-pc-windows-gnu
+          - build: aarch64-pc-windows-msvc
+            os: windows-2022
+            target: aarch64-pc-windows-msvc
+
+          # BSD (x86_64)
+          - build: x86_64-netbsd
+            os: ubuntu-22.04
+            target: x86_64-unknown-netbsd
+          - build: x86_64-freebsd
+            os: ubuntu-22.04
+            target: x86_64-unknown-freebsd
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+          target: ${{ matrix.target }}
+
+      - name: Use Cross
+        shell: bash
+        run: |
+          cargo install cross --git https://github.com/cross-rs/cross
+          echo "CARGO=cross" >> $GITHUB_ENV
+          echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
+          echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
+
+      - name: Show command used for Cargo
+        run: |
+          echo "cargo command is: ${{ env.CARGO }}"
+          echo "target flag is: ${{ env.TARGET_FLAGS }}"
+          echo "target dir is: ${{ env.TARGET_DIR }}"
+
+      - name: Build release binary
+        run: ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }}
+
+      - name: Build archive
+        shell: bash
+        run: |
+          staging="claptrap-${{ needs.create-release.outputs.claptrap_version }}-${{ matrix.target }}"
+          mkdir -p "$staging"
+          if [ "${{ matrix.os }}" = "windows-2022" ] || [ "${{ matrix.build }}" = "x86_64-pc-windows-gnu" ]; then
+            cp "target/${{ matrix.target }}/release/claptrap.exe" "$staging/"
+            7z a -tzip "$staging.zip" "$staging"
+            echo "ASSET=$staging.zip" >> $GITHUB_ENV
+          else
+            cp "target/${{ matrix.target }}/release/claptrap" "$staging/"
+            tar czf "$staging.tar.gz" "$staging"
+            echo "ASSET=$staging.tar.gz" >> $GITHUB_ENV
+          fi
+
+      - name: Build RPM package
+        shell: bash
+        if: startsWith(matrix.build, 'x86_64-linux-gnu')
+        run: |
+          cargo install cargo-generate-rpm
+          cargo generate-rpm -p crates/claptrap --target ${{ matrix.target }} -o target/${{ matrix.target }}/generate-rpm/claptrap-${{ needs.create-release.outputs.claptrap_version }}-x86_64.rpm
+
+      - name: Upload RPM package
+        if: startsWith(matrix.build, 'x86_64-linux-gnu')
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: target/${{ matrix.target }}/generate-rpm/claptrap-${{ needs.create-release.outputs.claptrap_version }}-x86_64.rpm
+          asset_name: claptrap-${{ needs.create-release.outputs.claptrap_version }}-x86_64.rpm
+          asset_content_type: application/x-rpm
+
+      - name: Create Debian package
+        shell: bash
+        if: startsWith(matrix.build, 'x86_64-linux-gnu') || startsWith(matrix.build, 'x86_64-linux-musl')
+        run: |
+          cargo install cargo-deb
+          cargo deb -p claptrap --target ${{ matrix.target }} --deb-version ${{ needs.create-release.outputs.claptrap_version }}
+          case ${{ matrix.target }} in
+            aarch64-*-linux-*) DPKG_ARCH=arm64 ;;
+            arm-*-linux-*hf) DPKG_ARCH=armhf ;;
+            i686-*-linux-*) DPKG_ARCH=i686 ;;
+            x86_64-*-linux-*) DPKG_ARCH=amd64 ;;
+            *) DPKG_ARCH=notset ;;
+          esac;
+          echo "DPKG_ARCH=${DPKG_ARCH}" >> $GITHUB_ENV
+
+      - name: Upload Deb Release Asset
+        if: startsWith(matrix.build, 'x86_64-linux-gnu') || startsWith(matrix.build, 'x86_64-linux-musl')
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_content_type: application/vnd.debian.binary-package
+          asset_path: target/${{ matrix.target }}/debian/claptrap_${{ needs.create-release.outputs.claptrap_version }}_${{ env.DPKG_ARCH }}.deb
+          asset_name: claptrap_${{ matrix.target }}_${{ needs.create-release.outputs.claptrap_version }}_${{ env.DPKG_ARCH }}.deb
+
+      - name: Upload release archive
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: ${{ env.ASSET }}
+          asset_name: ${{ env.ASSET }}
+          asset_content_type: application/octet-stream
