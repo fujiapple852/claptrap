@@ -1,1 +1,1 @@
--F file1 file2 file3 word
+prog -F file1 file2 file3 word

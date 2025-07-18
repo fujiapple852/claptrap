@@ -1,1 +1,1 @@
-subcommand nested --arg3 one --arg3 two
+myprog subcommand nested --arg3 one --arg3 two

@@ -1,1 +1,1 @@
-test --arg value
+myprog test --arg value

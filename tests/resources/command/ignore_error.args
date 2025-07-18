@@ -1,1 +1,1 @@
--c file -f -x
+prog -c file -f -x

@@ -12,6 +12,7 @@ use claptrap::types::Command;
 use minijinja::{Environment, context};
 use std::ffi::OsString;
 use std::io::Write;
+use std::iter::once;
 use std::panic;
 use std::panic::AssertUnwindSafe;
 use std::path::{Path, PathBuf};
@@ -103,7 +104,7 @@ fn run_generate_completions(
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
     let spec = parse_spec(spec_path, spec_format)?;
-    let mut clap_cmd = clap::Command::from(spec).no_binary_name(true);
+    let mut clap_cmd = clap::Command::from(spec);
     let name = clap_cmd.get_name().to_string();
     let mut buffer: Vec<u8> = vec![];
     clap_complete::generate(shell, &mut clap_cmd, name, &mut buffer);
@@ -121,7 +122,7 @@ fn run_generate_man(
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
     let spec = parse_spec(spec_path, spec_format)?;
-    let clap_cmd = clap::Command::from(spec).no_binary_name(true);
+    let clap_cmd = clap::Command::from(spec);
     let mut buffer: Vec<u8> = vec![];
     clap_mangen::Man::new(clap_cmd).render(&mut buffer)?;
     if let Some(output_path) = output {
@@ -139,7 +140,7 @@ fn run_generate_template(
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
     let spec = parse_spec(spec_path, spec_format)?;
-    let clap_cmd = clap::Command::from(spec).no_binary_name(true);
+    let clap_cmd = clap::Command::from(spec);
     let template = match shell {
         Shell::Bash => Ok(include_str!("../templates/bash_template.sh.j2")),
         Shell::Zsh => Ok(include_str!("../templates/zsh_template.sh.j2")),
@@ -170,7 +171,7 @@ fn run_generate_doc(
     output: Option<PathBuf>,
 ) -> anyhow::Result<()> {
     let spec = parse_spec(spec_path, spec_format)?;
-    let clap_cmd = clap::Command::from(spec).no_binary_name(true);
+    let clap_cmd = clap::Command::from(spec);
     let markdown = clap_markdown::help_markdown_command(&clap_cmd);
     let bytes = match doc_format {
         DocFormat::Markdown => markdown.into_bytes(),
@@ -188,7 +189,10 @@ fn run_app(
     spec_format: SpecFormat,
     args: Vec<OsString>,
 ) -> error::Result<Output> {
-    Ok(parse::parse(parse_spec(spec_path, spec_format)?, args))
+    let spec = parse_spec(spec_path, spec_format)?;
+    let name = spec.get_name().to_string();
+    let args = once(OsString::from(name)).chain(args);
+    Ok(parse::parse(spec, args))
 }
 
 fn parse_spec(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Command> {

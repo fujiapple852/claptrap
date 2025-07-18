@@ -1,1 +1,1 @@
---pattern -file
+prog --pattern -file

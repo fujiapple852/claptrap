@@ -1,1 +1,1 @@
---config file.toml
+prog --config file.toml

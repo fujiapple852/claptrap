@@ -1,1 +1,1 @@
--c file.toml
+prog -c file.toml

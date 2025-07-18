@@ -1,1 +1,1 @@
---config special.conf
+prog --config special.conf

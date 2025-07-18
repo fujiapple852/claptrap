@@ -40,6 +40,7 @@ pub struct Command {
     subcommands: Vec<Command>,
     #[serde(default, deserialize_with = "deserialize_groups")]
     groups: Option<IndexMap<String, ArgGroup>>,
+    no_binary_name: Option<bool>,
     ignore_errors: Option<bool>,
     args_override_self: Option<bool>,
     dont_delimit_trailing_values: Option<bool>,
@@ -128,7 +129,7 @@ where
 
 impl Command {
     #[must_use]
-    pub(crate) fn get_name(&self) -> &str {
+    pub fn get_name(&self) -> &str {
         &self.name
     }
 
@@ -148,6 +149,9 @@ impl Command {
 impl From<Command> for clap::Command {
     fn from(cmd: Command) -> Self {
         let mut command = Self::new(cmd.name);
+        if let Some(no_binary_name) = cmd.no_binary_name {
+            command = command.no_binary_name(no_binary_name);
+        }
         if let Some(ignore_errors) = cmd.ignore_errors {
             command = command.ignore_errors(ignore_errors);
         }

@@ -1,1 +1,1 @@
---myopt=non_default
+prog --myopt=non_default

@@ -1,1 +1,1 @@
---config file.conf
+prog --config file.conf

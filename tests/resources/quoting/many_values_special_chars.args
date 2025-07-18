@@ -1,1 +1,1 @@
---opt val1 --opt val'2
+prog --opt val1 --opt val'2

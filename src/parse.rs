@@ -11,8 +11,12 @@ use std::fmt::Display;
 /// This function does not perform any I/O operations.
 #[must_use]
 #[expect(clippy::needless_pass_by_value)]
-pub fn parse(cmd: Command, args: Vec<OsString>) -> Output {
-    let clap_cmd = clap::Command::from(cmd.clone()).no_binary_name(true);
+pub fn parse<I, T>(cmd: Command, args: I) -> Output
+where
+    I: IntoIterator<Item = T>,
+    T: Into<OsString> + Clone,
+{
+    let clap_cmd = clap::Command::from(cmd.clone());
     match clap_cmd.clone().try_get_matches_from(args) {
         Ok(matches) => Output::Variables(
             extract_subcommand_path(&matches)

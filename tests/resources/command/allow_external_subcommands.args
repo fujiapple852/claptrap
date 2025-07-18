@@ -1,1 +1,1 @@
-subcmd --option value -fff --flag
+myprog subcmd --option value -fff --flag

@@ -1,1 +1,1 @@
-find type f -name special ; /home/clap
+prog find type f -name special ; /home/clap

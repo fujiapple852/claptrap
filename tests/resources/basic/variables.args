@@ -1,1 +1,1 @@
---mode stream -p udp
+myapp --mode stream -p udp

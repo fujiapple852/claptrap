@@ -1,1 +1,1 @@
-arg1 -r val1
+prog arg1 -r val1

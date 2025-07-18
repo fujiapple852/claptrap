@@ -1,1 +1,1 @@
---flag value1 --flag value2
+prog --flag value1 --flag value2
