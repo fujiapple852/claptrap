@@ -1,5 +1,5 @@
 ![ci](https://github.com/fujiapple852/claptrap/actions/workflows/ci.yml/badge.svg)
-[![Documentation](https://docs.rs/claptrap/badge.svg)](https://docs.rs/claptrap/0.1.1)
+[![Documentation](https://docs.rs/claptrap/badge.svg)](https://docs.rs/claptrap/0.1.0)
 [![Crate](https://img.shields.io/crates/v/claptrap.svg)](https://crates.io/crates/claptrap/0.1.0)
 
 # Claptrap 👏🪤
@@ -20,81 +20,58 @@ set -euo pipefail
 
 eval "$(claptrap --spec - -- "$@" <<'SPEC'
   name = "hello"
-  version = "0.1.0"
-  arg-required-else-help = true
   [args]
-  format = { short = "f", long = "format", required = true, value-parser = ["toml", "yaml", "json"] }
-  exts = { long = "extensions", num-args = "1..", default-values = ["txt", "sh", "rs"] }
+  name = { short = 'n', long = "name", default-value = "world" }
 SPEC
 )"
 
-echo "format: $claptrap_format"
-for i in "${!claptrap_exts[@]}"; do
-  echo "extensions[$i]: ${claptrap_exts[$i]}"
-done
+echo "hello, ${claptrap_name}!"
 ```
 
 Show usage:
 
 ```shell
-$ ./hello.sh
-Usage: hello [OPTIONS] --format <format>
+$ ./hello.sh -h
+Usage: hello [OPTIONS]
 
 Options:
-  -f, --format <format>       [possible values: toml, yaml, json]
-      --extensions <exts>...  [default: txt sh rs]
-  -h, --help                  Print help
-  -V, --version               Print version
+  -n, --name <name>  [default: world]
+  -h, --help         Print help
 ```
 
 Parse arguments:
 
 ```shell
-$ ./hello.sh -f json
-protocol: json
-extensions[0]: txt
-extensions[1]: sh
-extensions[2]: rs
+$ ./hello.sh -n fuji
+hello, fuji!
 ```
 
 Error handling:
 
 ```shell
-$ ./hello.sh -f yml --extensions md ts js
-error: invalid value 'yml' for '--format <format>'
-  [possible values: toml, yaml, json]
+$ ./hello.sh --nam fuji
+./hello.sh --nam fuji
+error: unexpected argument '--nam' found
 
-  tip: a similar value exists: 'yaml'
+  tip: a similar argument exists: '--name'
+
+Usage: hello --name <name>
 
 For more information, try '--help'.
 ```
 
 ## Features
 
-- **Spec driven**: define your CLI once in `toml`, `yaml` or `json` and reuse it across shells.
-- **Shell agnostic**: works with `bash` and `zsh` with more to come (`fish`, `PowerShell` and others).
-- **Platform independent**: runs on Linux, macOS, Windows and BSD.
-- **Safe evaluation**: only outputs `eval`-safe commands for usage and errors.
-- **Shell quoting**: values are quoted and arrays are emitted for multi value options.
-- **Generate extras**: generate shell completions, man pages, documentation and template scripts.
-- **Flexible sources**: load specs from files, `stdin` or from heredoc
+Claptrap supports the full range of CLap features, including short and long flags, default values, subcommands, argument
+groups, typed parsing, value hints, environment variables, color and styles and many more. See the full list
+of [supported](https://claptrap.cli.rs/reference/supported/) Clap features.
 
-## Parsing features
+Command line interface specifications can be declared in `toml`, `yaml` or `json` and reused across `bash` and `zsh`
+scripts on Linux, macOS, Windows and BSD.
 
-Claptrap supports the full range of Clap features, including:
+Claptrap can also generate shell completions, man pages, markdown documentation and template scripts.
 
-- **Short and long flags**: standard single-character or word-style options.
-- **Multi-value parsing**: accept repeated values via delimiters or terminators.
-- **Subcommands**: nested subcommands, optional subcommand requirements and precedence rules.
-- **Argument groups**: express mutual exclusion or dependencies between related options.
-- **Default values**: set static or conditional defaults for arguments.
-- **Typed parsing**: parse values as numbers, booleans or other typed data.
-- **Custom help**: add before/after text and tailor help templates.
-- **Color and styles**: use clap's color choices to style help output.
-- **Value hints**: suggest file paths, commands or URLs for completions.
-- **Environment variables**: define arguments that read from the environment when not provided.
-
-See the full list of [supported](https://claptrap.cli.rs/reference/supported/) Clap features.
+See the [documentation](https://claptrap.cli.rs) for more details.
 
 ## Installation
 
@@ -119,10 +96,6 @@ a non-goal for Claptrap.
 ## Alternatives
 
 - [Argc](https://crates.io/crates/argc)
-
-## Status
-
-Incomplete WIP, unpublished, experimental.
 
 ## License
 
