@@ -213,8 +213,8 @@ impl From<NumArgs> for clap::builder::ValueRange {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use serde::Deserialize;
     use serde::de::Error;
+    use serde::Deserialize;
 
     #[test_case::test_case(r#"num-args = "empty""#, Ok(NumArgs::Exact(0)); "empty")]
     #[test_case::test_case(r#"num-args = "single""#, Ok(NumArgs::Exact(1)); "single")]

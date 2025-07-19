@@ -1,7 +1,7 @@
 use crate::clap_ext::IsManyEx;
 use crate::output::{CatCmd, ExitCode, Output, Var};
-use clap::ArgAction;
 use clap::parser::ValuesRef;
+use clap::ArgAction;
 use claptrap::{Command, ValueParser};
 use std::ffi::OsString;
 use std::fmt::Display;
