@@ -73,7 +73,20 @@ Claptrap can also generate shell completions, man pages, markdown documentation 
 
 See the [documentation](https://claptrap.cli.rs) for more details.
 
-## Installation
+## Install
+
+Claptrap runs on Linux, BSD, macOS, and Windows. It can be installed from most package managers, precompiled binaries,
+or source.
+
+For example, to install Claptrap from `cargo`:
+
+```shell
+cargo install claptrap --locked
+```
+
+<details>
+
+<summary>All package managers</summary>
 
 ### Cargo
 
@@ -82,6 +95,39 @@ See the [documentation](https://claptrap.cli.rs) for more details.
 ```shell
 cargo install claptrap --locked
 ```
+
+### Snap (Linux)
+
+[![claptrap](https://snapcraft.io/claptrap/badge.svg)](https://snapcraft.io/claptrap)
+
+```shell
+snap install claptrap
+```
+
+### Homebrew (macOS)
+
+[![homebrew version](https://img.shields.io/badge/homebrew-0.1.0-orange)](https://github.com/fujiapple852/homebrew-claptrap)
+
+```shell
+brew tap fujiapple852/claptrap && brew install claptrap
+```
+
+### Docker
+
+[![Docker Image Version (latest by date)](https://img.shields.io/docker/v/fujiapple/claptrap)](https://hub.docker.com/r/fujiapple/claptrap/)
+
+```shell
+docker run -it fujiapple/claptrap
+```
+
+### All Repositories
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/claptrap.svg)](https://repology.org/project/claptrap/versions)
+
+</details>
+
+See the [installation](https://claptrap.cli.rs/start/installation) guide for details of how to install Claptrap on your
+system.
 
 ## Goals and non-goals
 
