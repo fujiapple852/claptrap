@@ -74,7 +74,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 <Tabs>
   <TabItem label="Basic">
 
-A simple `toml` spec embedded in a bash script:
+A simple `toml` specification embedded in a bash script:
 
 ```shell
 # simple.sh
@@ -137,7 +137,7 @@ For more information, try '--help'.
 
   <TabItem label="Subcommands">
 
-A standalone `toml` spec with subcommands:
+A standalone `toml` specification with subcommands:
 
 ```toml
 name = "docker"
@@ -188,7 +188,31 @@ Options:
 
   <TabItem label="Formats">
 
-  A standalone spec written in `yaml`:
+The hello example specification written in `json` and embedded in a script:
+
+```shell
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+eval "$(claptrap --spec - --spec-format json -- "$@" <<'SPEC'
+  {
+    "name": "hello",
+    "args": {
+      "name": {
+        "default-value": "world",
+        "long": "name",
+        "short": "n"
+      }
+    }
+  }
+SPEC
+)"
+
+echo "hello, ${claptrap_name}!"
+```
+
+A standalone specification written in `yaml`:
 
 ```yaml
 name: pacman
@@ -361,10 +385,31 @@ Generate markdown documentation:
 $ claptrap doc --spec myapp.toml -o myapp.md
 ```
 
-Generate JSON schema for the spec format:
+Generate JSON schema for the specification format:
 
 ```shell
 $ claptrap schema -o schema.json
+```
+
+  </TabItem>
+
+  <TabItem label="Rust">
+
+The `claptrap` crate can be used in Rust applications to parse command line arguments using a specification file.
+
+```rust
+fn main() {
+    let spec = r#"
+          name = "hello"
+          [args]
+          name = { short = 'n', long = "name", default-value = "world" }
+        "#;
+    let cmd: claptrap::Command = toml::from_str(spec).unwrap();
+    let clap_cmd = clap::Command::from(cmd);
+    let matches = clap_cmd.get_matches();
+    let name = matches.get_one::<String>("name").unwrap();
+    println!("Hello, {}!", name);
+}
 ```
 
   </TabItem>
