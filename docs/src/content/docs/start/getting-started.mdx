@@ -1,48 +1,58 @@
 ---
 title: Getting Started
 description: Get started with Claptrap.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
 sidebar:
   order: 2
 ---
 
-Welcome to **Claptrap**! This quick guide will help you install the tool and parse command line arguments in your shell scripts with ease.
+import { Steps } from '@astrojs/starlight/components';
 
-## Installation
+The following steps will guide you through the process of installing and running Claptrap.
 
-```bash
-cargo install claptrap --locked
-```
+<Steps>
 
-## Basic Usage
+1. Install Claptrap:
 
-Create a `spec.toml` describing your arguments:
+    Claptrap runs on Linux, BSD, macOS, and Windows. It can be installed from most common package managers, precompiled binaries, or source.
 
-```toml
-name = "myapp"
-version = "0.1.0"
+    ```bash
+    cargo install claptrap --locked
+    ```
 
-[args]
-mode = { short = "m", long = "mode" }
-protocol = { short = "p", long = "protocol" }
-```
+    See the [installation guide](/start/installation) for details of how to install Claptrap on your system.
 
-Use Claptrap in your script:
+2. Create a script:
 
-```bash
-#!/usr/bin/env bash
+    `hello.sh`:
 
-set -euo pipefail
+    ```bash
+    #!/usr/bin/env bash
 
-eval "$(claptrap --spec spec.toml -- "$@")"
+    set -euo pipefail
 
-echo "mode: $claptrap_mode"
-echo "protocol: $claptrap_protocol"
-```
+    eval "$(claptrap --spec - -- "$@" <<'SPEC'
+      name = "hello"
+      [args]
+      name = { short = 'n', long = "name", default-value = "world" }
+    SPEC
+    )"
 
-Run your script:
+    echo "hello, ${claptrap_name}!"
+    ```
 
-```bash
-$ ./myapp.sh -m normal --protocol http
-mode: normal
-protocol: http
-```
+3. Make the script executable:
+
+    ```shell
+    chmod +x hello.sh
+    ```
+
+4. Run the script:
+
+    ```shell
+    $ ./hello.sh -n fuji
+    hello, fuji!
+    ```
+
+</Steps>

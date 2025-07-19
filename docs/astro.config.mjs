@@ -12,7 +12,7 @@ export default defineConfig({
                 versions: [{ slug: '0.0.0' }],
               }),
             ],
-            title: 'Claptrap',
+            title: 'Claptrap 👏🪤',
             customCss: [
               // Relative path to your custom CSS file
               './src/styles/custom.css',
@@ -45,11 +45,7 @@ export default defineConfig({
                 {
                     label: 'Reference',
                     autogenerate: { directory: 'reference' },
-                },
-                {
-                    label: 'Development',
-                    autogenerate: { directory: 'development' },
-                },
+                }
             ],
         }),
     ],
