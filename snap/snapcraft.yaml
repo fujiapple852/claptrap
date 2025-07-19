@@ -1,0 +1,24 @@
+name: claptrap
+version: '0.1.0'
+summary: Bring the power of Clap to shell scripts
+description: |
+  Claptrap is a tool that allows you to parse complex command line arguments in shell scripts using a declarative
+  specification.
+
+contact: mailto:fujiapple852@gmail.com
+issues: https://github.com/fujiapple852/claptrap/issues
+license: Apache-2.0
+source-code: https://github.com/fujiapple852/claptrap
+website: https://claptrap.cli.rs
+base: core20
+grade: stable
+confinement: strict
+parts:
+  claptrap:
+    plugin: rust
+    source: .
+    organize:
+      claptrap: usr/bin/claptrap
+apps:
+  claptrap:
+    command: usr/bin/claptrap
