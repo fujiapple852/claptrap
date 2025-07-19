@@ -96,6 +96,19 @@ cargo install claptrap --locked
 cargo install claptrap --locked
 ```
 
+### PPA (Ubuntu)
+
+[![Ubuntu PPA](https://img.shields.io/badge/Ubuntu%20PPA-0.13.0-brightgreen)](https://launchpad.net/~fujiapple/+archive/ubuntu/claptrap/+packages)
+
+```shell
+add-apt-repository ppa:fujiapple/claptrap
+apt update && apt install claptrap
+```
+
+> ⓘ Note:
+>
+> Only available for Ubuntu 24.04 (`Noble`) and 22.04 (`Jammy`).
+
 ### Snap (Linux)
 
 [![claptrap](https://snapcraft.io/claptrap/badge.svg)](https://snapcraft.io/claptrap)
