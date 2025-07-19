@@ -17,8 +17,6 @@ parts:
   claptrap:
     plugin: rust
     source: .
-    organize:
-      claptrap: usr/bin/claptrap
 apps:
   claptrap:
-    command: usr/bin/claptrap
+    command: bin/claptrap
