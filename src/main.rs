@@ -1,10 +1,10 @@
 use anstream::ColorChoice;
 use anyhow::anyhow;
-use clap::Parser;
 use clap::builder::StyledStr;
+use clap::Parser;
 use claptrap::Command;
 use cli::{DocFormat, Shell, SpecFormat, SpecInfo, SubCommand};
-use minijinja::{Environment, context};
+use minijinja::{context, Environment};
 use output::{CatCmd, ExitCode, Output};
 use std::ffi::OsString;
 use std::io::Write;

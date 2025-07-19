@@ -1,5 +1,5 @@
 use serde::de::{IntoDeserializer, Visitor};
-use serde::{Deserialize, Deserializer, de};
+use serde::{de, Deserialize, Deserializer};
 use std::fmt;
 use std::fmt::Formatter;
 

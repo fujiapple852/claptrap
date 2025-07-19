@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use serde::de::value::BorrowedStrDeserializer;
+use serde::Deserialize;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
