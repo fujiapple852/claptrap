@@ -20,20 +20,11 @@ REVISION=4
 # The Ubuntu series to build for
 SERIES=("noble" "jammy")
 
-TARBALL="claptrap_${VERSION}.orig.tar.gz"
+TARBALL="claptrap_${UPSTREAM}.orig.tar.gz"
 PACKAGE="claptrap"
 CHANGES="New upstream release"
 export DEBEMAIL="fujiapple852@gmail.com"
 export DEBFULLNAME="Fuji Apple"
-
-# Download TARBALL
-wget -O "${TARBALL}" "https://github.com/fujiapple852/claptrap/archive/refs/tags/${VERSION}.tar.gz"
-if [[ ! -f "${TARBALL}" ]]; then
-    echo "Error: Failed to download TARBALL." >&2
-    exit 1
-fi
-
-mv "${TARBALL}" "claptrap_${UPSTREAM}.orig.tar.gz"
 
 # Import GPG key securely
 if [[ ! -f launchpad_secret_key.pgp ]]; then
@@ -51,13 +42,23 @@ if gpg --list-keys --with-colons "${GPG_KEY_ID}" | grep '^pub' | grep '[e]'; the
     exit 1
 fi
 
+# Download TARBALL
+wget -O "${TARBALL}" "https://github.com/fujiapple852/claptrap/archive/refs/tags/${VERSION}.tar.gz"
+if [[ ! -f "${TARBALL}" ]]; then
+    echo "Error: Failed to download TARBALL." >&2
+    exit 1
+fi
+
 # Vendor the cargo dependencies
-#
-# FIXME: this vendors based on the local Cargo.lock file (i.e the current git branch/tag) and not the Cargo.lock file
-# from the upstream tarball. This means that if the upstream Cargo.lock file is different, the vendored dependencies
-# will not match and the build will fail.
+# We have to ensure we run cargo `vendor --locked` against the src in the tarball, not the src in the current directory.
+tar -xf "${TARBALL}"
+pushd "claptrap-${VERSION}"
+rm -f ../ubuntu-ppa/vendor.tar.xz
+rm -rf vendor
 cargo-1.82 vendor --locked
-tar cJf ubuntu-ppa/vendor.tar.xz vendor
+tar -C vendor -cJf ../ubuntu-ppa/vendor.tar.xz .
+popd
+rm -rf "claptrap-${VERSION}"
 
 for series in "${SERIES[@]}"; do
     UBUNTU_VERSION=$(distro-info --series "${series}" -r | cut -d' ' -f1)
