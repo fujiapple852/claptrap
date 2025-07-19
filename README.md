@@ -98,7 +98,7 @@ cargo install claptrap --locked
 
 ### PPA (Ubuntu)
 
-[![Ubuntu PPA](https://img.shields.io/badge/Ubuntu%20PPA-0.13.0-brightgreen)](https://launchpad.net/~fujiapple/+archive/ubuntu/claptrap/+packages)
+[![Ubuntu PPA](https://img.shields.io/badge/Ubuntu%20PPA-0.1.0-brightgreen)](https://launchpad.net/~fujiapple/+archive/ubuntu/claptrap/+packages)
 
 ```shell
 add-apt-repository ppa:fujiapple/claptrap
