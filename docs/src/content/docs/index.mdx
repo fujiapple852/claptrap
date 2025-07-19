@@ -12,10 +12,10 @@ hero:
     dark: ../../assets/logo.png
   actions:
     - text: Get Started
-      link: /getting-started/
+      link: /start/getting-started/
       icon: right-arrow
     - text: Read the docs
-      link: /reference/
+      link: /reference/overview/
       icon: open-book
     - text: View on GitHub
       link: https://github.com/fujiapple852/claptrap
@@ -23,6 +23,350 @@ hero:
       variant: secondary
 ---
 
-🚧 **Claptrap** is currently in early development. Expect breaking changes and limited features. 🚧
+## Hello, `${claptrap_name}`!
 
-Claptrap brings the power of the [clap](https://crates.io/crates/clap) Rust library to your shell scripts.
+```shell
+# hello.sh
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+eval "$(claptrap --spec - -- "$@" <<'SPEC'
+  name = "hello"
+  [args]
+  name = { short = 'n', long = "name", default-value = "world" }
+SPEC
+)"
+
+echo "hello, ${claptrap_name}!"
+```
+
+```shell
+$ ./hello.sh -n fuji
+hello, fuji!
+```
+
+### Features
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+
+<CardGrid>
+	<Card title="Powered by Clap" icon="rocket">
+	    Claptrap brings the [full power](https://claptrap.cli.rs/reference/supported/) of [Clap](https://crates.io/crates/clap) command line parsing to shell scripts.
+	</Card>
+    <Card title="Declarative Specification" icon="rocket">
+        Command line interface specifications can be declared in `toml`, `yaml` or `json` and used as standalone files
+        or embedded directly in scripts.
+    </Card>
+    <Card title="Beyond Parsing" icon="rocket">
+        Automatically generate shell completions, man pages, markdown documentation and template scripts.
+    </Card>
+    <Card title="Run Anywhere" icon="rocket">
+        Supports `bash` and `zsh` shells and can run on Linux, BSD, macOS, and Windows.
+    </Card>
+</CardGrid>
+
+### Examples
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+  <TabItem label="Basic">
+
+A simple `toml` spec embedded in a bash script:
+
+```shell
+# simple.sh
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+eval "$(claptrap --spec - -- "$@" <<'SPEC'
+  name = "simple"
+  version = "0.1.0"
+  arg-required-else-help = true
+  [args]
+  format = { short = "f", long = "format", required = true, value-parser = ["toml", "yaml", "json"] }
+  exts = { long = "extensions", num-args = "1..", default-values = ["txt", "sh", "rs"] }
+SPEC
+)"
+
+echo "format: $claptrap_format"
+for i in "${!claptrap_exts[@]}"; do
+  echo "extensions[$i]: ${claptrap_exts[$i]}"
+done
+```
+
+Show usage:
+
+```shell
+$ ./hello.sh
+Usage: hello [OPTIONS] --format <format>
+
+Options:
+  -f, --format <format>       [possible values: toml, yaml, json]
+      --extensions <exts>...  [default: txt sh rs]
+  -h, --help                  Print help
+  -V, --version               Print version
+```
+
+Parse arguments:
+
+```shell
+$ ./hello.sh -f json
+protocol: json
+extensions[0]: txt
+extensions[1]: sh
+extensions[2]: rs
+```
+
+Error handling:
+
+```shell
+$ ./hello.sh -f yml --extensions md ts js
+error: invalid value 'yml' for '--format <format>'
+  [possible values: toml, yaml, json]
+
+  tip: a similar value exists: 'yaml'
+
+For more information, try '--help'.
+```
+
+  </TabItem>
+
+  <TabItem label="Subcommands">
+
+A standalone `toml` spec with subcommands:
+
+```toml
+name = "docker"
+about = "A self-sufficient runtime for containers"
+version = "Docker version 27.5.1, build 9f9e405"
+arg-required-else-help = true
+
+[[subcommands]]
+name = "run"
+about = "Create and run a new container from an image"
+[subcommands.args]
+interactive = { short = 'i', long = "interactive", help = "Keep STDIN open even if not attached", action = "set-true" }
+tty = { short = 't', long = "tty", help = "Allocate a pseudo-TTY", action = "set-true" }
+volume = { short = 'v', long = "volume", value-name = "list", help = "Bind mount a volume", action = "append", num-args = 1 }
+image = { value-name = "IMAGE", help = "The image to run", required = true, index = 1 }
+```
+
+Use it in a script with the `claptrap` Docker image:
+
+```shell
+# docker.sh
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+eval "$(docker run -it -v ${PWD}:/data fujiapple/claptrap:latest --spec docker.toml -- "$@")"
+```
+
+Show usage:
+
+```shell
+$ ./docker.sh run --help
+Create and run a new container from an image
+
+Usage: docker run [OPTIONS] <IMAGE>
+
+Arguments:
+  <IMAGE>  The image to run
+
+Options:
+  -i, --interactive    Keep STDIN open even if not attached
+  -t, --tty            Allocate a pseudo-TTY
+  -v, --volume <list>  Bind mount a volume
+  -h, --help           Print help
+```
+
+  </TabItem>
+
+  <TabItem label="Formats">
+
+  A standalone spec written in `yaml`:
+
+```yaml
+name: pacman
+about: package manager utility
+version: 5.2.1
+subcommand-required: true
+arg-required-else-help: true
+subcommands:
+- name: query
+  short-flag: Q
+  long-flag: query
+  about: Query the package database.
+  args:
+    search:
+      short: s
+      long: search
+      help: search locally installed packages for matching strings
+      conflicts-with: info
+      action: set
+      num-args: 1..
+    info:
+      long: info
+      short: i
+      conflicts-with: search
+      help: view package information
+      action: set
+      num-args: 1..
+- name: sync
+  short-flag: S
+  long-flag: sync
+  about: Synchronize packages.
+  args:
+    search:
+      short: s
+      long: search
+      conflicts-with: info
+      action: set
+      num-args: 1..
+      help: search remote repositories for matching strings
+    info:
+      long: info
+      conflicts-with: search
+      short: i
+      action: set-true
+      help: view package information
+    package:
+      help: packages
+      required-unless-present: search
+      action: set
+      num-args: 1..
+```
+
+Use it in a script:
+
+```bash
+# pacman.sh
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+eval "$(claptrap --spec pacman.spec -- "$@")"
+
+echo "claptrap__subcommand: ${claptrap__subcommand}"
+case "${claptrap__subcommand}" in
+  "query")
+    if [ -n "${claptrap_query_search+x}" ]; then
+      for i in "${!claptrap_query_search[@]}"; do
+        echo "claptrap_query_search[$i]: ${claptrap_query_search[$i]}"
+      done
+    fi
+    if [ -n "${claptrap_query_info+x}" ]; then
+      for i in "${!claptrap_query_info[@]}"; do
+        echo "claptrap_query_info[$i]: ${claptrap_query_info[$i]}"
+      done
+    fi
+    ;;
+  "sync")
+    if [ -n "${claptrap_sync_search+x}" ]; then
+      for i in "${!claptrap_sync_search[@]}"; do
+        echo "claptrap_sync_search[$i]: ${claptrap_sync_search[$i]}"
+      done
+    fi
+    if [ -n "${claptrap_sync_info+x}" ]; then
+      echo "claptrap_sync_info: ${claptrap_sync_info}"
+    fi
+    if [ -n "${claptrap_sync_package+x}" ]; then
+      for i in "${!claptrap_sync_package[@]}"; do
+        echo "claptrap_sync_package[$i]: ${claptrap_sync_package[$i]}"
+      done
+    fi
+    ;;
+esac
+```
+
+Parse some arguments:
+
+```shell
+./pacman.sh --sync -i claptrap trippy
+claptrap__subcommand: sync
+claptrap_sync_info: true
+claptrap_sync_package[0]: claptrap
+claptrap_sync_package[1]: trippy
+```
+
+  </TabItem>
+
+  <TabItem label="Templates">
+
+Generate a template `bash` shell script from a `hello.toml` spec:
+
+```toml
+name = "hello"
+[args]
+name = { short = 'n', long = "name", default-value = "world" }
+```
+
+```shell
+$ claptrap script --spec hello.toml bash -o hello.sh
+```
+
+Outputs:
+
+```shell
+# hello.sh
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v claptrap &> /dev/null; then
+    echo "claptrap command not found. Please install it first, see https://claptrap.cli.rs for instructions."
+    exit 1
+fi
+
+eval "$(claptrap --spec examples/pacman/spec.toml -- "$@")"
+
+if [ -n "${claptrap_name+x}" ]; then
+  echo "claptrap_name: ${claptrap_name}"
+fi
+```
+
+Run the script:
+
+```shell
+$ ./hello.sh
+claptrap_name: world
+```
+
+  </TabItem>
+
+  <TabItem label="Generate">
+
+Generate man pages:
+
+```shell
+$ claptrap man --spec myapp.toml -o myapp.roff
+```
+
+Generate shell completions:
+
+```shell
+$ claptrap completion --spec myapp.json --shell bash -o myapp.bash
+$ claptrap completion --spec myapp.json --shell zsh -o _myapp.zsh
+$ claptrap completion --spec myapp.json --shell fish -o myapp.fish
+$ claptrap completion --spec myapp.json --shell powershell -o myapp.ps1
+```
+
+Generate markdown documentation:
+
+```shell
+$ claptrap doc --spec myapp.toml -o myapp.md
+```
+
+Generate JSON schema for the spec format:
+
+```shell
+$ claptrap schema -o schema.json
+```
+
+  </TabItem>
+
+</Tabs>
