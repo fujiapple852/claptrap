@@ -9,9 +9,14 @@ fi
 
 eval "$(claptrap --spec {{spec}} -- "$@")"
 
-{# TODO support multi args #}
 {% macro dump_arg(arg) -%}
+{% if arg.multiple %}
+for i in {1..${{ '{#' }}{{ arg.name }}[@]{{ '}' }}}; do
+  echo "{{ arg.name }}[$i]: ${{ '{' }}{{ arg.name }}[$i]{{ '}' }}"
+done
+{% else %}
 echo "{{ arg.name }}: ${{ '{' }}{{ arg.name }}{{ '}' }}"
+{% endif %}
 {% endmacro -%}
 
 {% if values.subcommands|length == 0 %}

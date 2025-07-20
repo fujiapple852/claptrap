@@ -18,7 +18,9 @@ if [ -z "${claptrap__subcommand+x}" ]; then
     echo "claptrap_arg1: ${claptrap_arg1}"
   fi
   if [ -n "${claptrap_multi1+x}" ]; then
-    echo "claptrap_multi1: ${claptrap_multi1}"
+    for i in {1..${#claptrap_multi1[@]}}; do
+      echo "claptrap_multi1[$i]: ${claptrap_multi1[$i]}"
+    done
   fi
 else
   echo "claptrap__subcommand: ${claptrap__subcommand}"
@@ -28,7 +30,9 @@ else
         echo "claptrap_first_arg2: ${claptrap_first_arg2}"
       fi
       if [ -n "${claptrap_first_multi2+x}" ]; then
-        echo "claptrap_first_multi2: ${claptrap_first_multi2}"
+        for i in {1..${#claptrap_first_multi2[@]}}; do
+          echo "claptrap_first_multi2[$i]: ${claptrap_first_multi2[$i]}"
+        done
       fi
       ;;
     "another")
@@ -36,7 +40,9 @@ else
         echo "claptrap_another_arg4: ${claptrap_another_arg4}"
       fi
       if [ -n "${claptrap_another_multi4+x}" ]; then
-        echo "claptrap_another_multi4: ${claptrap_another_multi4}"
+        for i in {1..${#claptrap_another_multi4[@]}}; do
+          echo "claptrap_another_multi4[$i]: ${claptrap_another_multi4[$i]}"
+        done
       fi
       ;;
     "first::nested")
@@ -44,7 +50,9 @@ else
         echo "claptrap_first_nested_arg3: ${claptrap_first_nested_arg3}"
       fi
       if [ -n "${claptrap_first_nested_multi3+x}" ]; then
-        echo "claptrap_first_nested_multi3: ${claptrap_first_nested_multi3}"
+        for i in {1..${#claptrap_first_nested_multi3[@]}}; do
+          echo "claptrap_first_nested_multi3[$i]: ${claptrap_first_nested_multi3[$i]}"
+        done
       fi
       ;;
   esac

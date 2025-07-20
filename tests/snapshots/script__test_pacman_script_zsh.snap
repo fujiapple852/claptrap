@@ -20,21 +20,29 @@ else
   case "${claptrap__subcommand}" in
     "query")
       if [ -n "${claptrap_query_search+x}" ]; then
-        echo "claptrap_query_search: ${claptrap_query_search}"
+        for i in {1..${#claptrap_query_search[@]}}; do
+          echo "claptrap_query_search[$i]: ${claptrap_query_search[$i]}"
+        done
       fi
       if [ -n "${claptrap_query_info+x}" ]; then
-        echo "claptrap_query_info: ${claptrap_query_info}"
+        for i in {1..${#claptrap_query_info[@]}}; do
+          echo "claptrap_query_info[$i]: ${claptrap_query_info[$i]}"
+        done
       fi
       ;;
     "sync")
       if [ -n "${claptrap_sync_search+x}" ]; then
-        echo "claptrap_sync_search: ${claptrap_sync_search}"
+        for i in {1..${#claptrap_sync_search[@]}}; do
+          echo "claptrap_sync_search[$i]: ${claptrap_sync_search[$i]}"
+        done
       fi
       if [ -n "${claptrap_sync_info+x}" ]; then
         echo "claptrap_sync_info: ${claptrap_sync_info}"
       fi
       if [ -n "${claptrap_sync_package+x}" ]; then
-        echo "claptrap_sync_package: ${claptrap_sync_package}"
+        for i in {1..${#claptrap_sync_package[@]}}; do
+          echo "claptrap_sync_package[$i]: ${claptrap_sync_package[$i]}"
+        done
       fi
       ;;
   esac
