@@ -48,10 +48,14 @@ fn test_script_exec(shell: &str) {
         .expect("failed to run claptrap");
     assert_eq!(Some(0), output.status.code());
     let script = String::from_utf8_lossy(&output.stdout);
-    let mut file = tempfile::NamedTempFile::new().expect("temp file");
-    std::io::Write::write_all(&mut file, script.as_bytes()).expect("write script");
-    let path = file.into_temp_path();
-    std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755)).expect("chmod");
+    let path = {
+        let mut file = tempfile::NamedTempFile::new().expect("temp file");
+        std::io::Write::write_all(&mut file, script.as_bytes()).expect("write script");
+        file.as_file_mut().sync_all().expect("sync script");
+        let path = file.into_temp_path();
+        std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755)).expect("chmod");
+        path
+    };
     let path_env = format!(
         "{}:{}",
         std::path::Path::new(CLAPTRAP_BIN)
