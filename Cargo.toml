@@ -37,6 +37,7 @@ toml = { version = "0.9.2", features = ["preserve_order"] }
 
 [dev-dependencies]
 insta = "1.43.1"
+tempfile = "3.10.1"
 test-case = "3.3.1"
 
 [lints.rust]
