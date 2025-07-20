@@ -213,28 +213,54 @@ fn run_app(
 }
 
 fn parse_spec(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Command> {
-    let spec = if spec_path == PathBuf::from("-") {
-        std::io::read_to_string(std::io::stdin())?
+    if spec_path == PathBuf::from("-") {
+        parse_spec_stdin(spec_format)
     } else {
-        std::fs::read_to_string(spec_path)?
-    };
-    Ok(match spec_format {
+        parse_spec_file(spec_path, spec_format)
+    }
+}
+
+fn parse_spec_stdin(spec_format: SpecFormat) -> anyhow::Result<Command> {
+    let spec = std::io::read_to_string(std::io::stdin())?;
+    match spec_format {
+        SpecFormat::Auto => {
+            if let Ok(cmd) = serde_json::from_str::<Command>(&spec) {
+                Ok(cmd)
+            } else if let Ok(cmd) = serde_yaml::from_str::<Command>(&spec) {
+                Ok(cmd)
+            } else if let Ok(cmd) = toml::from_str::<Command>(&spec) {
+                Ok(cmd)
+            } else {
+                Err(anyhow!("Failed to detect spec format, please specify a format explicitly with --spec-format (-f)"))?
+            }
+        }
+        SpecFormat::Json => Ok(serde_json::from_str::<Command>(&spec)?),
+        SpecFormat::Yaml => Ok(serde_yaml::from_str::<Command>(&spec)?),
+        SpecFormat::Toml => Ok(toml::from_str::<Command>(&spec)?),
+    }
+}
+
+fn parse_spec_file(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Command> {
+    let spec = std::fs::read_to_string(spec_path)?;
+    match spec_format {
         SpecFormat::Auto => {
             if let Some(ext) = spec_path.extension().and_then(|s| s.to_str()) {
                 match ext {
-                    "json" => serde_json::from_str::<Command>(&spec)?,
-                    "yaml" | "yml" => serde_yaml::from_str::<Command>(&spec)?,
-                    "toml" => toml::from_str::<Command>(&spec)?,
+                    "json" => Ok(serde_json::from_str::<Command>(&spec)?),
+                    "yaml" | "yml" => Ok(serde_yaml::from_str::<Command>(&spec)?),
+                    "toml" => Ok(toml::from_str::<Command>(&spec)?),
                     _ => Err(anyhow::anyhow!("Unsupported spec format: {}", ext))?,
                 }
             } else {
-                toml::from_str::<Command>(&spec)?
+                Err(anyhow::anyhow!(
+                    "No file extension found for spec format detection, please specify a format explicitly with --spec-format (-f)"
+                ))?
             }
         }
-        SpecFormat::Json => serde_json::from_str::<Command>(&spec)?,
-        SpecFormat::Yaml => serde_yaml::from_str::<Command>(&spec)?,
-        SpecFormat::Toml => toml::from_str::<Command>(&spec)?,
-    })
+        SpecFormat::Json => Ok(serde_json::from_str::<Command>(&spec)?),
+        SpecFormat::Yaml => Ok(serde_yaml::from_str::<Command>(&spec)?),
+        SpecFormat::Toml => Ok(toml::from_str::<Command>(&spec)?),
+    }
 }
 
 fn panic_output(err: &Box<dyn std::any::Any + Send>) -> Output {
