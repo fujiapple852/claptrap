@@ -1,7 +1,7 @@
 use crate::clap_ext::IsManyEx;
 use crate::output::{CatCmd, ExitCode, Output, Var};
 use clap::parser::ValuesRef;
-use clap::ArgAction;
+use clap::{ArgAction, ColorChoice};
 use claptrap::{Command, ValueParser};
 use std::ffi::OsString;
 use std::fmt::Display;
@@ -17,6 +17,12 @@ where
     T: Into<OsString> + Clone,
 {
     let clap_cmd = clap::Command::from(cmd.clone());
+    let color = clap_cmd.get_color();
+    let help_color = if clap_cmd.is_disable_colored_help_set() {
+        ColorChoice::Never
+    } else {
+        color
+    };
     match clap_cmd.clone().try_get_matches_from(args) {
         Ok(matches) => Output::Variables(
             extract_subcommand_path(&matches)
@@ -26,12 +32,12 @@ where
         ),
         Err(err) => match err.kind() {
             clap::error::ErrorKind::DisplayHelp | clap::error::ErrorKind::DisplayVersion => {
-                Output::Cat(CatCmd::new(err.render(), ExitCode::Success))
+                Output::Cat(CatCmd::new(err.render(), ExitCode::Success, help_color))
             }
             clap::error::ErrorKind::DisplayHelpOnMissingArgumentOrSubcommand => {
-                Output::Cat(CatCmd::new(err.render(), ExitCode::Usage))
+                Output::Cat(CatCmd::new(err.render(), ExitCode::Usage, help_color))
             }
-            _ => Output::Cat(CatCmd::new(err.render(), ExitCode::Error)),
+            _ => Output::Cat(CatCmd::new(err.render(), ExitCode::Error, color)),
         },
     }
 }

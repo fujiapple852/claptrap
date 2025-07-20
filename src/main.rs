@@ -73,7 +73,7 @@ fn main() -> anyhow::Result<()> {
                 panic::set_hook(Box::new(|_| {}));
             }
             let mut stdout =
-                anstream::AutoStream::new(std::io::stdout().lock(), ColorChoice::Always);
+                anstream::AutoStream::new(std::io::stdout().lock(), ColorChoice::AlwaysAnsi);
             match panic::catch_unwind(AssertUnwindSafe(|| {
                 let spec = cli
                     .spec
@@ -274,5 +274,6 @@ fn panic_output(err: &Box<dyn std::any::Any + Send>) -> Output {
     Output::Cat(CatCmd::new(
         StyledStr::from(format!("{panic_message}\n")),
         ExitCode::Panic,
+        clap::ColorChoice::Auto,
     ))
 }

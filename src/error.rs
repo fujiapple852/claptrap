@@ -1,6 +1,7 @@
 use crate::output::ExitCode;
 use crate::{CatCmd, Output};
 use clap::builder::StyledStr;
+use clap::ColorChoice;
 use std::fmt::{Display, Formatter};
 
 pub type Result<T> = std::result::Result<T, Error>;
@@ -24,6 +25,7 @@ impl From<anyhow::Error> for Error {
         Self(Output::Cat(CatCmd::new(
             StyledStr::from(format!("{err}\n")),
             ExitCode::Error,
+            ColorChoice::Auto,
         )))
     }
 }
