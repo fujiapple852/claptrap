@@ -31,7 +31,7 @@ Options:
 
           [env: CLAPTRAP_SPEC=]
 
-      --spec-format <FORMAT>
+  -f, --spec-format <FORMAT>
           The format of the spec file
 
           [env: CLAPTRAP_SPEC_FORMAT=]
@@ -72,7 +72,7 @@ Options:
 
           [env: CLAPTRAP_SPEC=]
 
-      --spec-format <FORMAT>
+  -f, --spec-format <FORMAT>
           The format of the spec file
 
           [env: CLAPTRAP_SPEC_FORMAT=]
@@ -104,7 +104,7 @@ Options:
 
           [env: CLAPTRAP_SPEC=]
 
-      --spec-format <FORMAT>
+  -f, --spec-format <FORMAT>
           The format of the spec file
 
           [env: CLAPTRAP_SPEC_FORMAT=]
@@ -146,7 +146,7 @@ Options:
 
           [env: CLAPTRAP_SPEC=]
 
-      --spec-format <FORMAT>
+  -f, --spec-format <FORMAT>
           The format of the spec file
 
           [env: CLAPTRAP_SPEC_FORMAT=]
@@ -178,7 +178,7 @@ Options:
 
           [env: CLAPTRAP_SPEC=]
 
-      --spec-format <FORMAT>
+  -f, --spec-format <FORMAT>
           The format of the spec file
 
           [env: CLAPTRAP_SPEC_FORMAT=]
@@ -190,7 +190,7 @@ Options:
           - yaml: YAML spec format
           - toml: TOML spec format
 
-  -f, --format <FORMAT>
+      --format <FORMAT>
           The format of the documentation
 
           [default: markdown]
