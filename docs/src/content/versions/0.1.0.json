@@ -17,12 +17,6 @@
       "autogenerate": {
         "directory": "reference"
       }
-    },
-    {
-      "label": "Development",
-      "autogenerate": {
-        "directory": "development"
-      }
     }
   ]
 }

@@ -9,7 +9,7 @@ export default defineConfig({
         starlight({
             plugins: [
               starlightVersions({
-                versions: [{ slug: '0.0.0' }],
+                versions: [{ slug: '0.1.0' }],
               }),
             ],
             title: 'Claptrap',

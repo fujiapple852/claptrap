@@ -1,0 +1,57 @@
+---
+title: Getting Started
+description: Get started with Claptrap.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  order: 2
+slug: 0.1.0/start/getting-started
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+The following steps will guide you through the process of installing and running Claptrap.
+
+<Steps>
+  1. Install Claptrap:
+
+     Claptrap runs on Linux, BSD, macOS, and Windows. It can be installed from most common package managers, precompiled binaries, or source.
+
+     ```bash
+     cargo install claptrap --locked
+     ```
+
+     See the [installation guide](/0.1.0/start/installation) for details of how to install Claptrap on your system.
+
+  2. Create a script:
+
+     `hello.sh`:
+
+     ```bash
+     #!/usr/bin/env bash
+
+     set -euo pipefail
+
+     eval "$(claptrap --spec - -- "$@" <<'SPEC'
+       name = "hello"
+       [args]
+       name = { short = 'n', long = "name", default-value = "world" }
+     SPEC
+     )"
+
+     echo "hello, ${claptrap_name}!"
+     ```
+
+  3. Make the script executable:
+
+     ```shell
+     chmod +x hello.sh
+     ```
+
+  4. Run the script:
+
+     ```shell
+     $ ./hello.sh -n fuji
+     hello, fuji!
+     ```
+</Steps>
