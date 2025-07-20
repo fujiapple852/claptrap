@@ -5,6 +5,34 @@ description: |
   Claptrap is a tool that allows you to parse complex command line arguments in shell scripts using a declarative
   specification.
 
+  Features:
+
+  Claptrap supports the full range of Clap features, including short and long flags, default values, subcommands, argument
+  groups, typed parsing, value hints, environment variables, color and styles and many more. See the full list
+  of [supported](https://claptrap.cli.rs/reference/supported/) Clap features.
+  
+  Command line interface specifications can be declared in `toml`, `yaml` or `json` and reused across `bash` and `zsh`
+  scripts.
+  
+  Claptrap can also generate shell completions, man pages, markdown documentation and template scripts.
+  
+  See the [documentation](https://claptrap.cli.rs) for more details.
+  
+  Example:
+  
+     #!/usr/bin/env bash
+     
+     set -euo pipefail
+     
+     eval "$(claptrap --spec - -- "$@" <<'SPEC'
+     name = "hello"
+     [args]
+     name = { short = 'n', long = "name", default-value = "world" }
+     SPEC
+     )"
+     
+     echo "hello, ${claptrap_name}!"
+
 contact: mailto:fujiapple852@gmail.com
 issues: https://github.com/fujiapple852/claptrap/issues
 license: Apache-2.0
