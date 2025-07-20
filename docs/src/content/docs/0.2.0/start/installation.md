@@ -5,6 +5,7 @@ banner:
   content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
 sidebar:
   order: 2
+slug: 0.2.0/start/installation
 ---
 
 The following sections provide instructions for installing Claptrap on your platform.
