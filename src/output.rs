@@ -1,4 +1,5 @@
 use clap::builder::StyledStr;
+use clap::ColorChoice;
 use crc32fast::hash;
 use itertools::Itertools;
 use std::fmt::Display;
@@ -107,21 +108,26 @@ impl Display for ExitCode {
 pub struct CatCmd {
     pub data: StyledStr,
     pub exit_code: ExitCode,
+    pub color: ColorChoice,
 }
 
 impl CatCmd {
     #[must_use]
-    pub fn new(cmd: StyledStr, exit_code: ExitCode) -> Self {
+    pub fn new(cmd: StyledStr, exit_code: ExitCode, color: ColorChoice) -> Self {
         Self {
             data: cmd,
             exit_code,
+            color,
         }
     }
 }
 
 impl Display for CatCmd {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let msg = format!("{}", self.data.ansi());
+        let msg = match self.color {
+            ColorChoice::Never => format!("{}", self.data),
+            _ => format!("{}", self.data.ansi()),
+        };
         let mut delimiter = format!("EOF_{:08x}", hash(msg.as_bytes()));
         while msg.contains(&delimiter) {
             delimiter.push('_');

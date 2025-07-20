@@ -42,7 +42,7 @@ mod basic {
     fn cat_cmd_handles_eof_in_message() {
         let styled =
             clap::builder::StyledStr::from("this contains EOF in the text\nEOF\nand more\n");
-        let cmd = CatCmd::new(styled, ExitCode::Error);
+        let cmd = CatCmd::new(styled, ExitCode::Error, clap::ColorChoice::Never);
         insta::assert_snapshot!(format!("{}", cmd));
     }
 }
@@ -61,7 +61,8 @@ mod command {
     #[test_case(case!("command", "ignore_error"))]
     #[test_case(case!("command", "args_override_self"))]
     #[test_case(case!("command", "dont_delimit_trailing_values"))]
-    #[test_case(case!("command", "color"))]
+    #[test_case(case!("command", "color-1"))]
+    #[test_case(case!("command", "color-2"))]
     #[test_case(case!("command", "styles"))]
     #[test_case(case!("command", "term_width"))]
     #[test_case(case!("command", "max_term_width"))]
@@ -72,7 +73,8 @@ mod command {
     #[test_case(case!("command", "disable_help_flag-1"))]
     #[test_case(case!("command", "disable_help_flag-2"))]
     #[test_case(case!("command", "disable_help_subcommand"))]
-    #[test_case(case!("command", "disable_colored_help"))]
+    #[test_case(case!("command", "disable_colored_help-1"))]
+    #[test_case(case!("command", "disable_colored_help-2"))]
     #[test_case(case!("command", "help_expected"))]
     #[test_case(case!("command", "hide_possible_values"))]
     #[test_case(case!("command", "infer_long_args"))]
