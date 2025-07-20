@@ -12,7 +12,7 @@ export default defineConfig({
                 versions: [{ slug: '0.0.0' }],
               }),
             ],
-            title: 'Claptrap 👏🪤',
+            title: 'Claptrap',
             customCss: [
               // Relative path to your custom CSS file
               './src/styles/custom.css',
@@ -26,6 +26,14 @@ export default defineConfig({
                 attrs: {
                   rel: 'apple-touch-icon',
                   href: '/apple-touch-icon.png',
+                },
+              },
+              {
+                tag: 'link',
+                attrs: {
+                  rel: 'icon',
+                  type: 'image/png',
+                  href: '/favicon-96x96.png',
                 },
               },
             ],
