@@ -81,7 +81,7 @@ pub enum SubCommand {
         spec: SpecInfo,
 
         /// The format of the documentation
-        #[arg(value_enum, short = 'f', long, default_value_t = DocFormat::Markdown)]
+        #[arg(value_enum, long, default_value_t = DocFormat::Markdown)]
         format: DocFormat,
 
         /// The output file for the documentation
@@ -103,7 +103,7 @@ pub struct SpecInfo {
     pub spec: PathBuf,
 
     /// The format of the spec file
-    #[arg(long, value_name = "FORMAT", env = "CLAPTRAP_SPEC_FORMAT", default_value_t = SpecFormat::Auto)]
+    #[arg(long, short = 'f', value_name = "FORMAT", env = "CLAPTRAP_SPEC_FORMAT", default_value_t = SpecFormat::Auto)]
     pub spec_format: SpecFormat,
 }
 
