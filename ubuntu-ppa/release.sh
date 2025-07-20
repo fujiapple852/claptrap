@@ -3,19 +3,19 @@
 set -o errexit -o pipefail -o nounset
 
 # The Claptrap version to release
-VERSION="0.1.0"
+VERSION="0.2.0"
 
 # The upstream version to use in the PPA
 #
 # This should usually be the same as the VERSION, but if the upstream tarball has been repacked
 # (e.g. to remove unnecessary files or to fix the tarball) then this should be set to the upstream version
 # with a `+repack{N}` suffix, where `{N}` is the number of times the tarball has been repacked. i.e. `0.1.0+repack1`.
-UPSTREAM="0.1.0+repack3"
+UPSTREAM="0.2.0"
 
 # The revision number for the PPA
 #
 # This is incremented each time a new upload is made to the PPA so will always be one greater than repack number.
-REVISION=4
+REVISION=1
 
 # The Ubuntu series to build for
 SERIES=("noble" "jammy")
