@@ -195,7 +195,7 @@ The hello example specification written in `json` and embedded in a script:
 
 set -euo pipefail
 
-eval "$(claptrap --spec - --spec-format json -- "$@" <<'SPEC'
+eval "$(claptrap --spec - -- "$@" <<'SPEC'
   {
     "name": "hello",
     "args": {

@@ -65,20 +65,21 @@ fn test_spec_stdin_redirect(shell: &str, format: &str) {
     );
 }
 
-#[test_matrix(["bash", "zsh"]; "test_spec_stdin_heredoc")]
-fn test_spec_stdin_heredoc(shell: &str) {
-    let output =
-        std::process::Command::new(format!("tests/resources/shell/{shell}/stdin_heredoc.sh"))
-            .env("CLAPTRAP_BIN", CLAPTRAP_BIN)
-            .arg("--mode")
-            .arg("stream")
-            .arg("--protocol")
-            .arg("udp")
-            .output()
-            .expect("Failed to execute command");
+#[test_matrix(["bash", "zsh"], ["yaml", "json", "toml"]; "test_spec_stdin_heredoc")]
+fn test_spec_stdin_heredoc(shell: &str, format: &str) {
+    let output = std::process::Command::new(format!(
+        "tests/resources/shell/{shell}/stdin_heredoc_{format}.sh"
+    ))
+    .env("CLAPTRAP_BIN", CLAPTRAP_BIN)
+    .arg("--mode")
+    .arg("stream")
+    .arg("--protocol")
+    .arg("udp")
+    .output()
+    .expect("Failed to execute command");
     assert_eq!(Some(0), output.status.code());
     insta::assert_snapshot!(
-        format!("test_spec_stdin_heredoc_{shell}"),
+        format!("test_spec_stdin_heredoc_{shell}_{format}"),
         String::from_utf8_lossy(&output.stdout)
     );
 }
