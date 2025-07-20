@@ -23,7 +23,7 @@ pub struct Cli {
     pub spec: Option<PathBuf>,
 
     /// The format of the spec file
-    #[arg(long, value_name = "FORMAT", env = "CLAPTRAP_SPEC_FORMAT", default_value_t = SpecFormat::Auto)]
+    #[arg(short = 'f', long, value_name = "FORMAT", env = "CLAPTRAP_SPEC_FORMAT", default_value_t = SpecFormat::Auto)]
     pub spec_format: SpecFormat,
 
     /// Do not suppress panic messages
