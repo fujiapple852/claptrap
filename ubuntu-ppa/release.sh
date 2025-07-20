@@ -15,7 +15,7 @@ UPSTREAM="0.2.0"
 # The revision number for the PPA
 #
 # This is incremented each time a new upload is made to the PPA so will always be one greater than repack number.
-REVISION=1
+REVISION=2
 
 # The Ubuntu series to build for
 SERIES=("noble" "jammy")
@@ -56,7 +56,7 @@ pushd "claptrap-${VERSION}"
 rm -f ../ubuntu-ppa/vendor.tar.xz
 rm -rf vendor
 cargo-1.82 vendor --locked
-tar -C vendor -cJf ../ubuntu-ppa/vendor.tar.xz .
+tar -cJf ../ubuntu-ppa/vendor.tar.xz vendor
 popd
 rm -rf "claptrap-${VERSION}"
 
