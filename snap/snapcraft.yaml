@@ -1,5 +1,5 @@
 name: claptrap
-version: '0.1.0'
+version: '0.2.0'
 summary: Bring the power of Clap to shell scripts
 description: |
   Claptrap is a tool that allows you to parse complex command line arguments in shell scripts using a declarative
