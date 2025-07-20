@@ -67,7 +67,7 @@ groups, typed parsing, value hints, environment variables, color and styles and 
 of [supported](https://claptrap.cli.rs/reference/supported/) Clap features.
 
 Command line interface specifications can be declared in `toml`, `yaml` or `json` and reused across `bash` and `zsh`
-scripts on Linux, macOS, Windows and BSD.
+scripts.
 
 Claptrap can also generate shell completions, man pages, markdown documentation and template scripts.
 
