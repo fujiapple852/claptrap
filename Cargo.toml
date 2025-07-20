@@ -1,7 +1,7 @@
 [package]
 name = "claptrap"
 description = "Bring the power of Clap to shell scripts."
-version = "0.1.0"
+version = "0.2.0"
 authors = ["FujiApple <fujiapple852@gmail.com>"]
 documentation = "https://github.com/fujiapple852/claptrap"
 homepage = "https://github.com/fujiapple852/claptrap"
