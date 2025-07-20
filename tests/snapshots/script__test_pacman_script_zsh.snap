@@ -1,0 +1,41 @@
+---
+source: tests/script.rs
+expression: "String::from_utf8_lossy(&output.stdout)"
+---
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+if ! command -v claptrap &> /dev/null; then
+    echo "claptrap command not found. Please install it first, see https://claptrap.cli.rs for instructions."
+    exit 1
+fi
+
+eval "$(claptrap --spec examples/pacman/spec.toml -- "$@")"
+
+if [ -z "${claptrap__subcommand+x}" ]; then
+  :
+else
+  echo "claptrap__subcommand: ${claptrap__subcommand}"
+  case "${claptrap__subcommand}" in
+    "query")
+      if [ -n "${claptrap_query_search+x}" ]; then
+        echo "claptrap_query_search: ${claptrap_query_search}"
+      fi
+      if [ -n "${claptrap_query_info+x}" ]; then
+        echo "claptrap_query_info: ${claptrap_query_info}"
+      fi
+      ;;
+    "sync")
+      if [ -n "${claptrap_sync_search+x}" ]; then
+        echo "claptrap_sync_search: ${claptrap_sync_search}"
+      fi
+      if [ -n "${claptrap_sync_info+x}" ]; then
+        echo "claptrap_sync_info: ${claptrap_sync_info}"
+      fi
+      if [ -n "${claptrap_sync_package+x}" ]; then
+        echo "claptrap_sync_package: ${claptrap_sync_package}"
+      fi
+      ;;
+  esac
+fi

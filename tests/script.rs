@@ -19,3 +19,19 @@ fn test_script(shell: &str) {
         String::from_utf8_lossy(&output.stdout)
     );
 }
+
+#[test_matrix(["bash", "zsh"]; "test_pacman_script")]
+fn test_pacman_script(shell: &str) {
+    let output = std::process::Command::new(CLAPTRAP_BIN)
+        .arg("script")
+        .arg("--spec")
+        .arg("examples/pacman/spec.toml")
+        .arg(shell)
+        .output()
+        .expect("failed to run claptrap");
+    assert_eq!(Some(0), output.status.code());
+    insta::assert_snapshot!(
+        format!("test_pacman_script_{shell}"),
+        String::from_utf8_lossy(&output.stdout)
+    );
+}

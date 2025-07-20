@@ -27,11 +27,15 @@ fi
 {% endfor %}
 {% else %}
 if [ -z "${claptrap__subcommand+x}" ]; then
+  {% if values.args|length > 0 %}
   {% for arg in values.args %}
   if [ -n "{{ '${' ~ arg.name ~ '+x}' }}" ]; then
 {{ dump_arg(arg)|indent(4, true) }}
   fi
   {% endfor %}
+  {% else %}
+  :
+  {% endif %}
 else
   echo "claptrap__subcommand: ${claptrap__subcommand}"
   case "${claptrap__subcommand}" in
