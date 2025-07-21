@@ -36,6 +36,15 @@ export default defineConfig({
                   href: '/favicon-96x96.png',
                 },
               },
+              {
+                tag: 'script',
+                attrs: {
+                  defer: true,
+                  src: 'https://cloud.umami.is/script.js',
+                  'data-website-id': 'f894e1bd-3555-44b2-abe6-833da265d669',
+                  'data-astro-rerun': true
+                }
+            }
             ],
             social: [
                 { icon: 'github', label: 'github', href: 'https://github.com/fujiapple852/claptrap' },
