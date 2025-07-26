@@ -1,0 +1,71 @@
+---
+title: Command::allow_missing_positional
+description: The `Command::allow_missing_positional` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: allow_missing_positional
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `allow_missing_positional` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.allow_missing_positional" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Allows one to implement two styles of CLIs where positionals can be used out of order.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+allow-missing-positional = true
+[args]
+arg1 = {}
+arg2 = { required = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+allow-missing-positional: true
+args:
+  arg1: {}
+  arg2:
+    required: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "allow-missing-positional": true,
+  "args": {
+    "arg1": {},
+    "arg2": {
+      "required": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog other
+```
+
+### Output
+
+```bash
+claptrap_arg2='other'
+```

@@ -1,0 +1,80 @@
+---
+title: Arg::group
+description: The `Arg::group` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: group
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `group` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.group" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+The name of the ArgGroup the argument belongs to.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+debug = { long = "debug", action = "set-true", group = "mode" }
+verbose = { long = "verbose", action = "set-true", group = "mode" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  debug:
+    long: debug
+    action: set-true
+    group: mode
+  verbose:
+    long: verbose
+    action: set-true
+    group: mode
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "debug": {
+      "long": "debug",
+      "action": "set-true",
+      "group": "mode"
+    },
+    "verbose": {
+      "long": "verbose",
+      "action": "set-true",
+      "group": "mode"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --debug
+```
+
+### Output
+
+```bash
+claptrap_debug='true'
+claptrap_verbose='false'
+```

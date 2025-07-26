@@ -1,10 +1,10 @@
 ---
-title: Arg::hide
-description: The `Arg::hide` API.
+title: Arg::hide_env
+description: The `Arg::hide_env` API.
 banner:
   content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
 sidebar:
-  label: hide
+  label: hide_env
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -12,11 +12,11 @@ import { Badge } from '@astrojs/starlight/components';
 import { Icon } from '@astrojs/starlight/components';
 import { LinkButton } from '@astrojs/starlight/components';
 
-# `hide` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide" icon="open-book" variant="minimal"></LinkButton>
+# `hide_env` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_env" icon="open-book" variant="minimal"></LinkButton>
 
 <Badge text="since 0.1.0" size="small" />
 
-Hide this argument from the generated help text.
+Do not display in help the environment variable name.
 
 # Example
 
@@ -27,16 +27,18 @@ Hide this argument from the generated help text.
 ```toml
 name = "prog"
 [args]
-cfg = { long = "config", hide = true }
+mode = { long = "mode", env = "MODE", action = "set", hide-env = true }
 ```
   </TabItem>
   <TabItem label="YAML">
 ```yaml
 name: prog
 args:
-  cfg:
-    long: config
-    hide: true
+  mode:
+    long: mode
+    env: MODE
+    action: set
+    hide-env: true
 ```
   </TabItem>
   <TabItem label="JSON">
@@ -44,9 +46,11 @@ args:
 {
   "name": "prog",
   "args": {
-    "cfg": {
-      "long": "config",
-      "hide": true
+    "mode": {
+      "long": "mode",
+      "env": "MODE",
+      "action": "set",
+      "hide-env": true
     }
   }
 }
@@ -63,8 +67,9 @@ prog --help
 ### Output
 
 ```bash
-Usage: prog
+Usage: prog [OPTIONS]
 
 Options:
-  -h, --help  Print help
+      --mode <mode>  
+  -h, --help         Print help
 ```

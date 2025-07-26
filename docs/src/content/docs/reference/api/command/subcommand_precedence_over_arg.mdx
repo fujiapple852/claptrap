@@ -1,0 +1,82 @@
+---
+title: Command::subcommand_precedence_over_arg
+description: The `Command::subcommand_precedence_over_arg` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: subcommand_precedence_over_arg
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `subcommand_precedence_over_arg` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_precedence_over_arg" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Prevent subcommands from being consumed as an arguments value.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+subcommand-precedence-over-arg = true
+[args]
+arg = { long = "arg", num-args = "1..", action = "set" }
+[[subcommands]]
+name = "sub"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommand-precedence-over-arg: true
+args:
+  arg:
+    long: arg
+    num-args: 1..
+    action: set
+subcommands:
+- name: sub
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommand-precedence-over-arg": true,
+  "args": {
+    "arg": {
+      "long": "arg",
+      "num-args": "1..",
+      "action": "set"
+    }
+  },
+  "subcommands": [
+    {
+      "name": "sub"
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --arg 1 2 3 sub
+```
+
+### Output
+
+```bash
+claptrap__subcommand='sub'
+claptrap_arg=('1' '2' '3')
+```

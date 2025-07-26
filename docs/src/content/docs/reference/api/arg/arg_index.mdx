@@ -1,10 +1,8 @@
 ---
-title: Arg::hide
-description: The `Arg::hide` API.
-banner:
-  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+title: Arg::Index
+description: The `Arg::index` API.
 sidebar:
-  label: hide
+  label: Index
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -12,31 +10,34 @@ import { Badge } from '@astrojs/starlight/components';
 import { Icon } from '@astrojs/starlight/components';
 import { LinkButton } from '@astrojs/starlight/components';
 
-# `hide` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide" icon="open-book" variant="minimal"></LinkButton>
+# `index` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.index" icon="open-book" variant="minimal"></LinkButton>
 
 <Badge text="since 0.1.0" size="small" />
 
-Hide this argument from the generated help text.
+Specifies the index of a positional argument starting at 1.
 
-# Example
+## Example
 
-### Spec
+#### Spec
 
 <Tabs syncKey="format">
   <TabItem label="TOML">
 ```toml
 name = "prog"
 [args]
-cfg = { long = "config", hide = true }
+mode = { index = 1 }
+debug = { long = "debug", action = "set-true" }
 ```
   </TabItem>
   <TabItem label="YAML">
 ```yaml
 name: prog
 args:
-  cfg:
-    long: config
-    hide: true
+  mode:
+    index: 1
+  debug:
+    long: debug
+    action: set-true
 ```
   </TabItem>
   <TabItem label="JSON">
@@ -44,9 +45,12 @@ args:
 {
   "name": "prog",
   "args": {
-    "cfg": {
-      "long": "config",
-      "hide": true
+    "mode": {
+      "index": 1
+    },
+    "debug": {
+      "long": "debug",
+      "action": "set-true"
     }
   }
 }
@@ -54,17 +58,14 @@ args:
   </TabItem>
 </Tabs>
 
-### Input
+#### Input
 
 ```bash
-prog --help
+prog --debug fast
 ```
 
-### Output
+#### Output
 
 ```bash
-Usage: prog
-
-Options:
-  -h, --help  Print help
+claptrap_mode='fast'
 ```

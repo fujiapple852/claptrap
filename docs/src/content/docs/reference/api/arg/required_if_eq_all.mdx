@@ -1,0 +1,182 @@
+---
+title: Arg::required_if_eq_all
+description: The `Arg::required_if_eq_all` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: required_if_eq_all
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `required_if_eq_all` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_if_eq_all" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Specify this argument is required based on multiple conditions.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+cfg = { long = "config", action = "set", required-if-eq-all = [{ arg = "extra", value = "val" }, { arg = "option", value = "spec" }] }
+extra = { long = "extra", action = "set" }
+option = { long = "option", action = "set" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  cfg:
+    long: config
+    action: set
+    required-if-eq-all:
+    - arg: extra
+      value: val
+    - arg: option
+      value: spec
+  extra:
+    long: extra
+    action: set
+  option:
+    long: option
+    action: set
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "cfg": {
+      "long": "config",
+      "action": "set",
+      "required-if-eq-all": [
+        {
+          "arg": "extra",
+          "value": "val"
+        },
+        {
+          "arg": "option",
+          "value": "spec"
+        }
+      ]
+    },
+    "extra": {
+      "long": "extra",
+      "action": "set"
+    },
+    "option": {
+      "long": "option",
+      "action": "set"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --option spec
+```
+
+### Output
+
+```bash
+claptrap_option='spec'
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+cfg = { long = "config", action = "set", required-if-eq-all = [{ arg = "extra", value = "val" }, { arg = "option", value = "spec" }] }
+extra = { long = "extra", action = "set" }
+option = { long = "option", action = "set" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  cfg:
+    long: config
+    action: set
+    required-if-eq-all:
+    - arg: extra
+      value: val
+    - arg: option
+      value: spec
+  extra:
+    long: extra
+    action: set
+  option:
+    long: option
+    action: set
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "cfg": {
+      "long": "config",
+      "action": "set",
+      "required-if-eq-all": [
+        {
+          "arg": "extra",
+          "value": "val"
+        },
+        {
+          "arg": "option",
+          "value": "spec"
+        }
+      ]
+    },
+    "extra": {
+      "long": "extra",
+      "action": "set"
+    },
+    "option": {
+      "long": "option",
+      "action": "set"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --extra val --option spec
+```
+
+### Output
+
+```bash
+error: the following required arguments were not provided:
+  --config <cfg>
+
+Usage: prog --extra <extra> --option <option> --config <cfg>
+
+For more information, try '--help'.
+```

@@ -1,0 +1,140 @@
+---
+title: Arg::requires_if
+description: The `Arg::requires_if` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: requires_if
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `requires_if` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_if" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Require another argument if this arg matches the ArgPredicate.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+config = { long = "config", action = "set", requires-if = { arg = "other", value = "my.cfg" } }
+other = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  config:
+    long: config
+    action: set
+    requires-if:
+      arg: other
+      value: my.cfg
+  other: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "config": {
+      "long": "config",
+      "action": "set",
+      "requires-if": {
+        "arg": "other",
+        "value": "my.cfg"
+      }
+    },
+    "other": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config some.cfg
+```
+
+### Output
+
+```bash
+claptrap_config='some.cfg'
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+config = { long = "config", action = "set", requires-if = { arg = "other", value = "my.cfg" } }
+other = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  config:
+    long: config
+    action: set
+    requires-if:
+      arg: other
+      value: my.cfg
+  other: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "config": {
+      "long": "config",
+      "action": "set",
+      "requires-if": {
+        "arg": "other",
+        "value": "my.cfg"
+      }
+    },
+    "other": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config my.cfg
+```
+
+### Output
+
+```bash
+error: the following required arguments were not provided:
+  <other>
+
+Usage: prog --config <config> <other>
+
+For more information, try '--help'.
+```

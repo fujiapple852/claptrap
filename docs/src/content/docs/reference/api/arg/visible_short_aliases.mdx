@@ -1,10 +1,10 @@
 ---
-title: Arg::hide
-description: The `Arg::hide` API.
+title: Arg::visible_short_aliases
+description: The `Arg::visible_short_aliases` API.
 banner:
   content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
 sidebar:
-  label: hide
+  label: visible_short_aliases
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -12,11 +12,11 @@ import { Badge } from '@astrojs/starlight/components';
 import { Icon } from '@astrojs/starlight/components';
 import { LinkButton } from '@astrojs/starlight/components';
 
-# `hide` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide" icon="open-book" variant="minimal"></LinkButton>
+# `visible_short_aliases` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_short_aliases" icon="open-book" variant="minimal"></LinkButton>
 
 <Badge text="since 0.1.0" size="small" />
 
-Hide this argument from the generated help text.
+Add aliases, which function as visible short flags.
 
 # Example
 
@@ -27,16 +27,19 @@ Hide this argument from the generated help text.
 ```toml
 name = "prog"
 [args]
-cfg = { long = "config", hide = true }
+test = { long = "test", visible-short-aliases = ['t', 'e'], action = "set-true" }
 ```
   </TabItem>
   <TabItem label="YAML">
 ```yaml
 name: prog
 args:
-  cfg:
-    long: config
-    hide: true
+  test:
+    long: test
+    visible-short-aliases:
+    - t
+    - e
+    action: set-true
 ```
   </TabItem>
   <TabItem label="JSON">
@@ -44,9 +47,13 @@ args:
 {
   "name": "prog",
   "args": {
-    "cfg": {
-      "long": "config",
-      "hide": true
+    "test": {
+      "long": "test",
+      "visible-short-aliases": [
+        "t",
+        "e"
+      ],
+      "action": "set-true"
     }
   }
 }
@@ -57,14 +64,11 @@ args:
 ### Input
 
 ```bash
-prog --help
+prog -t
 ```
 
 ### Output
 
 ```bash
-Usage: prog
-
-Options:
-  -h, --help  Print help
+claptrap_test='true'
 ```

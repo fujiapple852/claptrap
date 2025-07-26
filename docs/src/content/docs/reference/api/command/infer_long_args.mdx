@@ -1,10 +1,10 @@
 ---
-title: Arg::hide
-description: The `Arg::hide` API.
+title: Command::infer_long_args
+description: The `Command::infer_long_args` API.
 banner:
   content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
 sidebar:
-  label: hide
+  label: infer_long_args
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -12,11 +12,11 @@ import { Badge } from '@astrojs/starlight/components';
 import { Icon } from '@astrojs/starlight/components';
 import { LinkButton } from '@astrojs/starlight/components';
 
-# `hide` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide" icon="open-book" variant="minimal"></LinkButton>
+# `infer_long_args` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.infer_long_args" icon="open-book" variant="minimal"></LinkButton>
 
 <Badge text="since 0.1.0" size="small" />
 
-Hide this argument from the generated help text.
+Allow partial matches of long arguments or their aliases.
 
 # Example
 
@@ -25,28 +25,31 @@ Hide this argument from the generated help text.
 <Tabs syncKey="format">
   <TabItem label="TOML">
 ```toml
-name = "prog"
+name = "myprog"
+infer-long-args = true
 [args]
-cfg = { long = "config", hide = true }
+test = { long = "test", action = "set-true" }
 ```
   </TabItem>
   <TabItem label="YAML">
 ```yaml
-name: prog
+name: myprog
+infer-long-args: true
 args:
-  cfg:
-    long: config
-    hide: true
+  test:
+    long: test
+    action: set-true
 ```
   </TabItem>
   <TabItem label="JSON">
 ```json
 {
-  "name": "prog",
+  "name": "myprog",
+  "infer-long-args": true,
   "args": {
-    "cfg": {
-      "long": "config",
-      "hide": true
+    "test": {
+      "long": "test",
+      "action": "set-true"
     }
   }
 }
@@ -57,14 +60,11 @@ args:
 ### Input
 
 ```bash
-prog --help
+myprog --te
 ```
 
 ### Output
 
 ```bash
-Usage: prog
-
-Options:
-  -h, --help  Print help
+claptrap_test='true'
 ```
