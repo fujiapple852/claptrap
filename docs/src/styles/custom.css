@@ -27,3 +27,8 @@
 	--sl-color-gray-7: #f5f6f8;
 	--sl-color-black: #ffffff;
 }
+
+.api-table td:first-child,
+.api-table th:first-child,
+.api-table td:first-child * { white-space: nowrap; word-break: keep-all; }
+.api-table td:nth-child(2) { white-space: normal; overflow-wrap: anywhere; }

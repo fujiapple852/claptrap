@@ -61,7 +61,26 @@ export default defineConfig({
                 },
                 {
                     label: 'Reference',
-                    autogenerate: { directory: 'reference' },
+                    items: [
+                        'reference/overview',
+                        'reference/cli',
+                        'reference/api',
+                        {
+                            label: 'API Reference', items: [
+                                'reference/api/command',
+                                'reference/api/arg',
+                                'reference/api/arg_group',
+                                'reference/api/styles',
+                                'reference/api/value_parser',
+                                { label: 'Command', autogenerate: { directory: 'reference/api/command' } },
+                                { label: 'Arg', autogenerate: { directory: 'reference/api/arg' } },
+                                { label: 'Arg Group', autogenerate: { directory: 'reference/api/arg_group' } },
+                                { label: 'Styles', autogenerate: { directory: 'reference/api/styles' } },
+                                { label: 'Value Parser', autogenerate: { directory: 'reference/api/value_parser' } }
+                            ]
+                        },
+
+                    ]
                 }
             ],
         }),
