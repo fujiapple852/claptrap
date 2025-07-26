@@ -1,0 +1,235 @@
+---
+title: Command::multicall
+description: The `Command::multicall` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: multicall
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `multicall` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.multicall" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Multiple-personality program dispatched on the binary name (`argv[0]`).
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "busybox"
+multicall = true
+[args]
+[[subcommands]]
+name = "busybox"
+subcommand-value-name = "APPLET"
+subcommand-help-heading = "APPLETS"
+[[subcommands.subcommands]]
+name = "true"
+[[subcommands.subcommands]]
+name = "false"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: busybox
+multicall: true
+args: {}
+subcommands:
+- name: busybox
+  subcommand-value-name: APPLET
+  subcommand-help-heading: APPLETS
+  subcommands:
+  - name: 'true'
+  - name: 'false'
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "busybox",
+  "multicall": true,
+  "args": {},
+  "subcommands": [
+    {
+      "name": "busybox",
+      "subcommand-value-name": "APPLET",
+      "subcommand-help-heading": "APPLETS",
+      "subcommands": [
+        {
+          "name": "true"
+        },
+        {
+          "name": "false"
+        }
+      ]
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+/usr/bin/busybox true
+```
+
+### Output
+
+```bash
+claptrap__subcommand='busybox::true'
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "busybox"
+multicall = true
+[args]
+[[subcommands]]
+name = "busybox"
+subcommand-value-name = "APPLET"
+subcommand-help-heading = "APPLETS"
+[[subcommands.subcommands]]
+name = "true"
+[[subcommands.subcommands]]
+name = "false"
+[[subcommands]]
+name = "true"
+[[subcommands]]
+name = "false"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: busybox
+multicall: true
+args: {}
+subcommands:
+- name: busybox
+  subcommand-value-name: APPLET
+  subcommand-help-heading: APPLETS
+  subcommands:
+  - name: 'true'
+  - name: 'false'
+- name: 'true'
+- name: 'false'
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "busybox",
+  "multicall": true,
+  "args": {},
+  "subcommands": [
+    {
+      "name": "busybox",
+      "subcommand-value-name": "APPLET",
+      "subcommand-help-heading": "APPLETS",
+      "subcommands": [
+        {
+          "name": "true"
+        },
+        {
+          "name": "false"
+        }
+      ]
+    },
+    {
+      "name": "true"
+    },
+    {
+      "name": "false"
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+/usr/bin/true
+```
+
+### Output
+
+```bash
+claptrap__subcommand='true'
+```
+## Example 3
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "hostname"
+multicall = true
+[args]
+[[subcommands]]
+name = "hostname"
+[[subcommands]]
+name = "dnsdomainname"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: hostname
+multicall: true
+args: {}
+subcommands:
+- name: hostname
+- name: dnsdomainname
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "hostname",
+  "multicall": true,
+  "args": {},
+  "subcommands": [
+    {
+      "name": "hostname"
+    },
+    {
+      "name": "dnsdomainname"
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+/usr/bin/hostname dnsdomainname
+```
+
+### Output
+
+```bash
+error: unexpected argument 'dnsdomainname' found
+
+Usage: hostname
+
+For more information, try '--help'.
+```

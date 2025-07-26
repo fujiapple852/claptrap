@@ -1,0 +1,76 @@
+---
+title: Arg::value_names
+description: The `Arg::value_names` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: value_names
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `value_names` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_names" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Placeholders for the argument’s values in the help message / usage.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+io = { long = "io-files", value-names = ["INFILE", "OUTFILE"] }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  io:
+    long: io-files
+    value-names:
+    - INFILE
+    - OUTFILE
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "io": {
+      "long": "io-files",
+      "value-names": [
+        "INFILE",
+        "OUTFILE"
+      ]
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+      --io-files <INFILE> <OUTFILE>  
+  -h, --help                         Print help
+```

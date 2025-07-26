@@ -1,0 +1,65 @@
+---
+title: Arg::allow_negative_numbers
+description: The `Arg::allow_negative_numbers` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: allow_negative_numbers
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `allow_negative_numbers` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.allow_negative_numbers" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Allows negative numbers to pass as values.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+num = { allow-negative-numbers = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  num:
+    allow-negative-numbers: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "num": {
+      "allow-negative-numbers": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -20
+```
+
+### Output
+
+```bash
+claptrap_num='-20'
+```

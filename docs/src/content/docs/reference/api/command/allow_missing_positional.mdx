@@ -1,0 +1,241 @@
+---
+title: Command::allow_missing_positional
+description: The `Command::allow_missing_positional` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: allow_missing_positional
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `allow_missing_positional` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.allow_missing_positional" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Allows one to implement two styles of CLIs where positionals can be used out of order.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+allow-missing-positional = true
+[args]
+arg1 = {}
+arg2 = { required = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+allow-missing-positional: true
+args:
+  arg1: {}
+  arg2:
+    required: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "allow-missing-positional": true,
+  "args": {
+    "arg1": {},
+    "arg2": {
+      "required": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog other
+```
+
+### Output
+
+```bash
+claptrap_arg2='other'
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+allow-missing-positional = true
+[args]
+foo = {}
+bar = {}
+baz = { action = "set", num-args = "1.." }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+allow-missing-positional: true
+args:
+  foo: {}
+  bar: {}
+  baz:
+    action: set
+    num-args: 1..
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "allow-missing-positional": true,
+  "args": {
+    "foo": {},
+    "bar": {},
+    "baz": {
+      "action": "set",
+      "num-args": "1.."
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog foo bar baz1 baz2 baz3
+```
+
+### Output
+
+```bash
+claptrap_foo='foo'
+claptrap_bar='bar'
+claptrap_baz=('baz1' 'baz2' 'baz3')
+```
+## Example 3
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+allow-missing-positional = true
+[args]
+foo = {}
+bar = {}
+baz = { action = "set", num-args = "1.." }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+allow-missing-positional: true
+args:
+  foo: {}
+  bar: {}
+  baz:
+    action: set
+    num-args: 1..
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "allow-missing-positional": true,
+  "args": {
+    "foo": {},
+    "bar": {},
+    "baz": {
+      "action": "set",
+      "num-args": "1.."
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog -- baz1 baz2 baz3
+```
+
+### Output
+
+```bash
+claptrap_baz=('baz1' 'baz2' 'baz3')
+```
+## Example 4
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+allow-missing-positional = true
+[args]
+arg1 = { default-value = "something" }
+arg2 = { required = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+allow-missing-positional: true
+args:
+  arg1:
+    default-value: something
+  arg2:
+    required: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "allow-missing-positional": true,
+  "args": {
+    "arg1": {
+      "default-value": "something"
+    },
+    "arg2": {
+      "required": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog other
+```
+
+### Output
+
+```bash
+claptrap_arg2='other'
+claptrap_arg1='something'
+```

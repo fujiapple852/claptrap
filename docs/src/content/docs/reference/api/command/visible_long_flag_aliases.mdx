@@ -1,0 +1,90 @@
+---
+title: Command::visible_long_flag_aliases
+description: The `Command::visible_long_flag_aliases` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: visible_long_flag_aliases
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `visible_long_flag_aliases` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_long_flag_aliases" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Add aliases, which function as visible long flag subcommands.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[[subcommands]]
+name = "test"
+long-flag = "test"
+visible-long-flag-aliases = ["testing", "testall", "test_all"]
+[subcommands.args]
+input = { required = false, help = "the file to add" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommands:
+- name: test
+  long-flag: test
+  visible-long-flag-aliases:
+  - testing
+  - testall
+  - test_all
+  args:
+    input:
+      required: false
+      help: the file to add
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommands": [
+    {
+      "name": "test",
+      "long-flag": "test",
+      "visible-long-flag-aliases": [
+        "testing",
+        "testall",
+        "test_all"
+      ],
+      "args": {
+        "input": {
+          "required": false,
+          "help": "the file to add"
+        }
+      }
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --testing file.txt
+```
+
+### Output
+
+```bash
+claptrap__subcommand='test'
+claptrap_test_input='file.txt'
+```

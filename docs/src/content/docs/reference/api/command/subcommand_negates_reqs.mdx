@@ -1,0 +1,94 @@
+---
+title: Command::subcommand_negates_reqs
+description: The `Command::subcommand_negates_reqs` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: subcommand_negates_reqs
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `subcommand_negates_reqs` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_negates_reqs" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Allows subcommands to override all requirements of the parent command.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+subcommand-negates-reqs = true
+[args]
+opt = { long = "opt", required = true, action = "set" }
+[[subcommands]]
+name = "test"
+[subcommands.args]
+arg = { long = "arg", action = "set" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommand-negates-reqs: true
+args:
+  opt:
+    long: opt
+    required: true
+    action: set
+subcommands:
+- name: test
+  args:
+    arg:
+      long: arg
+      action: set
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommand-negates-reqs": true,
+  "args": {
+    "opt": {
+      "long": "opt",
+      "required": true,
+      "action": "set"
+    }
+  },
+  "subcommands": [
+    {
+      "name": "test",
+      "args": {
+        "arg": {
+          "long": "arg",
+          "action": "set"
+        }
+      }
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog test --arg value
+```
+
+### Output
+
+```bash
+claptrap__subcommand='test'
+claptrap_test_arg='value'
+```

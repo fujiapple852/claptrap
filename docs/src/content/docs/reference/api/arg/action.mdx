@@ -1,0 +1,459 @@
+---
+title: Arg::action
+description: The `Arg::action` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: action
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `action` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.action" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Specify how to react to an argument when parsing it.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+flag = { long = "flag", action = "append" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  flag:
+    long: flag
+    action: append
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "flag": {
+      "long": "flag",
+      "action": "append"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --flag value1 --flag value2
+```
+
+### Output
+
+```bash
+claptrap_flag=('value1' 'value2')
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+flag = { long = "flag", action = "count" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  flag:
+    long: flag
+    action: count
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "flag": {
+      "long": "flag",
+      "action": "count"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --flag --flag
+```
+
+### Output
+
+```bash
+claptrap_flag='2'
+```
+## Example 3
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+flag = { long = "flag", action = "help" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  flag:
+    long: flag
+    action: help
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "flag": {
+      "long": "flag",
+      "action": "help"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -h
+```
+
+### Output
+
+```bash
+Usage: prog
+
+Options:
+      --flag  
+  -h, --help  Print help
+```
+## Example 4
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+flag = { long = "flag", action = "help-long" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  flag:
+    long: flag
+    action: help-long
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "flag": {
+      "long": "flag",
+      "action": "help-long"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -h
+```
+
+### Output
+
+```bash
+Usage: prog
+
+Options:
+      --flag  
+  -h, --help  Print help
+```
+## Example 5
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+flag = { long = "flag", action = "help-short" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  flag:
+    long: flag
+    action: help-short
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "flag": {
+      "long": "flag",
+      "action": "help-short"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -h
+```
+
+### Output
+
+```bash
+Usage: prog
+
+Options:
+      --flag  
+  -h, --help  Print help
+```
+## Example 6
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+flag = { long = "flag", action = "set" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  flag:
+    long: flag
+    action: set
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "flag": {
+      "long": "flag",
+      "action": "set"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --flag value
+```
+
+### Output
+
+```bash
+claptrap_flag='value'
+```
+## Example 7
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+flag = { long = "flag", action = "set-false" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  flag:
+    long: flag
+    action: set-false
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "flag": {
+      "long": "flag",
+      "action": "set-false"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --flag
+```
+
+### Output
+
+```bash
+claptrap_flag='false'
+```
+## Example 8
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+flag = { long = "flag", action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  flag:
+    long: flag
+    action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "flag": {
+      "long": "flag",
+      "action": "set-true"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --flag
+```
+
+### Output
+
+```bash
+claptrap_flag='true'
+```
+## Example 9
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+version = "1.0.0"
+[args]
+flag = { long = "flag", action = "version" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+version: 1.0.0
+args:
+  flag:
+    long: flag
+    action: version
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "version": "1.0.0",
+  "args": {
+    "flag": {
+      "long": "flag",
+      "action": "version"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --version
+```
+
+### Output
+
+```bash
+prog 1.0.0
+```

@@ -1,0 +1,74 @@
+---
+title: Arg::index
+description: The `Arg::index` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: index
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `index` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.index" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Specifies the index of a positional argument starting at 1.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+mode = { index = 1 }
+debug = { long = "debug", action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  mode:
+    index: 1
+  debug:
+    long: debug
+    action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "mode": {
+      "index": 1
+    },
+    "debug": {
+      "long": "debug",
+      "action": "set-true"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --debug fast
+```
+
+### Output
+
+```bash
+claptrap_debug='true'
+claptrap_mode='fast'
+```

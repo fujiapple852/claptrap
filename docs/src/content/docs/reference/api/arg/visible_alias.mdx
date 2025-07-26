@@ -1,0 +1,69 @@
+---
+title: Arg::visible_alias
+description: The `Arg::visible_alias` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: visible_alias
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `visible_alias` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_alias" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Add an alias, which functions as a visible long flag.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+test = { long = "test", visible-alias = "something-awesome", action = "set" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  test:
+    long: test
+    visible-alias: something-awesome
+    action: set
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "test": {
+      "long": "test",
+      "visible-alias": "something-awesome",
+      "action": "set"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --something-awesome coffee
+```
+
+### Output
+
+```bash
+claptrap_test='coffee'
+```

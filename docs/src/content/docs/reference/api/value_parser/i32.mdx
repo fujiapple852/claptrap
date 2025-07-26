@@ -1,0 +1,70 @@
+---
+title: ValueParser::i32
+description: The `ValueParser::i32` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: i32
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `i32` <LinkButton href="https://docs.rs/clap/latest/clap/value_parser/fn.i32.html" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Parse `i32` values.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+
+[args]
+foo = { long = "foo", value-parser = ":i32:", allow-negative-numbers = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  foo:
+    long: foo
+    value-parser: ':i32:'
+    allow-negative-numbers: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "foo": {
+      "long": "foo",
+      "value-parser": ":i32:",
+      "allow-negative-numbers": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --foo -2147483648
+```
+
+### Output
+
+```bash
+claptrap_foo='-2147483648'
+```

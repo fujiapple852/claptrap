@@ -1,0 +1,91 @@
+---
+title: ArgGroup::id
+description: The `ArgGroup::id` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: id
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `id` <LinkButton href="https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.id" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets the group name.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[groups]
+my_group_id = { args = ["foo", "bar"] }
+[args]
+foo = { short = 'f', action = "set-true" }
+bar = { short = 'b', action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+groups:
+  my_group_id:
+    args:
+    - foo
+    - bar
+args:
+  foo:
+    short: f
+    action: set-true
+  bar:
+    short: b
+    action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "groups": {
+    "my_group_id": {
+      "args": [
+        "foo",
+        "bar"
+      ]
+    }
+  },
+  "args": {
+    "foo": {
+      "short": "f",
+      "action": "set-true"
+    },
+    "bar": {
+      "short": "b",
+      "action": "set-true"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog -f
+```
+
+### Output
+
+```bash
+claptrap_foo='true'
+claptrap_bar='false'
+```

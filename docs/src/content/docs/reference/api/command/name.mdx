@@ -1,0 +1,58 @@
+---
+title: Command::name
+description: The `Command::name` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: name
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `name` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.name" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets the program’s name.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog"
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --help
+```
+
+### Output
+
+```bash
+Usage: myprog
+
+Options:
+  -h, --help  Print help
+```

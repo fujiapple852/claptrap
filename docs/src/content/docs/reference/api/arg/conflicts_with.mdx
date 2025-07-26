@@ -1,0 +1,81 @@
+---
+title: Arg::conflicts_with
+description: The `Arg::conflicts_with` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: conflicts_with
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `conflicts_with` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.conflicts_with" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+This argument is mutually exclusive with the specified argument.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+cfg = { long = "config", action = "set", conflicts-with = "debug" }
+debug = { long = "debug", action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  cfg:
+    long: config
+    action: set
+    conflicts-with: debug
+  debug:
+    long: debug
+    action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "cfg": {
+      "long": "config",
+      "action": "set",
+      "conflicts-with": "debug"
+    },
+    "debug": {
+      "long": "debug",
+      "action": "set-true"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --debug --config file.conf
+```
+
+### Output
+
+```bash
+error: the argument '--debug' cannot be used with '--config <cfg>'
+
+Usage: prog --debug
+
+For more information, try '--help'.
+```

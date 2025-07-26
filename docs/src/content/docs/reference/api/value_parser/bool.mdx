@@ -1,0 +1,68 @@
+---
+title: ValueParser::bool
+description: The `ValueParser::bool` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: bool
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `bool` <LinkButton href="https://docs.rs/clap/latest/clap/value_parser/fn.bool.html" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Parse boolean values.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+
+[args]
+foo = { long = "foo", value-parser = ":bool:" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  foo:
+    long: foo
+    value-parser: ':bool:'
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "foo": {
+      "long": "foo",
+      "value-parser": ":bool:"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --foo true
+```
+
+### Output
+
+```bash
+claptrap_foo='true'
+```

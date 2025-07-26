@@ -1,0 +1,58 @@
+---
+title: Command::allow_external_subcommands
+description: The `Command::allow_external_subcommands` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: allow_external_subcommands
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `allow_external_subcommands` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.allow_external_subcommands" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Assume unexpected positional arguments are a subcommand.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+allow-external-subcommands = true
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+allow-external-subcommands: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "allow-external-subcommands": true
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog subcmd --option value -fff --flag
+```
+
+### Output
+
+```bash
+claptrap__subcommand='subcmd'
+```

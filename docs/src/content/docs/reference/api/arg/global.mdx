@@ -1,0 +1,87 @@
+---
+title: Arg::global
+description: The `Arg::global` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: global
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `global` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.global" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Specifies that an argument can be matched to all child Subcommands.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+verb = { long = "verbose", short = 'v', action = "set-true", global = true }
+[[subcommands]]
+name = "test"
+[[subcommands]]
+name = "do-stuff"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  verb:
+    long: verbose
+    short: v
+    action: set-true
+    global: true
+subcommands:
+- name: test
+- name: do-stuff
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "verb": {
+      "long": "verbose",
+      "short": "v",
+      "action": "set-true",
+      "global": true
+    }
+  },
+  "subcommands": [
+    {
+      "name": "test"
+    },
+    {
+      "name": "do-stuff"
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog do-stuff --verbose
+```
+
+### Output
+
+```bash
+claptrap__subcommand='do-stuff'
+claptrap_verb='true'
+```

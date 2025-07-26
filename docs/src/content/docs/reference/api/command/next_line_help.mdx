@@ -1,0 +1,92 @@
+---
+title: Command::next_line_help
+description: The `Command::next_line_help` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: next_line_help
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `next_line_help` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.next_line_help" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Places the help string for all arguments and subcommands on the line after them.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+next-line-help = true
+[args]
+opt = { short = 'o', long = "long-option-flag", action = "set", value-names = ["value1", "value2"], help = "Some really long help and complex\nhelp that makes more sense to be\non a line after the option" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+next-line-help: true
+args:
+  opt:
+    short: o
+    long: long-option-flag
+    action: set
+    value-names:
+    - value1
+    - value2
+    help: |-
+      Some really long help and complex
+      help that makes more sense to be
+      on a line after the option
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "next-line-help": true,
+  "args": {
+    "opt": {
+      "short": "o",
+      "long": "long-option-flag",
+      "action": "set",
+      "value-names": [
+        "value1",
+        "value2"
+      ],
+      "help": "Some really long help and complex\nhelp that makes more sense to be\non a line after the option"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+  -o, --long-option-flag <value1> <value2>
+          Some really long help and complex
+          help that makes more sense to be
+          on a line after the option
+  -h, --help
+          Print help
+```

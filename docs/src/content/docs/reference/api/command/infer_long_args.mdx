@@ -1,0 +1,135 @@
+---
+title: Command::infer_long_args
+description: The `Command::infer_long_args` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: infer_long_args
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `infer_long_args` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.infer_long_args" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Allow partial matches of long arguments or their aliases.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+infer-long-args = true
+[args]
+test = { long = "test", action = "set-true" }
+temp = { long = "temp", action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+infer-long-args: true
+args:
+  test:
+    long: test
+    action: set-true
+  temp:
+    long: temp
+    action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "infer-long-args": true,
+  "args": {
+    "test": {
+      "long": "test",
+      "action": "set-true"
+    },
+    "temp": {
+      "long": "temp",
+      "action": "set-true"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --te
+```
+
+### Output
+
+```bash
+error: unexpected argument '--te' found
+
+  tip: a similar argument exists: '--temp'
+
+Usage: myprog --temp
+
+For more information, try '--help'.
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+infer-long-args = true
+[args]
+test = { long = "test", action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+infer-long-args: true
+args:
+  test:
+    long: test
+    action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "infer-long-args": true,
+  "args": {
+    "test": {
+      "long": "test",
+      "action": "set-true"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --te
+```
+
+### Output
+
+```bash
+claptrap_test='true'
+```
