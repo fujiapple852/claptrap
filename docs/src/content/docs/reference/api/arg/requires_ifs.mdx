@@ -1,0 +1,312 @@
+---
+title: Arg::requires_ifs
+description: The `Arg::requires_ifs` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: requires_ifs
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `requires_ifs` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.requires_ifs" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Allows multiple conditional requirements.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+config = { long = "config", action = "set", requires-ifs = [{ arg = "opt", value = "special.conf" }, { arg = "other", value = "other.conf" }] }
+opt = { long = "option", action = "set" }
+other = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  config:
+    long: config
+    action: set
+    requires-ifs:
+    - arg: opt
+      value: special.conf
+    - arg: other
+      value: other.conf
+  opt:
+    long: option
+    action: set
+  other: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "config": {
+      "long": "config",
+      "action": "set",
+      "requires-ifs": [
+        {
+          "arg": "opt",
+          "value": "special.conf"
+        },
+        {
+          "arg": "other",
+          "value": "other.conf"
+        }
+      ]
+    },
+    "opt": {
+      "long": "option",
+      "action": "set"
+    },
+    "other": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config other.conf
+```
+
+### Output
+
+```bash
+error: the following required arguments were not provided:
+  <other>
+
+Usage: prog --config <config> <other>
+
+For more information, try '--help'.
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+config = { long = "config", action = "set", requires-ifs = [{ arg = "opt", value = "special.conf" }, { arg = "other", value = "other.conf" }] }
+opt = { long = "option", action = "set" }
+other = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  config:
+    long: config
+    action: set
+    requires-ifs:
+    - arg: opt
+      value: special.conf
+    - arg: other
+      value: other.conf
+  opt:
+    long: option
+    action: set
+  other: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "config": {
+      "long": "config",
+      "action": "set",
+      "requires-ifs": [
+        {
+          "arg": "opt",
+          "value": "special.conf"
+        },
+        {
+          "arg": "other",
+          "value": "other.conf"
+        }
+      ]
+    },
+    "opt": {
+      "long": "option",
+      "action": "set"
+    },
+    "other": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config special.conf
+```
+
+### Output
+
+```bash
+error: the following required arguments were not provided:
+  --option <opt>
+
+Usage: prog --option <opt> --config <config> [other]
+
+For more information, try '--help'.
+```
+## Example 3
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+config = { long = "config", action = "set", requires-ifs = [{ arg = "input" }, { arg = "output" }] }
+input = {}
+output = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  config:
+    long: config
+    action: set
+    requires-ifs:
+    - arg: input
+    - arg: output
+  input: {}
+  output: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "config": {
+      "long": "config",
+      "action": "set",
+      "requires-ifs": [
+        {
+          "arg": "input"
+        },
+        {
+          "arg": "output"
+        }
+      ]
+    },
+    "input": {},
+    "output": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config file.conf in.txt out.txt
+```
+
+### Output
+
+```bash
+claptrap_config='file.conf'
+claptrap_input='in.txt'
+claptrap_output='out.txt'
+```
+## Example 4
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+config = { long = "config", action = "set", requires-ifs = [{ arg = "input" }, { arg = "output" }] }
+input = {}
+output = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  config:
+    long: config
+    action: set
+    requires-ifs:
+    - arg: input
+    - arg: output
+  input: {}
+  output: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "config": {
+      "long": "config",
+      "action": "set",
+      "requires-ifs": [
+        {
+          "arg": "input"
+        },
+        {
+          "arg": "output"
+        }
+      ]
+    },
+    "input": {},
+    "output": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config file.conf in.txt
+```
+
+### Output
+
+```bash
+error: the following required arguments were not provided:
+  <output>
+
+Usage: prog --config <config> <input> <output>
+
+For more information, try '--help'.
+```

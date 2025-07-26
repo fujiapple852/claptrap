@@ -1,0 +1,93 @@
+---
+title: ArgGroup::multiple
+description: The `ArgGroup::multiple` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: multiple
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `multiple` <LinkButton href="https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.multiple" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Allows more than one of the Args in this group to be used.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[groups]
+req_flags = { args = ["flag", "color"], multiple = true }
+[args]
+flag = { short = 'f', action = "set-true" }
+color = { short = 'c', action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+groups:
+  req_flags:
+    args:
+    - flag
+    - color
+    multiple: true
+args:
+  flag:
+    short: f
+    action: set-true
+  color:
+    short: c
+    action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "groups": {
+    "req_flags": {
+      "args": [
+        "flag",
+        "color"
+      ],
+      "multiple": true
+    }
+  },
+  "args": {
+    "flag": {
+      "short": "f",
+      "action": "set-true"
+    },
+    "color": {
+      "short": "c",
+      "action": "set-true"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog -f -c
+```
+
+### Output
+
+```bash
+claptrap_flag='true'
+claptrap_color='true'
+```

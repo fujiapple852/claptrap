@@ -1,0 +1,82 @@
+---
+title: Command::alias
+description: The `Command::alias` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: alias
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `alias` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.alias" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets a hidden alias to this subcommand.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[[subcommands]]
+name = "test"
+alias = "do-stuff"
+[subcommands.args]
+search = { short = 's', long = "search", action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommands:
+- name: test
+  alias: do-stuff
+  args:
+    search:
+      short: s
+      long: search
+      action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommands": [
+    {
+      "name": "test",
+      "alias": "do-stuff",
+      "args": {
+        "search": {
+          "short": "s",
+          "long": "search",
+          "action": "set-true"
+        }
+      }
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog do-stuff -s
+```
+
+### Output
+
+```bash
+claptrap__subcommand='test'
+claptrap_test_search='true'
+```

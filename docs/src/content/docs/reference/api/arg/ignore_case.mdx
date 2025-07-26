@@ -1,0 +1,135 @@
+---
+title: Arg::ignore_case
+description: The `Arg::ignore_case` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: ignore_case
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `ignore_case` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.ignore_case" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Match values against PossibleValuesParser without matching case.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+option = { short = 'o', long = "option", action = "set", ignore-case = true, num-args = "1..", value-parser = ["test123", "test321"] }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  option:
+    short: o
+    long: option
+    action: set
+    ignore-case: true
+    num-args: 1..
+    value-parser:
+    - test123
+    - test321
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "option": {
+      "short": "o",
+      "long": "option",
+      "action": "set",
+      "ignore-case": true,
+      "num-args": "1..",
+      "value-parser": [
+        "test123",
+        "test321"
+      ]
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --option TeSt123 teST123 tESt321
+```
+
+### Output
+
+```bash
+claptrap_option=('TeSt123' 'teST123' 'tESt321')
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+option = { long = "option", action = "set", ignore-case = true, value-parser = ["test123"] }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  option:
+    long: option
+    action: set
+    ignore-case: true
+    value-parser:
+    - test123
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "option": {
+      "long": "option",
+      "action": "set",
+      "ignore-case": true,
+      "value-parser": [
+        "test123"
+      ]
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --option TeSt123
+```
+
+### Output
+
+```bash
+claptrap_option='TeSt123'
+```

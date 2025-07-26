@@ -70,13 +70,11 @@ export default defineConfig({
                                 'reference/api/command',
                                 'reference/api/arg',
                                 'reference/api/arg_group',
-                                'reference/api/styles',
                                 'reference/api/value_parser',
                                 { label: 'Command', autogenerate: { directory: 'reference/api/command' } },
                                 { label: 'Arg', autogenerate: { directory: 'reference/api/arg' } },
-                                { label: 'Arg Group', autogenerate: { directory: 'reference/api/arg_group' } },
-                                { label: 'Styles', autogenerate: { directory: 'reference/api/styles' } },
-                                { label: 'Value Parser', autogenerate: { directory: 'reference/api/value_parser' } }
+                                { label: 'ArgGroup', autogenerate: { directory: 'reference/api/arg_group' } },
+                                { label: 'ValueParser', autogenerate: { directory: 'reference/api/value_parser' } },
                             ]
                         },
 

@@ -1,0 +1,74 @@
+---
+title: Command::args_override_self
+description: The `Command::args_override_self` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: args_override_self
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `args_override_self` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.args_override_self" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Replace prior occurrences of arguments rather than error.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "cmd"
+args-override-self = true
+[args]
+foo = { long = "foo" }
+bar = { long = "bar" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: cmd
+args-override-self: true
+args:
+  foo:
+    long: foo
+  bar:
+    long: bar
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "cmd",
+  "args-override-self": true,
+  "args": {
+    "foo": {
+      "long": "foo"
+    },
+    "bar": {
+      "long": "bar"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+cmd --foo value --foo value
+```
+
+### Output
+
+```bash
+claptrap_foo='value'
+```

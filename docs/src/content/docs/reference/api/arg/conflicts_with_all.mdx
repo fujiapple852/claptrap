@@ -1,0 +1,89 @@
+---
+title: Arg::conflicts_with_all
+description: The `Arg::conflicts_with_all` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: conflicts_with_all
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `conflicts_with_all` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.conflicts_with_all" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+This argument is mutually exclusive with the specified arguments.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+cfg = { long = "config", action = "set", conflicts-with-all = ["debug", "input"] }
+debug = { long = "debug", action = "set-true" }
+input = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  cfg:
+    long: config
+    action: set
+    conflicts-with-all:
+    - debug
+    - input
+  debug:
+    long: debug
+    action: set-true
+  input: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "cfg": {
+      "long": "config",
+      "action": "set",
+      "conflicts-with-all": [
+        "debug",
+        "input"
+      ]
+    },
+    "debug": {
+      "long": "debug",
+      "action": "set-true"
+    },
+    "input": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config file.conf file.txt
+```
+
+### Output
+
+```bash
+error: the argument '--config <cfg>' cannot be used with '[input]'
+
+Usage: prog --config <cfg> [input]
+
+For more information, try '--help'.
+```

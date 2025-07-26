@@ -1,0 +1,479 @@
+---
+title: Arg::num_args
+description: The `Arg::num_args` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: num_args
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `num_args` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.num_args" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Specifies the number of arguments parsed per occurrence.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+mode = { long = "mode", default-missing-value = "slow", default-value = "plaid", num-args = "optional" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  mode:
+    long: mode
+    default-missing-value: slow
+    default-value: plaid
+    num-args: optional
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "mode": {
+      "long": "mode",
+      "default-missing-value": "slow",
+      "default-value": "plaid",
+      "num-args": "optional"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --mode fast
+```
+
+### Output
+
+```bash
+claptrap_mode='fast'
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+mode = { long = "mode", default-missing-value = "slow", default-value = "plaid", num-args = "optional" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  mode:
+    long: mode
+    default-missing-value: slow
+    default-value: plaid
+    num-args: optional
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "mode": {
+      "long": "mode",
+      "default-missing-value": "slow",
+      "default-value": "plaid",
+      "num-args": "optional"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --mode
+```
+
+### Output
+
+```bash
+claptrap_mode='slow'
+```
+## Example 3
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+mode = { long = "mode", default-missing-value = "slow", default-value = "plaid", num-args = "optional" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  mode:
+    long: mode
+    default-missing-value: slow
+    default-value: plaid
+    num-args: optional
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "mode": {
+      "long": "mode",
+      "default-missing-value": "slow",
+      "default-value": "plaid",
+      "num-args": "optional"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog
+```
+
+### Output
+
+```bash
+claptrap_mode='plaid'
+```
+## Example 4
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+file = { short = 'F', num-args = "..", action = "set" }
+word = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  file:
+    short: F
+    num-args: ..
+    action: set
+  word: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "file": {
+      "short": "F",
+      "num-args": "..",
+      "action": "set"
+    },
+    "word": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -F file1 file2 file3 word
+```
+
+### Output
+
+```bash
+claptrap_file=('file1' 'file2' 'file3' 'word')
+```
+## Example 5
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+file = { short = 'F', num-args = "..", action = "set" }
+word = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  file:
+    short: F
+    num-args: ..
+    action: set
+  word: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "file": {
+      "short": "F",
+      "num-args": "..",
+      "action": "set"
+    },
+    "word": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog word -F file1 file2 file3
+```
+
+### Output
+
+```bash
+claptrap_word='word'
+claptrap_file=('file1' 'file2' 'file3')
+```
+## Example 6
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+file = { short = 'F', action = "append" }
+word = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  file:
+    short: F
+    action: append
+  word: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "file": {
+      "short": "F",
+      "action": "append"
+    },
+    "word": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -F file1 -F file2 -F file3 word
+```
+
+### Output
+
+```bash
+claptrap_file=('file1' 'file2' 'file3')
+claptrap_word='word'
+```
+## Example 7
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+file = { short = 'F', num-args = 2, action = "set" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  file:
+    short: F
+    num-args: 2
+    action: set
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "file": {
+      "short": "F",
+      "num-args": 2,
+      "action": "set"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -F in-file out-file
+```
+
+### Output
+
+```bash
+claptrap_file=('in-file' 'out-file')
+```
+## Example 8
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+file = { short = 'F', num-args = 2, action = "set" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  file:
+    short: F
+    num-args: 2
+    action: set
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "file": {
+      "short": "F",
+      "num-args": 2,
+      "action": "set"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -F file1
+```
+
+### Output
+
+```bash
+error: 2 values required for '-F <file> <file>' but 1 was provided
+
+Usage: prog [OPTIONS]
+
+For more information, try '--help'.
+```
+## Example 9
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+mode = { long = "mode", num-args = 1 }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  mode:
+    long: mode
+    num-args: 1
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "mode": {
+      "long": "mode",
+      "num-args": 1
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --mode fast
+```
+
+### Output
+
+```bash
+claptrap_mode='fast'
+```

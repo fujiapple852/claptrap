@@ -1,0 +1,70 @@
+---
+title: ValueParser::isize
+description: The `ValueParser::isize` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: isize
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `isize` <LinkButton href="https://docs.rs/clap/latest/clap/value_parser/fn.isize.html" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Parse `isize` values.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+
+[args]
+foo = { long = "foo", value-parser = ":isize:", allow-negative-numbers = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  foo:
+    long: foo
+    value-parser: ':isize:'
+    allow-negative-numbers: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "foo": {
+      "long": "foo",
+      "value-parser": ":isize:",
+      "allow-negative-numbers": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --foo -9223372036854775808
+```
+
+### Output
+
+```bash
+claptrap_foo='-9223372036854775808'
+```

@@ -1,0 +1,86 @@
+---
+title: Command::hide
+description: The `Command::hide` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: hide
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `hide` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.hide" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Specifies that this subcommand should be hidden from help messages.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[[subcommands]]
+name = "beta"
+about = "Some help and text"
+[[subcommands]]
+name = "alpha"
+about = "I should be hidden!"
+hide = true
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommands:
+- name: beta
+  about: Some help and text
+- name: alpha
+  about: I should be hidden!
+  hide: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommands": [
+    {
+      "name": "beta",
+      "about": "Some help and text"
+    },
+    {
+      "name": "alpha",
+      "about": "I should be hidden!",
+      "hide": true
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --help
+```
+
+### Output
+
+```bash
+Usage: myprog [COMMAND]
+
+Commands:
+  beta  Some help and text
+  help  Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help
+```

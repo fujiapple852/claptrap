@@ -1,0 +1,61 @@
+---
+title: Command::display_name
+description: The `Command::display_name` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: display_name
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `display_name` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.display_name" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Overrides the runtime-determined display name of the program for help and error messages.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+version = "0.1.0"
+display-name = "my_program"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+version: 0.1.0
+display-name: my_program
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "version": "0.1.0",
+  "display-name": "my_program"
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog -V
+```
+
+### Output
+
+```bash
+my_program 0.1.0
+```

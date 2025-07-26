@@ -1,0 +1,80 @@
+---
+title: Command::visible_alias
+description: The `Command::visible_alias` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: visible_alias
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `visible_alias` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_alias" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets a visible alias to this subcommand.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[[subcommands]]
+name = "test"
+visible-alias = "do-stuff"
+[subcommands.args]
+input = { required = false, help = "the file to add" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommands:
+- name: test
+  visible-alias: do-stuff
+  args:
+    input:
+      required: false
+      help: the file to add
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommands": [
+    {
+      "name": "test",
+      "visible-alias": "do-stuff",
+      "args": {
+        "input": {
+          "required": false,
+          "help": "the file to add"
+        }
+      }
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog do-stuff file.txt
+```
+
+### Output
+
+```bash
+claptrap__subcommand='test'
+claptrap_test_input='file.txt'
+```

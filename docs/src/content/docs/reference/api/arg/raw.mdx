@@ -1,0 +1,65 @@
+---
+title: Arg::raw
+description: The `Arg::raw` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: raw
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `raw` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.raw" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Consume all following arguments.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+everything = { raw = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  everything:
+    raw: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "everything": {
+      "raw": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -- --foo something -- -v -v -v -b -b -b --baz -q -u -x
+```
+
+### Output
+
+```bash
+claptrap_everything=('--foo' 'something' '--' '-v' '-v' '-v' '-b' '-b' '-b' '--baz' '-q' '-u' '-x')
+```

@@ -1,0 +1,75 @@
+---
+title: Arg::hide_default_value
+description: The `Arg::hide_default_value` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: hide_default_value
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `hide_default_value` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_default_value" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Do not display the default value of the argument in the help message.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "connect"
+[args]
+host = { long = "host", default-value = "localhost", action = "set", hide-default-value = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: connect
+args:
+  host:
+    long: host
+    default-value: localhost
+    action: set
+    hide-default-value: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "connect",
+  "args": {
+    "host": {
+      "long": "host",
+      "default-value": "localhost",
+      "action": "set",
+      "hide-default-value": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+connect --help
+```
+
+### Output
+
+```bash
+Usage: connect [OPTIONS]
+
+Options:
+      --host <host>  
+  -h, --help         Print help
+```

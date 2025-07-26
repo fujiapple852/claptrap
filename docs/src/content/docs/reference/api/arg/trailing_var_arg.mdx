@@ -1,0 +1,67 @@
+---
+title: Arg::trailing_var_arg
+description: The `Arg::trailing_var_arg` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: trailing_var_arg
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `trailing_var_arg` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.trailing_var_arg" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+This is a “var arg” and everything that follows should be captured by it, as if the user had used a `--`.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+cmd = { trailing-var-arg = true, num-args = "1.." }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  cmd:
+    trailing-var-arg: true
+    num-args: 1..
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "cmd": {
+      "trailing-var-arg": true,
+      "num-args": "1.."
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog arg1 -r val1
+```
+
+### Output
+
+```bash
+claptrap_cmd=('arg1' '-r' 'val1')
+```

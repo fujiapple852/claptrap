@@ -1,0 +1,115 @@
+---
+title: Arg::default_value
+description: The `Arg::default_value` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: default_value
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `default_value` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Value for the argument when not present.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+opt = { long = "myopt", default-value = "myval" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  opt:
+    long: myopt
+    default-value: myval
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "opt": {
+      "long": "myopt",
+      "default-value": "myval"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog
+```
+
+### Output
+
+```bash
+claptrap_opt='myval'
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+opt = { long = "myopt", default-value = "myval" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  opt:
+    long: myopt
+    default-value: myval
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "opt": {
+      "long": "myopt",
+      "default-value": "myval"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --myopt=non_default
+```
+
+### Output
+
+```bash
+claptrap_opt='non_default'
+```

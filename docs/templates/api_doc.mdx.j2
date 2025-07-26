@@ -1,0 +1,59 @@
+---
+title: {{ title }}
+description: The `{{ struct }}::{{ slug }}` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: {{ sidebar }}
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `{{ slug }}` <LinkButton href="{{ link }}" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+{{ desc }}
+
+# {% if examples | length > 1 %}Examples{% else %}Example{% endif %}
+
+{% for ex in examples %}
+{% if examples | length > 1 %}
+## Example {{ loop.index }}
+{% endif %}
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+{{ ex.toml }}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+{{ ex.yaml }}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{{ ex.json }}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+{{ ex.args }}
+```
+
+### Output
+
+```bash
+{{ ex.output }}
+```
+{% endfor %}

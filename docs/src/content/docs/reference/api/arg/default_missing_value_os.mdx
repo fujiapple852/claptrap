@@ -1,0 +1,86 @@
+---
+title: Arg::default_missing_value_os
+description: The `Arg::default_missing_value_os` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: default_missing_value_os
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `default_missing_value_os` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_missing_value_os" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Value for the argument when the flag is present but no value is specified.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+color = { long = "color", value-name = "COLOR", value-parser = ["always", "auto", "never"], default-value = "auto", num-args = "optional", require-equals = true, default-missing-value-os = "always", help = "Specify WHEN to colorize output." }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  color:
+    long: color
+    value-name: COLOR
+    value-parser:
+    - always
+    - auto
+    - never
+    default-value: auto
+    num-args: optional
+    require-equals: true
+    default-missing-value-os: always
+    help: Specify WHEN to colorize output.
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "color": {
+      "long": "color",
+      "value-name": "COLOR",
+      "value-parser": [
+        "always",
+        "auto",
+        "never"
+      ],
+      "default-value": "auto",
+      "num-args": "optional",
+      "require-equals": true,
+      "default-missing-value-os": "always",
+      "help": "Specify WHEN to colorize output."
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --color
+```
+
+### Output
+
+```bash
+claptrap_color='always'
+```

@@ -1,0 +1,85 @@
+---
+title: Command::short_flag_alias
+description: The `Command::short_flag_alias` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: short_flag_alias
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `short_flag_alias` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.short_flag_alias" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Add an alias, which functions as “hidden” short flag subcommand.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[[subcommands]]
+name = "test"
+short-flag = 't'
+short-flag-alias = 'd'
+[subcommands.args]
+search = { short = 's', long = "search", action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommands:
+- name: test
+  short-flag: t
+  short-flag-alias: d
+  args:
+    search:
+      short: s
+      long: search
+      action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommands": [
+    {
+      "name": "test",
+      "short-flag": "t",
+      "short-flag-alias": "d",
+      "args": {
+        "search": {
+          "short": "s",
+          "long": "search",
+          "action": "set-true"
+        }
+      }
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -d --search
+```
+
+### Output
+
+```bash
+claptrap__subcommand='test'
+claptrap_test_search='true'
+```

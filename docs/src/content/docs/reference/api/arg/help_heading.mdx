@@ -1,0 +1,75 @@
+---
+title: Arg::help_heading
+description: The `Arg::help_heading` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: help_heading
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `help_heading` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.help_heading" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Override the current help section.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+cfg = { long = "config", help-heading = "Configuration Options", help = "Some help text describing the --config arg" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  cfg:
+    long: config
+    help-heading: Configuration Options
+    help: Some help text describing the --config arg
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "cfg": {
+      "long": "config",
+      "help-heading": "Configuration Options",
+      "help": "Some help text describing the --config arg"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+  -h, --help  Print help
+
+Configuration Options:
+      --config <cfg>  Some help text describing the --config arg
+```

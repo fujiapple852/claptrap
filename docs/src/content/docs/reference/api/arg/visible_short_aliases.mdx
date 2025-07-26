@@ -1,0 +1,74 @@
+---
+title: Arg::visible_short_aliases
+description: The `Arg::visible_short_aliases` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: visible_short_aliases
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `visible_short_aliases` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_short_aliases" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Add aliases, which function as visible short flags.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+test = { long = "test", visible-short-aliases = ['t', 'e'], action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  test:
+    long: test
+    visible-short-aliases:
+    - t
+    - e
+    action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "test": {
+      "long": "test",
+      "visible-short-aliases": [
+        "t",
+        "e"
+      ],
+      "action": "set-true"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -t
+```
+
+### Output
+
+```bash
+claptrap_test='true'
+```

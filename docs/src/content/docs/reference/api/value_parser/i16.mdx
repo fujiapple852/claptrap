@@ -1,0 +1,70 @@
+---
+title: ValueParser::i16
+description: The `ValueParser::i16` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: i16
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `i16` <LinkButton href="https://docs.rs/clap/latest/clap/value_parser/fn.i16.html" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Parse `i16` values.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+
+[args]
+foo = { long = "foo", value-parser = ":i16:", allow-negative-numbers = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  foo:
+    long: foo
+    value-parser: ':i16:'
+    allow-negative-numbers: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "foo": {
+      "long": "foo",
+      "value-parser": ":i16:",
+      "allow-negative-numbers": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --foo -32768
+```
+
+### Output
+
+```bash
+claptrap_foo='-32768'
+```

@@ -1,0 +1,90 @@
+---
+title: Command::override_help
+description: The `Command::override_help` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: override_help
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `override_help` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.override_help" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Overrides the clap generated help message (both `-h` and `--help`).
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+override-help = "myapp v1.0\n           Does awesome things\n           (C) me@mail.com\n\n           Usage: myapp <opts> <command>\n\n           Options:\n           -h, --help       Display this message\n           -V, --version    Display version info\n           -s <stuff>       Do something with stuff\n           -v               Be verbose\n\n           Commands:\n           help             Print this message\n           work             Do some work"
+[args]
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+override-help: |-
+  myapp v1.0
+             Does awesome things
+             (C) me@mail.com
+
+             Usage: myapp <opts> <command>
+
+             Options:
+             -h, --help       Display this message
+             -V, --version    Display version info
+             -s <stuff>       Do something with stuff
+             -v               Be verbose
+
+             Commands:
+             help             Print this message
+             work             Do some work
+args: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "override-help": "myapp v1.0\n           Does awesome things\n           (C) me@mail.com\n\n           Usage: myapp <opts> <command>\n\n           Options:\n           -h, --help       Display this message\n           -V, --version    Display version info\n           -s <stuff>       Do something with stuff\n           -v               Be verbose\n\n           Commands:\n           help             Print this message\n           work             Do some work",
+  "args": {}
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+myapp v1.0
+           Does awesome things
+           (C) me@mail.com
+
+           Usage: myapp <opts> <command>
+
+           Options:
+           -h, --help       Display this message
+           -V, --version    Display version info
+           -s <stuff>       Do something with stuff
+           -v               Be verbose
+
+           Commands:
+           help             Print this message
+           work             Do some work
+```
