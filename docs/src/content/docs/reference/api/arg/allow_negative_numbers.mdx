@@ -1,10 +1,10 @@
 ---
-title: Arg::hide
-description: The `Arg::hide` API.
+title: Arg::allow_negative_numbers
+description: The `Arg::allow_negative_numbers` API.
 banner:
   content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
 sidebar:
-  label: hide
+  label: allow_negative_numbers
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -12,11 +12,11 @@ import { Badge } from '@astrojs/starlight/components';
 import { Icon } from '@astrojs/starlight/components';
 import { LinkButton } from '@astrojs/starlight/components';
 
-# `hide` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide" icon="open-book" variant="minimal"></LinkButton>
+# `allow_negative_numbers` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.allow_negative_numbers" icon="open-book" variant="minimal"></LinkButton>
 
 <Badge text="since 0.1.0" size="small" />
 
-Hide this argument from the generated help text.
+Allows negative numbers to pass as values.
 
 # Example
 
@@ -27,16 +27,15 @@ Hide this argument from the generated help text.
 ```toml
 name = "prog"
 [args]
-cfg = { long = "config", hide = true }
+num = { allow-negative-numbers = true }
 ```
   </TabItem>
   <TabItem label="YAML">
 ```yaml
 name: prog
 args:
-  cfg:
-    long: config
-    hide: true
+  num:
+    allow-negative-numbers: true
 ```
   </TabItem>
   <TabItem label="JSON">
@@ -44,9 +43,8 @@ args:
 {
   "name": "prog",
   "args": {
-    "cfg": {
-      "long": "config",
-      "hide": true
+    "num": {
+      "allow-negative-numbers": true
     }
   }
 }
@@ -57,14 +55,11 @@ args:
 ### Input
 
 ```bash
-prog --help
+prog -20
 ```
 
 ### Output
 
 ```bash
-Usage: prog
-
-Options:
-  -h, --help  Print help
+claptrap_num='-20'
 ```

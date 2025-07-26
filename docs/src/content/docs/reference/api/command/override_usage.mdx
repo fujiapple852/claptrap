@@ -1,0 +1,69 @@
+---
+title: Command::override_usage
+description: The `Command::override_usage` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: override_usage
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `override_usage` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.override_usage" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Overrides the clap generated usage string for help and error messages.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+override-usage = "myapp -X [-a] [-b] <file>\n                   myapp -Y [-c] <file1> <file2>\n                   myapp -Z [-d|-e]"
+[args]
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+override-usage: |-
+  myapp -X [-a] [-b] <file>
+                     myapp -Y [-c] <file1> <file2>
+                     myapp -Z [-d|-e]
+args: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "override-usage": "myapp -X [-a] [-b] <file>\n                   myapp -Y [-c] <file1> <file2>\n                   myapp -Z [-d|-e]",
+  "args": {}
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: myapp -X [-a] [-b] <file>
+                   myapp -Y [-c] <file1> <file2>
+                   myapp -Z [-d|-e]
+
+Options:
+  -h, --help  Print help
+```

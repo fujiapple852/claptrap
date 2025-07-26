@@ -1,0 +1,104 @@
+---
+title: ArgGroup::conflicts_with
+description: The `ArgGroup::conflicts_with` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: conflicts_with
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `conflicts_with` <LinkButton href="https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.conflicts_with" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Specify an argument or group that must not be present when this group is.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[groups]
+req_flags = { args = ["flag", "color"], conflicts-with = "debug" }
+[args]
+flag = { short = 'f', action = "set-true" }
+color = { short = 'c', action = "set-true" }
+debug = { short = 'd', action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+groups:
+  req_flags:
+    args:
+    - flag
+    - color
+    conflicts-with: debug
+args:
+  flag:
+    short: f
+    action: set-true
+  color:
+    short: c
+    action: set-true
+  debug:
+    short: d
+    action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "groups": {
+    "req_flags": {
+      "args": [
+        "flag",
+        "color"
+      ],
+      "conflicts-with": "debug"
+    }
+  },
+  "args": {
+    "flag": {
+      "short": "f",
+      "action": "set-true"
+    },
+    "color": {
+      "short": "c",
+      "action": "set-true"
+    },
+    "debug": {
+      "short": "d",
+      "action": "set-true"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog -c -d
+```
+
+### Output
+
+```bash
+error: the argument '-c' cannot be used with '-d'
+
+Usage: myprog -c
+
+For more information, try '--help'.
+```

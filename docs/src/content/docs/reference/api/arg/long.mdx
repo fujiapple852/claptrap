@@ -1,10 +1,10 @@
 ---
-title: Arg::hide
-description: The `Arg::hide` API.
+title: Arg::long
+description: The `Arg::long` API.
 banner:
   content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
 sidebar:
-  label: hide
+  label: long
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -12,11 +12,11 @@ import { Badge } from '@astrojs/starlight/components';
 import { Icon } from '@astrojs/starlight/components';
 import { LinkButton } from '@astrojs/starlight/components';
 
-# `hide` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide" icon="open-book" variant="minimal"></LinkButton>
+# `long` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.long" icon="open-book" variant="minimal"></LinkButton>
 
 <Badge text="since 0.1.0" size="small" />
 
-Hide this argument from the generated help text.
+Sets the long version of the argument without the preceding `--`.
 
 # Example
 
@@ -27,7 +27,7 @@ Hide this argument from the generated help text.
 ```toml
 name = "prog"
 [args]
-cfg = { long = "config", hide = true }
+cfg = { long = "config", action = "set" }
 ```
   </TabItem>
   <TabItem label="YAML">
@@ -36,7 +36,7 @@ name: prog
 args:
   cfg:
     long: config
-    hide: true
+    action: set
 ```
   </TabItem>
   <TabItem label="JSON">
@@ -46,7 +46,7 @@ args:
   "args": {
     "cfg": {
       "long": "config",
-      "hide": true
+      "action": "set"
     }
   }
 }
@@ -57,14 +57,11 @@ args:
 ### Input
 
 ```bash
-prog --help
+prog --config file.toml
 ```
 
 ### Output
 
 ```bash
-Usage: prog
-
-Options:
-  -h, --help  Print help
+claptrap_cfg='file.toml'
 ```

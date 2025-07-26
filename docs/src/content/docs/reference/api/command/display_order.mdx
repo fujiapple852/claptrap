@@ -1,0 +1,90 @@
+---
+title: Command::display_order
+description: The `Command::display_order` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: display_order
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `display_order` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.display_order" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Set the placement of this subcommand within the help.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[[subcommands]]
+name = "beta"
+display-order = 0
+about = "Some help and text"
+[[subcommands]]
+name = "alpha"
+display-order = 0
+about = "I should be first!"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommands:
+- name: beta
+  display-order: 0
+  about: Some help and text
+- name: alpha
+  display-order: 0
+  about: I should be first!
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommands": [
+    {
+      "name": "beta",
+      "display-order": 0,
+      "about": "Some help and text"
+    },
+    {
+      "name": "alpha",
+      "display-order": 0,
+      "about": "I should be first!"
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --help
+```
+
+### Output
+
+```bash
+Usage: myprog [COMMAND]
+
+Commands:
+  alpha  I should be first!
+  beta   Some help and text
+  help   Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help
+```

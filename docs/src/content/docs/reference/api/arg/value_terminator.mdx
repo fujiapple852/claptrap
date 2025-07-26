@@ -1,0 +1,75 @@
+---
+title: Arg::value_terminator
+description: The `Arg::value_terminator` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: value_terminator
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `value_terminator` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_terminator" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Sentinel to stop parsing multiple values of a given argument.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+cmds = { action = "set", num-args = "..", allow-hyphen-values = true, value-terminator = ";" }
+location = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  cmds:
+    action: set
+    num-args: ..
+    allow-hyphen-values: true
+    value-terminator: ;
+  location: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "cmds": {
+      "action": "set",
+      "num-args": "..",
+      "allow-hyphen-values": true,
+      "value-terminator": ";"
+    },
+    "location": {}
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog find type f -name special ; /home/clap
+```
+
+### Output
+
+```bash
+claptrap_cmds=('find' 'type' 'f' '-name' 'special')
+claptrap_location='/home/clap'
+```

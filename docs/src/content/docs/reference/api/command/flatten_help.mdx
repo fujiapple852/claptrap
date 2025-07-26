@@ -1,0 +1,158 @@
+---
+title: Command::flatten_help
+description: The `Command::flatten_help` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: flatten_help
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `flatten_help` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.flatten_help" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Flatten subcommand help into the current command’s help.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+flatten-help = true
+[args]
+arg1 = {}
+[[subcommands]]
+name = "subcommand"
+about = "a sub command"
+flatten-help = true
+[subcommands.args]
+arg2 = {}
+[[subcommands.subcommands]]
+name = "nested"
+about = "A nested sub command"
+[subcommands.subcommands.args]
+arg3 = { long = "arg3" }
+[[subcommands]]
+name = "subcommand2"
+about = "another sub command"
+[subcommands.args]
+arg4 = {}
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+flatten-help: true
+args:
+  arg1: {}
+subcommands:
+- name: subcommand
+  about: a sub command
+  flatten-help: true
+  args:
+    arg2: {}
+  subcommands:
+  - name: nested
+    about: A nested sub command
+    args:
+      arg3:
+        long: arg3
+- name: subcommand2
+  about: another sub command
+  args:
+    arg4: {}
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "flatten-help": true,
+  "args": {
+    "arg1": {}
+  },
+  "subcommands": [
+    {
+      "name": "subcommand",
+      "about": "a sub command",
+      "flatten-help": true,
+      "args": {
+        "arg2": {}
+      },
+      "subcommands": [
+        {
+          "name": "nested",
+          "about": "A nested sub command",
+          "args": {
+            "arg3": {
+              "long": "arg3"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "subcommand2",
+      "about": "another sub command",
+      "args": {
+        "arg4": {}
+      }
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --help
+```
+
+### Output
+
+```bash
+Usage: myprog [arg1]
+       myprog subcommand [arg2]
+       myprog subcommand nested [OPTIONS]
+       myprog subcommand help [COMMAND]
+       myprog subcommand2 [arg4]
+       myprog help [COMMAND]...
+
+Arguments:
+  [arg1]  
+
+Options:
+  -h, --help  Print help
+
+myprog subcommand:
+a sub command
+  -h, --help  Print help
+  [arg2]      
+
+myprog subcommand nested:
+A nested sub command
+      --arg3 <arg3>  
+  -h, --help         Print help
+
+myprog subcommand help:
+Print this message or the help of the given subcommand(s)
+
+myprog subcommand2:
+another sub command
+  -h, --help  Print help
+  [arg4]      
+
+myprog help:
+Print this message or the help of the given subcommand(s)
+  [COMMAND]...  Print help for the subcommand(s)
+```

@@ -1,10 +1,10 @@
 ---
-title: Arg::hide
-description: The `Arg::hide` API.
+title: Arg::help_heading
+description: The `Arg::help_heading` API.
 banner:
   content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
 sidebar:
-  label: hide
+  label: help_heading
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -12,11 +12,11 @@ import { Badge } from '@astrojs/starlight/components';
 import { Icon } from '@astrojs/starlight/components';
 import { LinkButton } from '@astrojs/starlight/components';
 
-# `hide` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide" icon="open-book" variant="minimal"></LinkButton>
+# `help_heading` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.help_heading" icon="open-book" variant="minimal"></LinkButton>
 
 <Badge text="since 0.1.0" size="small" />
 
-Hide this argument from the generated help text.
+Override the current help section.
 
 # Example
 
@@ -27,7 +27,7 @@ Hide this argument from the generated help text.
 ```toml
 name = "prog"
 [args]
-cfg = { long = "config", hide = true }
+cfg = { long = "config", help-heading = "Configuration Options", help = "Some help text describing the --config arg" }
 ```
   </TabItem>
   <TabItem label="YAML">
@@ -36,7 +36,8 @@ name: prog
 args:
   cfg:
     long: config
-    hide: true
+    help-heading: Configuration Options
+    help: Some help text describing the --config arg
 ```
   </TabItem>
   <TabItem label="JSON">
@@ -46,7 +47,8 @@ args:
   "args": {
     "cfg": {
       "long": "config",
-      "hide": true
+      "help-heading": "Configuration Options",
+      "help": "Some help text describing the --config arg"
     }
   }
 }
@@ -63,8 +65,11 @@ prog --help
 ### Output
 
 ```bash
-Usage: prog
+Usage: prog [OPTIONS]
 
 Options:
   -h, --help  Print help
+
+Configuration Options:
+      --config <cfg>  Some help text describing the --config arg
 ```

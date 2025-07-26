@@ -1,0 +1,129 @@
+---
+title: Arg::default_values
+description: The `Arg::default_values` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: default_values
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `default_values` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_values" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Value for the argument when not present.
+
+# Examples
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+opt = { long = "myopt", num-args = 2, default-values = ["myval1", "myval2"] }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  opt:
+    long: myopt
+    num-args: 2
+    default-values:
+    - myval1
+    - myval2
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "opt": {
+      "long": "myopt",
+      "num-args": 2,
+      "default-values": [
+        "myval1",
+        "myval2"
+      ]
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog
+```
+
+### Output
+
+```bash
+claptrap_opt=('myval1' 'myval2')
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+opt = { long = "myopt", num-args = 2, default-values = ["myval1", "myval2"] }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  opt:
+    long: myopt
+    num-args: 2
+    default-values:
+    - myval1
+    - myval2
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "opt": {
+      "long": "myopt",
+      "num-args": 2,
+      "default-values": [
+        "myval1",
+        "myval2"
+      ]
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --myopt non_default another_value
+```
+
+### Output
+
+```bash
+claptrap_opt=('non_default' 'another_value')
+```

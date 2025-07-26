@@ -1,0 +1,164 @@
+---
+title: Command::styles
+description: The `Command::styles` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: styles
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `styles` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.styles" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets the `Styles` for terminal output.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[styles]
+header = { fg = "blue", bg = "#f0f0f0", underline = 7, effects = ["bold", "italic"] }
+error = { fg = "bright-red" }
+usage = { fg = "green" }
+literal = { fg = "magenta" }
+placeholder = { fg = "white" }
+valid = { fg = "bright-green" }
+invalid = { fg = "#ff0000" }
+context = { fg = "yellow", bg = "#000000", effects = ["bold"] }
+context-value = { fg = "cyan", bg = "#000000", effects = ["bold"] }
+[args]
+foo = { help = "It does foo stuff", short = 'f', long = "foo", value-name = "FOO", default-value = "bar", env = "MY_FOO", action = "set" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+styles:
+  header:
+    fg: blue
+    bg: '#f0f0f0'
+    underline: 7
+    effects:
+    - bold
+    - italic
+  error:
+    fg: bright-red
+  usage:
+    fg: green
+  literal:
+    fg: magenta
+  placeholder:
+    fg: white
+  valid:
+    fg: bright-green
+  invalid:
+    fg: '#ff0000'
+  context:
+    fg: yellow
+    bg: '#000000'
+    effects:
+    - bold
+  context-value:
+    fg: cyan
+    bg: '#000000'
+    effects:
+    - bold
+args:
+  foo:
+    help: It does foo stuff
+    short: f
+    long: foo
+    value-name: FOO
+    default-value: bar
+    env: MY_FOO
+    action: set
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "styles": {
+    "header": {
+      "fg": "blue",
+      "bg": "#f0f0f0",
+      "underline": 7,
+      "effects": [
+        "bold",
+        "italic"
+      ]
+    },
+    "error": {
+      "fg": "bright-red"
+    },
+    "usage": {
+      "fg": "green"
+    },
+    "literal": {
+      "fg": "magenta"
+    },
+    "placeholder": {
+      "fg": "white"
+    },
+    "valid": {
+      "fg": "bright-green"
+    },
+    "invalid": {
+      "fg": "#ff0000"
+    },
+    "context": {
+      "fg": "yellow",
+      "bg": "#000000",
+      "effects": [
+        "bold"
+      ]
+    },
+    "context-value": {
+      "fg": "cyan",
+      "bg": "#000000",
+      "effects": [
+        "bold"
+      ]
+    }
+  },
+  "args": {
+    "foo": {
+      "help": "It does foo stuff",
+      "short": "f",
+      "long": "foo",
+      "value-name": "FOO",
+      "default-value": "bar",
+      "env": "MY_FOO",
+      "action": "set"
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --help
+```
+
+### Output
+
+```bash
+Usage: myprog [OPTIONS]
+
+Options:
+  -f, --foo <FOO>  It does foo stuff [env: MY_FOO=] [default: bar]
+  -h, --help       Print help
+```

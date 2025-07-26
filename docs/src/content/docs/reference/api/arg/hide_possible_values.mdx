@@ -1,0 +1,80 @@
+---
+title: Arg::hide_possible_values
+description: The `Arg::hide_possible_values` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: hide_possible_values
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `hide_possible_values` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_possible_values" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Do not display the possible values in the help message.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+mode = { long = "mode", value-parser = ["fast", "slow"], action = "set", hide-possible-values = true }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  mode:
+    long: mode
+    value-parser:
+    - fast
+    - slow
+    action: set
+    hide-possible-values: true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "mode": {
+      "long": "mode",
+      "value-parser": [
+        "fast",
+        "slow"
+      ],
+      "action": "set",
+      "hide-possible-values": true
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+      --mode <mode>  
+  -h, --help         Print help
+```

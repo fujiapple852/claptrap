@@ -1,0 +1,70 @@
+---
+title: Command::propagate_version
+description: The `Command::propagate_version` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: propagate_version
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `propagate_version` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.propagate_version" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Specifies to use the version of the current command for all subcommands.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+version = "v1.1"
+propagate-version = true
+[[subcommands]]
+name = "test"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+version: v1.1
+propagate-version: true
+subcommands:
+- name: test
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "version": "v1.1",
+  "propagate-version": true,
+  "subcommands": [
+    {
+      "name": "test"
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog test --version
+```
+
+### Output
+
+```bash
+myprog-test v1.1
+```

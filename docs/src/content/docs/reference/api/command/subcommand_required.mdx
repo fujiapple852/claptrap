@@ -1,0 +1,72 @@
+---
+title: Command::subcommand_required
+description: The `Command::subcommand_required` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: subcommand_required
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `subcommand_required` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_required" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+If no subcommand is present at runtime, error and exit gracefully.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+subcommand-required = true
+[[subcommands]]
+name = "test"
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommand-required: true
+subcommands:
+- name: test
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommand-required": true,
+  "subcommands": [
+    {
+      "name": "test"
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog
+```
+
+### Output
+
+```bash
+error: 'myprog' requires a subcommand but one was not provided
+  [subcommands: test, help]
+
+Usage: myprog <COMMAND>
+
+For more information, try '--help'.
+```

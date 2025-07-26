@@ -1,0 +1,80 @@
+---
+title: Command::infer_subcommands
+description: The `Command::infer_subcommands` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: infer_subcommands
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `infer_subcommands` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.infer_subcommands" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Allow partial matches of subcommand names and their aliases.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+infer-subcommands = true
+[[subcommands]]
+name = "test"
+[subcommands.args]
+arg1 = { long = "arg1", action = "set-true" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+infer-subcommands: true
+subcommands:
+- name: test
+  args:
+    arg1:
+      long: arg1
+      action: set-true
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "infer-subcommands": true,
+  "subcommands": [
+    {
+      "name": "test",
+      "args": {
+        "arg1": {
+          "long": "arg1",
+          "action": "set-true"
+        }
+      }
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog te --arg1
+```
+
+### Output
+
+```bash
+claptrap__subcommand='test'
+claptrap_test_arg1='true'
+```

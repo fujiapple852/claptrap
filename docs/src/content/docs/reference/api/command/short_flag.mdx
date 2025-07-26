@@ -1,0 +1,84 @@
+---
+title: Command::short_flag
+description: The `Command::short_flag` API.
+banner:
+  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
+sidebar:
+  label: short_flag
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `short_flag` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.short_flag" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets the short version of the subcommand flag without the preceding `-`.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "myprog"
+[[subcommands]]
+name = "sync"
+short-flag = 'S'
+[subcommands.args]
+search = { short = 's', long = "search", action = "set-true", help = "search remote repositories for matching stringsg" }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: myprog
+subcommands:
+- name: sync
+  short-flag: S
+  args:
+    search:
+      short: s
+      long: search
+      action: set-true
+      help: search remote repositories for matching stringsg
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "myprog",
+  "subcommands": [
+    {
+      "name": "sync",
+      "short-flag": "S",
+      "args": {
+        "search": {
+          "short": "s",
+          "long": "search",
+          "action": "set-true",
+          "help": "search remote repositories for matching stringsg"
+        }
+      }
+    }
+  ]
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -Ss
+```
+
+### Output
+
+```bash
+claptrap__subcommand='sync'
+claptrap_sync_search='true'
+```
