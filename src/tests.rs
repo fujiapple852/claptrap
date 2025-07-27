@@ -330,28 +330,28 @@ mod arg_group {
     }
 }
 
-mod values {
+mod value_parser {
     use test_case::test_case;
 
-    #[test_case(case!("values", "bool"))]
-    #[test_case(case!("values", "boolish"))]
-    #[test_case(case!("values", "falsey"))]
-    #[test_case(case!("values", "string"))]
-    #[test_case(case!("values", "u8"))]
-    #[test_case(case!("values", "u16"))]
-    #[test_case(case!("values", "u32"))]
-    #[test_case(case!("values", "u64"))]
-    #[test_case(case!("values", "u128"))]
-    #[test_case(case!("values", "usize"))]
-    #[test_case(case!("values", "i8"))]
-    #[test_case(case!("values", "i16"))]
-    #[test_case(case!("values", "i32"))]
-    #[test_case(case!("values", "i64"))]
-    #[test_case(case!("values", "i128"))]
-    #[test_case(case!("values", "isize"))]
-    #[test_case(case!("values", "f32"))]
-    #[test_case(case!("values", "f64"))]
-    #[test_case(case!("values", "possible_values"))]
+    #[test_case(case!("value_parser", "bool"))]
+    #[test_case(case!("value_parser", "boolish"))]
+    #[test_case(case!("value_parser", "falsey"))]
+    #[test_case(case!("value_parser", "string"))]
+    #[test_case(case!("value_parser", "u8"))]
+    #[test_case(case!("value_parser", "u16"))]
+    #[test_case(case!("value_parser", "u32"))]
+    #[test_case(case!("value_parser", "u64"))]
+    #[test_case(case!("value_parser", "u128"))]
+    #[test_case(case!("value_parser", "usize"))]
+    #[test_case(case!("value_parser", "i8"))]
+    #[test_case(case!("value_parser", "i16"))]
+    #[test_case(case!("value_parser", "i32"))]
+    #[test_case(case!("value_parser", "i64"))]
+    #[test_case(case!("value_parser", "i128"))]
+    #[test_case(case!("value_parser", "isize"))]
+    #[test_case(case!("value_parser", "f32"))]
+    #[test_case(case!("value_parser", "f64"))]
+    #[test_case(case!("value_parser", "possible_values"))]
     fn test_values((name, spec, args): (&str, &str, &str)) {
         insta::assert_snapshot!(name, super::run(spec, args));
     }
