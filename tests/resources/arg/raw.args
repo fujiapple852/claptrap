@@ -1,0 +1,1 @@
+prog -- --foo something -- -v -v -v -b -b -b --baz -q -u -x

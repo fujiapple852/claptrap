@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+color = { long = "color", value-name = "COLOR", value-parser = ["always", "auto", "never"], default-value = "auto", num-args = "optional", require-equals = true, default-missing-value-os = "always", help = "Specify WHEN to colorize output." }

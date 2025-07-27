@@ -155,6 +155,7 @@ mod command {
 mod arg {
     use test_case::test_case;
 
+    #[test_case(case!("arg", "id"))]
     #[test_case(case!("arg", "action-append"))]
     #[test_case(case!("arg", "action-count"))]
     #[test_case(case!("arg", "action-help"))]
@@ -173,6 +174,9 @@ mod arg {
     #[test_case(case!("arg", "default_missing_value-1"))]
     #[test_case(case!("arg", "default_missing_value-2"))]
     #[test_case(case!("arg", "default_missing_value-3"))]
+    #[test_case(case!("arg", "default_missing_value_os"))]
+    #[test_case(case!("arg", "default_missing_values"))]
+    #[test_case(case!("arg", "default_missing_values_os"))]
     #[test_case(case!("arg", "default_missing_value-bool_literal1"))]
     #[test_case(case!("arg", "default_missing_value-bool_literal2"))]
     #[test_case(case!("arg", "default_missing_value-bool_literal3"))]
@@ -205,6 +209,7 @@ mod arg {
     #[test_case(case!("arg", "hide_possible_values"))]
     #[test_case(case!("arg", "hide_short_help-1"))]
     #[test_case(case!("arg", "hide_short_help-2"))]
+    #[test_case(case!("arg", "value_hint"))]
     #[test_case(case!("arg", "ignore_case"))]
     #[test_case(case!("arg", "ignore_case-multi"))]
     #[test_case(case!("arg", "index"))]
@@ -312,6 +317,7 @@ mod arg {
 mod arg_group {
     use test_case::test_case;
 
+    #[test_case(case!("arg_group", "id"))]
     #[test_case(case!("arg_group", "args"))]
     #[test_case(case!("arg_group", "multiple"))]
     #[test_case(case!("arg_group", "required"))]

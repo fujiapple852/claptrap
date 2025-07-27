@@ -1,0 +1,6 @@
+name = "myprog"
+[groups]
+my_group_id = { args = ["foo", "bar"] }
+[args]
+foo = { short = 'f', action = "set-true" }
+bar = { short = 'b', action = "set-true" }
