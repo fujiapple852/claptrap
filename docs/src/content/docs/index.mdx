@@ -53,7 +53,7 @@ import { Icon } from '@astrojs/starlight/components';
 
 <CardGrid>
 	<Card title="Powered by Clap" icon="rocket">
-	    Claptrap brings the [full power](https://claptrap.cli.rs/reference/supported/) of [Clap](https://crates.io/crates/clap) command line parsing to shell scripts.
+	    Claptrap brings the [full power](https://claptrap.sh/reference/supported/) of [Clap](https://crates.io/crates/clap) command line parsing to shell scripts.
 	</Card>
     <Card title="Declarative Specification" icon="seti:json">
         Command line interface specifications can be declared in `toml`, `yaml` or `json` and used as standalone files
@@ -342,7 +342,7 @@ Outputs:
 set -euo pipefail
 
 if ! command -v claptrap &> /dev/null; then
-    echo "claptrap command not found. Please install it first, see https://claptrap.cli.rs for instructions."
+    echo "claptrap command not found. Please install it first, see https://claptrap.sh for instructions."
     exit 1
 fi
 
