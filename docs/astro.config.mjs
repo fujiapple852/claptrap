@@ -4,7 +4,7 @@ import starlightVersions from 'starlight-versions'
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://claptrap.cli.rs',
+    site: 'https://claptrap.sh',
     integrations: [
         starlight({
             plugins: [

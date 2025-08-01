@@ -64,14 +64,14 @@ For more information, try '--help'.
 
 Claptrap supports the full range of Clap features, including short and long flags, default values, subcommands, argument
 groups, typed parsing, value hints, environment variables, color and styles and many more. See the full list
-of [supported](https://claptrap.cli.rs/reference/supported/) Clap features.
+of [supported](https://claptrap.sh/reference/supported/) Clap features.
 
 Command line interface specifications can be declared in `toml`, `yaml` or `json` and reused across `bash` and `zsh`
 scripts.
 
 Claptrap can also generate shell completions, man pages, markdown documentation and template scripts.
 
-See the [documentation](https://claptrap.cli.rs) for more details.
+See the [documentation](https://claptrap.sh) for more details.
 
 ## Install
 
@@ -139,7 +139,7 @@ docker run -it fujiapple/claptrap
 
 </details>
 
-See the [installation](https://claptrap.cli.rs/start/installation) guide for details of how to install Claptrap on your
+See the [installation](https://claptrap.sh/start/installation) guide for details of how to install Claptrap on your
 system.
 
 ## Goals and non-goals
