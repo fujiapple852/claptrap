@@ -28,7 +28,15 @@
 	--sl-color-black: #ffffff;
 }
 
-.api-table td:first-child,
-.api-table th:first-child,
-.api-table td:first-child * { white-space: nowrap; word-break: keep-all; }
-.api-table td:nth-child(2) { white-space: normal; overflow-wrap: anywhere; }
+@media (min-width: 50rem) {
+  .api-table td:first-child,
+  .api-table th:first-child,
+  .api-table td:first-child * {
+    white-space: nowrap;
+    word-break: keep-all;
+  }
+  .api-table td:nth-child(2) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
