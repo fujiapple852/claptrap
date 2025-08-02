@@ -34,6 +34,7 @@ mod basic {
     #[test_case(case!("basic", "short_version"))]
     #[test_case(case!("basic", "variables"))]
     #[test_case(case!("basic", "unexpected_arg"))]
+    #[test_case(case!("basic", "all_aliases"))]
     fn test_values((name, spec, args): (&str, &str, &str)) {
         insta::assert_snapshot!(name, super::run(spec, args));
     }
