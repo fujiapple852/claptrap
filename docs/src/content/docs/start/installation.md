@@ -1,8 +1,6 @@
 ---
 title: Installation
 description: Install Claptrap on your platform.
-banner:
-  content: 🚧 🚧 🚧 Under construction 🚧 🚧 🚧
 sidebar:
   order: 2
 ---
