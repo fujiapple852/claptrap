@@ -25,7 +25,7 @@ anyhow = "1.0.98"
 clap = { version = "4.5.41", features = ["derive", "string", "cargo", "wrap_help", "usage", "unstable-styles", "color", "suggestions", "error-context", "env"] }
 clap-markdown = "0.1.5"
 clap_complete = "4.5.54"
-clap_mangen = "0.2.27"
+clap_mangen = "0.2.29"
 crc32fast = "1.5.0"
 indexmap = { version = "2.10.0", features = ["serde"] }
 itertools = "0.14.0"
