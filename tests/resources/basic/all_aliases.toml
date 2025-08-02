@@ -1,0 +1,24 @@
+name = "ctest"
+version = "0.1"
+
+[args]
+dest = { short = 'd', long = "destination", value-name = "FILE", help = "File to save into", long-help = "The Filepath to save into the result", short-alias = 'q', short-aliases = ['w', 'e'], alias = "arg-alias", aliases = ["do-stuff", "do-tests"], visible-short-alias = 't', visible-short-aliases = ['i', 'o'], visible-alias = "file", visible-aliases = ["into", "to"], action = "set" }
+
+[[subcommands]]
+name = "rev"
+about = "In place"
+long-about = "Change mode to work in place on source"
+short-flag = 'r'
+long-flag = "inplace"
+alias = "subc-alias"
+aliases = ["subc-do-stuff", "subc-do-tests"]
+short-flag-alias = 'j'
+short-flag-aliases = ['k', 'l']
+long-flag-alias = "subc-long-flag-alias"
+long-flag-aliases = ["subc-long-do-stuff", "subc-long-do-tests"]
+visible-aliases = ["--origin", "--path", "--tryfrom", "source", "from"]
+visible-short-flag-alias = 's'
+visible-short-flag-aliases = ['f', 'g']
+
+[subcommands.args]
+input = { value-name = "INPUT", help = "The source file" }
