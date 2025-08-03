@@ -82,19 +82,19 @@ fn main() -> anyhow::Result<()> {
             })) {
                 Ok(val) => match val {
                     Ok(output) => {
-                        write!(stdout, "{output}")?;
+                        write!(stdout, "{}", output.render(cli.output_format))?;
                         stdout.flush()?;
                         exit(0);
                     }
                     Err(err) => {
-                        write!(stdout, "{err}")?;
+                        write!(stdout, "{}", err.render(cli.output_format))?;
                         stdout.flush()?;
                         exit(0);
                     }
                 },
                 Err(err) => {
                     let panic = panic_output(&err);
-                    write!(stdout, "{panic}")?;
+                    write!(stdout, "{}", panic.render(cli.output_format))?;
                     stdout.flush()?;
                     exit(0);
                 }
