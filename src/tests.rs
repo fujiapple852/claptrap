@@ -1,6 +1,6 @@
 #![cfg(test)]
 
-use crate::output::Output;
+use crate::cli::OutputFormat;
 use claptrap::Command;
 use std::ffi::OsString;
 
@@ -14,14 +14,14 @@ macro_rules! case {
     }};
 }
 
-fn run(spec: &str, args: &str) -> Output {
+fn run(spec: &str, args: &str) -> String {
     let app: Command = toml::from_str(spec).unwrap();
     let args: Vec<OsString> = if args.trim().is_empty() {
         Vec::new()
     } else {
         args.split_whitespace().map(OsString::from).collect()
     };
-    crate::parse::parse(app, args)
+    crate::parse::parse(app, args).render(OutputFormat::Posix)
 }
 
 mod basic {
@@ -43,7 +43,7 @@ mod basic {
     fn cat_cmd_handles_eof_in_message() {
         let styled =
             clap::builder::StyledStr::from("this contains EOF in the text\nEOF\nand more\n");
-        let cmd = CatCmd::new(styled, ExitCode::Error, clap::ColorChoice::Never);
+        let cmd = CatCmd::new(styled, ExitCode::Error, clap::ColorChoice::Never).render();
         insta::assert_snapshot!(format!("{}", cmd));
     }
 }

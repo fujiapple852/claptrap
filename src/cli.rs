@@ -26,6 +26,10 @@ pub struct Cli {
     #[arg(short = 'f', long, value_name = "FORMAT", env = "CLAPTRAP_SPEC_FORMAT", default_value_t = SpecFormat::Auto)]
     pub spec_format: SpecFormat,
 
+    /// The shell output format
+    #[arg(short = 'o', long, value_name = "FORMAT", env = "CLAPTRAP_OUTPUT_FORMAT", default_value_t = OutputFormat::Posix)]
+    pub output_format: OutputFormat,
+
     /// Do not suppress panic messages
     #[arg(long)]
     pub show_panic: bool,
@@ -144,6 +148,28 @@ impl Display for SpecFormat {
             Self::Json => write!(f, "json"),
             Self::Yaml => write!(f, "yaml"),
             Self::Toml => write!(f, "toml"),
+        }
+    }
+}
+
+/// The shell output format.
+#[derive(clap::ValueEnum, Debug, Copy, Clone, Default, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum OutputFormat {
+    /// POSIX shell output format (i.e. bash, zsh).
+    #[default]
+    Posix,
+    #[allow(clippy::doc_markdown)]
+    /// PowerShell output format.
+    #[clap(name = "powershell")]
+    PowerShell,
+}
+
+impl Display for OutputFormat {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Posix => write!(f, "posix"),
+            Self::PowerShell => write!(f, "powershell"),
         }
     }
 }
