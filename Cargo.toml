@@ -19,7 +19,7 @@ schema = ["schemars"]
 doc_gen = []
 
 [dependencies]
-anstream = "0.6.19"
+anstream = "0.6.20"
 anstyle = "1.0.11"
 anyhow = "1.0.98"
 clap = { version = "4.5.42", features = ["derive", "string", "cargo", "wrap_help", "usage", "unstable-styles", "color", "suggestions", "error-context", "env"] }
