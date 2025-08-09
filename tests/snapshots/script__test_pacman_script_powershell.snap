@@ -1,0 +1,54 @@
+---
+source: tests/script.rs
+expression: "String::from_utf8_lossy(&output.stdout)"
+---
+#!/usr/bin/env pwsh
+
+$ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
+
+if (-not (Get-Command claptrap -ErrorAction SilentlyContinue)) {
+    Write-Output "claptrap command not found. Please install it first, see https://claptrap.sh for instructions."
+    exit 1
+}
+
+. ([scriptblock]::Create(( & claptrap --spec examples/pacman/spec.toml --output-format powershell -- @args ) -join "`n"))
+
+
+if (-not (Test-Path Env:claptrap__subcommand)) {
+} else {
+  Write-Output "claptrap__subcommand: $env:claptrap__subcommand"
+  switch ($env:claptrap__subcommand) {
+    "query" {
+            if (Test-Path Env:claptrap_query_search) {
+        $claptrap_query_search = $env:claptrap_query_search -split ' '
+        for ($i = 0; $i -lt $claptrap_query_search.Length; $i++) {
+          Write-Output "claptrap_query_search[$i]: $($claptrap_query_search[$i])"
+        }
+      }
+            if (Test-Path Env:claptrap_query_info) {
+        $claptrap_query_info = $env:claptrap_query_info -split ' '
+        for ($i = 0; $i -lt $claptrap_query_info.Length; $i++) {
+          Write-Output "claptrap_query_info[$i]: $($claptrap_query_info[$i])"
+        }
+      }
+    }
+    "sync" {
+            if (Test-Path Env:claptrap_sync_search) {
+        $claptrap_sync_search = $env:claptrap_sync_search -split ' '
+        for ($i = 0; $i -lt $claptrap_sync_search.Length; $i++) {
+          Write-Output "claptrap_sync_search[$i]: $($claptrap_sync_search[$i])"
+        }
+      }
+            if (Test-Path Env:claptrap_sync_info) {
+        Write-Output "claptrap_sync_info: $env:claptrap_sync_info"
+      }
+            if (Test-Path Env:claptrap_sync_package) {
+        $claptrap_sync_package = $env:claptrap_sync_package -split ' '
+        for ($i = 0; $i -lt $claptrap_sync_package.Length; $i++) {
+          Write-Output "claptrap_sync_package[$i]: $($claptrap_sync_package[$i])"
+        }
+      }
+    }
+  }
+}

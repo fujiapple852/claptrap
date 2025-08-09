@@ -121,6 +121,7 @@ pub enum Shell {
     Fish,
     /// `PowerShell`
     #[expect(clippy::enum_variant_names)]
+    #[clap(name = "powershell")]
     PowerShell,
     /// Z `SHell` (zsh)
     Zsh,
