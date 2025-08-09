@@ -150,6 +150,7 @@ fn run_generate_template(
     let template = match shell {
         Shell::Bash => Ok(include_str!("../templates/bash_template.sh.j2")),
         Shell::Zsh => Ok(include_str!("../templates/zsh_template.sh.j2")),
+        Shell::PowerShell => Ok(include_str!("../templates/powershell_template.ps1.j2")),
         _ => Err(anyhow::anyhow!(
             "Unsupported shell for script generation: {:?}",
             shell

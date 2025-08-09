@@ -1,0 +1,52 @@
+#!/usr/bin/env pwsh
+
+$ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
+
+if (-not (Get-Command claptrap -ErrorAction SilentlyContinue)) {
+    Write-Output "claptrap command not found. Please install it first, see https://claptrap.sh for instructions."
+    exit 1
+}
+
+. ([scriptblock]::Create(( & claptrap --spec {{spec}} --output-format powershell -- @args ) -join "`n"))
+
+{% macro dump_arg(arg) -%}
+{% if arg.multiple %}
+if (Test-Path Env:{{ arg.name }}) {
+  ${{ arg.name }} = $env:{{ arg.name }} -split ' '
+  for ($i = 0; $i -lt ${{ arg.name }}.Length; $i++) {
+    Write-Output "{{ arg.name }}[$i]: $(${{ arg.name }}[$i])"
+  }
+}
+{% else %}
+if (Test-Path Env:{{ arg.name }}) {
+  Write-Output "{{ arg.name }}: $env:{{ arg.name }}"
+}
+{% endif %}
+{%- endmacro %}
+
+{% if values.subcommands|length == 0 %}
+{% for arg in values.args %}
+{{ dump_arg(arg) }}
+{% endfor %}
+{% else %}
+if (-not (Test-Path Env:claptrap__subcommand)) {
+  {% if values.args|length > 0 %}
+  {% for arg in values.args %}
+  {{ dump_arg(arg)|indent(2, true) }}
+  {% endfor %}
+  {% endif %}
+} else {
+  Write-Output "claptrap__subcommand: $env:claptrap__subcommand"
+  switch ($env:claptrap__subcommand) {
+  {% for sub in values.subcommands %}
+    "{{ sub.name }}" {
+      {% for arg in sub.args %}
+      {{ dump_arg(arg)|indent(6, true) }}
+      {% endfor %}
+    }
+  {% endfor %}
+  }
+}
+{% endif %}
+

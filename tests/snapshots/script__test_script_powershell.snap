@@ -1,0 +1,65 @@
+---
+source: tests/script.rs
+expression: "String::from_utf8_lossy(&output.stdout)"
+---
+#!/usr/bin/env pwsh
+
+$ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
+
+if (-not (Get-Command claptrap -ErrorAction SilentlyContinue)) {
+    Write-Output "claptrap command not found. Please install it first, see https://claptrap.sh for instructions."
+    exit 1
+}
+
+. ([scriptblock]::Create(( & claptrap --spec tests/resources/script/powershell/spec.toml --output-format powershell -- @args ) -join "`n"))
+
+
+if (-not (Test-Path Env:claptrap__subcommand)) {
+    if (Test-Path Env:claptrap_arg1) {
+    Write-Output "claptrap_arg1: $env:claptrap_arg1"
+  }
+    if (Test-Path Env:claptrap_multi1) {
+    $claptrap_multi1 = $env:claptrap_multi1 -split ' '
+    for ($i = 0; $i -lt $claptrap_multi1.Length; $i++) {
+      Write-Output "claptrap_multi1[$i]: $($claptrap_multi1[$i])"
+    }
+  }
+} else {
+  Write-Output "claptrap__subcommand: $env:claptrap__subcommand"
+  switch ($env:claptrap__subcommand) {
+    "first" {
+            if (Test-Path Env:claptrap_first_arg2) {
+        Write-Output "claptrap_first_arg2: $env:claptrap_first_arg2"
+      }
+            if (Test-Path Env:claptrap_first_multi2) {
+        $claptrap_first_multi2 = $env:claptrap_first_multi2 -split ' '
+        for ($i = 0; $i -lt $claptrap_first_multi2.Length; $i++) {
+          Write-Output "claptrap_first_multi2[$i]: $($claptrap_first_multi2[$i])"
+        }
+      }
+    }
+    "another" {
+            if (Test-Path Env:claptrap_another_arg4) {
+        Write-Output "claptrap_another_arg4: $env:claptrap_another_arg4"
+      }
+            if (Test-Path Env:claptrap_another_multi4) {
+        $claptrap_another_multi4 = $env:claptrap_another_multi4 -split ' '
+        for ($i = 0; $i -lt $claptrap_another_multi4.Length; $i++) {
+          Write-Output "claptrap_another_multi4[$i]: $($claptrap_another_multi4[$i])"
+        }
+      }
+    }
+    "first::nested" {
+            if (Test-Path Env:claptrap_first_nested_arg3) {
+        Write-Output "claptrap_first_nested_arg3: $env:claptrap_first_nested_arg3"
+      }
+            if (Test-Path Env:claptrap_first_nested_multi3) {
+        $claptrap_first_nested_multi3 = $env:claptrap_first_nested_multi3 -split ' '
+        for ($i = 0; $i -lt $claptrap_first_nested_multi3.Length; $i++) {
+          Write-Output "claptrap_first_nested_multi3[$i]: $($claptrap_first_nested_multi3[$i])"
+        }
+      }
+    }
+  }
+}
