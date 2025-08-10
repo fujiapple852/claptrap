@@ -30,6 +30,10 @@ impl Output {
                 Self::Cat(cmd) => cmd.render_posix(),
                 Self::Variables(vars) => vars.iter().map(Var::render_posix).join("\n"),
             },
+            OutputFormat::Fish => match self {
+                Self::Cat(cmd) => cmd.render_fish(),
+                Self::Variables(vars) => vars.iter().map(Var::render_fish).join("\n"),
+            },
             OutputFormat::PowerShell => match self {
                 Self::Cat(cmd) => cmd.render_powershell(),
                 Self::Variables(vars) => vars.iter().map(Var::render_powershell).join("\n"),
@@ -139,6 +143,47 @@ mod var {
                 }
             }
         }
+
+        #[must_use]
+        pub(super) fn render_fish(&self) -> String {
+            fn quote(value: &str) -> String {
+                format!("'{}'", value.replace('\'', "\\''"))
+            }
+            match self {
+                Self::Subcommand(path) => {
+                    let path = quote(&path.iter().join(SUBCOMMAND_VALUE_SEPARATOR));
+                    format!("set -gx {PREFIX}__{SUBCOMMAND_PREFIX} {path}")
+                }
+                Self::Single(p, name, value) => {
+                    let value = quote(value);
+                    if p.is_empty() {
+                        format!("set -gx {PREFIX}_{name} {value}")
+                    } else {
+                        format!(
+                            "set -gx {}_{}_{} {}",
+                            PREFIX,
+                            p.iter().format(SUBCOMMAND_PATH_SEPARATOR),
+                            name,
+                            value
+                        )
+                    }
+                }
+                Self::Many(p, name, values) => {
+                    let values = values.iter().map(|v| quote(v)).join(" ");
+                    if p.is_empty() {
+                        format!("set -gx {PREFIX}_{name} {values}")
+                    } else {
+                        format!(
+                            "set -gx {}_{}_{} {}",
+                            PREFIX,
+                            p.iter().format(SUBCOMMAND_PATH_SEPARATOR),
+                            name,
+                            values
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -204,6 +249,20 @@ mod cat {
                     .replace('"', "`\"")
                     .replace('$', "`$")
             )
+        }
+
+        #[must_use]
+        pub(super) fn render_fish(&self) -> String {
+            let msg = match self.color {
+                ColorChoice::Never => format!("{}", self.data),
+                _ => format!("{}", self.data.ansi()),
+            };
+            let msg = Self::quote(&msg);
+            format!("command printf %s {msg}\nexit {}", self.exit_code)
+        }
+
+        fn quote(value: &str) -> String {
+            format!("'{}'", value.replace('\'', "\\''"))
         }
     }
 

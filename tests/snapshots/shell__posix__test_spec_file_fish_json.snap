@@ -1,0 +1,6 @@
+---
+source: tests/shell.rs
+expression: "String::from_utf8_lossy(&output.stdout)"
+---
+mode: stream
+protocol: udp

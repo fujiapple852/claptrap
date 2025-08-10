@@ -1,0 +1,22 @@
+---
+source: tests/script.rs
+expression: output_text
+---
+claptrap_arg1: foo
+claptrap_multi1[1]: one
+claptrap_multi1[2]: two
+--
+claptrap__subcommand: first
+claptrap_first_arg2: bar
+claptrap_first_multi2[1]: x
+claptrap_first_multi2[2]: y
+--
+claptrap__subcommand: first::nested
+claptrap_first_nested_arg3: q
+claptrap_first_nested_multi3[1]: m1
+claptrap_first_nested_multi3[2]: m2
+--
+claptrap__subcommand: another
+claptrap_another_arg4: baz
+claptrap_another_multi4[1]: a
+claptrap_another_multi4[2]: b

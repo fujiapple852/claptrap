@@ -160,6 +160,8 @@ pub enum OutputFormat {
     /// POSIX shell output format (i.e. bash, zsh).
     #[default]
     Posix,
+    /// Fish shell output format.
+    Fish,
     #[allow(clippy::doc_markdown)]
     /// PowerShell output format.
     #[clap(name = "powershell")]
@@ -170,6 +172,7 @@ impl Display for OutputFormat {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Posix => write!(f, "posix"),
+            Self::Fish => write!(f, "fish"),
             Self::PowerShell => write!(f, "powershell"),
         }
     }

@@ -1,0 +1,54 @@
+---
+source: tests/script.rs
+expression: "String::from_utf8_lossy(&output.stdout)"
+---
+#!/usr/bin/env fish
+
+if not command -q claptrap
+    echo "claptrap command not found. Please install it first, see https://claptrap.sh for instructions."
+    exit 1
+end
+
+eval (claptrap --spec tests/resources/script/fish/spec.toml --output-format fish -- $argv | string collect)
+
+if not set -q claptrap__subcommand
+  if set -q claptrap_arg1
+    echo "claptrap_arg1: $claptrap_arg1"
+  end
+  if set -q claptrap_multi1
+    for i in (seq (count $claptrap_multi1))
+      echo "claptrap_multi1[$i]: $claptrap_multi1[$i]"
+    end
+  end
+else
+  echo "claptrap__subcommand: $claptrap__subcommand"
+  switch $claptrap__subcommand
+    case "first"
+      if set -q claptrap_first_arg2
+      echo "claptrap_first_arg2: $claptrap_first_arg2"
+      end
+      if set -q claptrap_first_multi2
+      for i in (seq (count $claptrap_first_multi2))
+        echo "claptrap_first_multi2[$i]: $claptrap_first_multi2[$i]"
+      end
+      end
+    case "another"
+      if set -q claptrap_another_arg4
+      echo "claptrap_another_arg4: $claptrap_another_arg4"
+      end
+      if set -q claptrap_another_multi4
+      for i in (seq (count $claptrap_another_multi4))
+        echo "claptrap_another_multi4[$i]: $claptrap_another_multi4[$i]"
+      end
+      end
+    case "first::nested"
+      if set -q claptrap_first_nested_arg3
+      echo "claptrap_first_nested_arg3: $claptrap_first_nested_arg3"
+      end
+      if set -q claptrap_first_nested_multi3
+      for i in (seq (count $claptrap_first_nested_multi3))
+        echo "claptrap_first_nested_multi3[$i]: $claptrap_first_nested_multi3[$i]"
+      end
+      end
+  end
+end
