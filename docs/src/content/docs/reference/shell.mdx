@@ -1,0 +1,85 @@
+---
+title: "Shell Reference"
+description: "Using Claptrap in shell scripts"
+sidebar:
+  order: 2
+---
+
+This section documents how to use Claptrap in various shell environments. It provides examples and usage patterns for
+integrating Claptrap into your shell scripts.
+
+### Bash
+
+Parse arguments from a specification file:
+
+```bash
+eval "$(claptrap --spec spec.toml -- "$@")"
+```
+
+Parse arguments from a specification provided inline:
+
+```bash
+eval "$(claptrap --spec - -- "$@" <<'SPEC'
+  name = "spec"
+  [args]
+  arg = {}
+SPEC
+)"
+```
+
+### Zsh
+
+Parse arguments from a specification file:
+
+```zsh
+eval "$(claptrap --spec spec.toml -- "$@")"
+```
+
+Parse arguments from a specification provided inline:
+
+```zsh
+eval "$(claptrap --spec - -- "$@" <<'SPEC'
+  name = "spec"
+  [args]
+  arg = {}
+SPEC
+)"
+```
+
+### Fish
+
+Parse arguments from a specification file:
+
+```fish
+eval (claptrap --spec spec.toml --output-format fish -- $argv | string collect)
+```
+
+Parse arguments from a specification provided inline:
+
+```fish
+set -l spec '
+  name = "spec"
+  [args]
+  arg = {}
+'
+eval (printf "%s" "$spec" | claptrap --spec - --output-format fish -- $argv | string collect)
+```
+
+### PowerShell
+
+Parse arguments from a specification file:
+
+```powershell
+. ([scriptblock]::Create(( & claptrap --spec spec.toml --output-format powershell -- @args ) -join "`n"))
+```
+
+Parse arguments from a specification provided inline:
+
+```powershell
+$spec = @'
+  name = "spec"
+  [args]
+  arg = {}
+'@
+. ([scriptblock]::Create(( $spec | & $env:CLAPTRAP_BIN --spec - --output-format powershell -- @args ) -join "`n"))
+```
