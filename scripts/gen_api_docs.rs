@@ -88,6 +88,7 @@ fn struct_name(module: &str) -> &'static str {
         "command" => "Command",
         "arg_group" => "ArgGroup",
         "value_parser" => "ValueParser",
+        "possible_value" => "PossibleValue",
         _ => unreachable!(),
     }
 }
@@ -100,6 +101,11 @@ fn doc_url(module: &str, slug: &str) -> String {
             format!("https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.{slug}")
         }
         "value_parser" => format!("https://docs.rs/clap/latest/clap/value_parser/fn.{slug}.html"),
+        "possible_value" => {
+            format!(
+                "https://docs.rs/clap/latest/clap/builder/struct.PossibleValue.html#method.{slug}"
+            )
+        }
         _ => unreachable!(),
     }
 }
@@ -165,6 +171,7 @@ fn main() -> Result<()> {
         ("command", "command.mdx"),
         ("arg_group", "arg_group.mdx"),
         ("value_parser", "value_parser.mdx"),
+        ("possible_value", "possible_value.mdx"),
     ];
     let mut env = Environment::new();
     env.set_trim_blocks(true);

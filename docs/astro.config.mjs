@@ -71,10 +71,12 @@ export default defineConfig({
                                 'reference/api/arg',
                                 'reference/api/arg_group',
                                 'reference/api/value_parser',
+                                'reference/api/possible_value',
                                 { label: 'Command', autogenerate: { directory: 'reference/api/command' } },
                                 { label: 'Arg', autogenerate: { directory: 'reference/api/arg' } },
                                 { label: 'ArgGroup', autogenerate: { directory: 'reference/api/arg_group' } },
                                 { label: 'ValueParser', autogenerate: { directory: 'reference/api/value_parser' } },
+                                { label: 'PossibleValue', autogenerate: { directory: 'reference/api/possible_value' } },
                             ]
                         },
 
