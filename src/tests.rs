@@ -353,7 +353,19 @@ mod value_parser {
     #[test_case(case!("value_parser", "isize"))]
     #[test_case(case!("value_parser", "f32"))]
     #[test_case(case!("value_parser", "f64"))]
-    #[test_case(case!("value_parser", "possible_values"))]
+    fn test_values((name, spec, args): (&str, &str, &str)) {
+        insta::assert_snapshot!(name, super::run(spec, args));
+    }
+}
+
+mod possible_value {
+    use test_case::test_case;
+
+    #[test_case(case!("possible_value", "possible_values"))]
+    #[test_case(case!("possible_value", "help"))]
+    #[test_case(case!("possible_value", "alias"))]
+    #[test_case(case!("possible_value", "aliases"))]
+    #[test_case(case!("possible_value", "hide"))]
     fn test_values((name, spec, args): (&str, &str, &str)) {
         insta::assert_snapshot!(name, super::run(spec, args));
     }

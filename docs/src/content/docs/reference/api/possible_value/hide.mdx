@@ -1,0 +1,104 @@
+---
+title: PossibleValue::hide
+description: The `PossibleValue::hide` API.
+sidebar:
+  label: hide
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `hide` <LinkButton href="https://docs.rs/clap/latest/clap/builder/struct.PossibleValue.html#method.hide" icon="open-book" variant="minimal"></LinkButton>
+
+<Badge text="since 0.1.0" size="small" />
+
+Hides this value from help and shell completions.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+mode = { long = "mode", action = "set", value-parser = [{ name = "fast", alias = "speedy", help = "speedy" }, { name = "slow", help = "very slow", hide = true }, { name = "express", aliases = ["e", "exp"] }] }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  mode:
+    long: mode
+    action: set
+    value-parser:
+    - name: fast
+      alias: speedy
+      help: speedy
+    - name: slow
+      help: very slow
+      hide: true
+    - name: express
+      aliases:
+      - e
+      - exp
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "mode": {
+      "long": "mode",
+      "action": "set",
+      "value-parser": [
+        {
+          "name": "fast",
+          "alias": "speedy",
+          "help": "speedy"
+        },
+        {
+          "name": "slow",
+          "help": "very slow",
+          "hide": true
+        },
+        {
+          "name": "express",
+          "aliases": [
+            "e",
+            "exp"
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+      --mode <mode>
+          Possible values:
+          - fast:    speedy
+          - express
+
+  -h, --help
+          Print help (see a summary with '-h')
+```
