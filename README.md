@@ -62,21 +62,17 @@ For more information, try '--help'.
 
 ## Features
 
-Claptrap supports the full range of Clap features, including short and long flags, default values, subcommands, argument
-groups, typed parsing, value hints, environment variables, color and styles and many more. See the full list
-of [supported](https://claptrap.sh/reference/supported/) Clap features.
-
-Command line interface specifications can be declared in `toml`, `yaml` or `json` and reused across `bash` and `zsh`
-scripts.
-
-Claptrap can also generate shell completions, man pages, markdown documentation and template scripts.
+Claptrap brings the full power of Clap command line parsing to shell scripts. Command line interface specifications can
+be declared in `toml`, `yaml` or `json` and used as standalone files or
+embedded directly in scripts. Claptrap Supports `bash`, `zsh`, `fish` and `PowerShell` scripts and can run on Linux,
+BSD, macOS, and Windows. Claptrap can also automatically generate shell completions, man pages, markdown documentation
+and template scripts.
 
 See the [documentation](https://claptrap.sh) for more details.
 
 ## Install
 
-Claptrap runs on Linux, BSD, macOS, and Windows. It can be installed from most package managers, precompiled binaries,
-or source.
+Claptrap can be installed from many package managers, precompiled binaries, or source.
 
 For example, to install Claptrap from `cargo`:
 
