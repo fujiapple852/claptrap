@@ -65,6 +65,7 @@ export default defineConfig({
                         'reference/overview',
                         'reference/cli',
                         'reference/api',
+                        'reference/shell',
                         {
                             label: 'API Reference', items: [
                                 'reference/api/command',
