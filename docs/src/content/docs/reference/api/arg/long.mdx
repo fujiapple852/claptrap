@@ -16,7 +16,8 @@ import { LinkButton } from '@astrojs/starlight/components';
 
 Sets the long version of the argument without the preceding `--`.
 
-# Example
+# Examples
+## Example 1
 
 ### Spec
 
@@ -62,4 +63,81 @@ prog --config file.toml
 
 ```bash
 claptrap_cfg='file.toml'
+```
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+```toml
+name = "prog"
+[args]
+mode = { long = "mode", value-name = "MODE", help = "Speed configuration", default-value = "fast", value-parser = [{ name = "fast" }, { name = "slow", help = "slower than fast" }] }
+```
+  </TabItem>
+  <TabItem label="YAML">
+```yaml
+name: prog
+args:
+  mode:
+    long: mode
+    value-name: MODE
+    help: Speed configuration
+    default-value: fast
+    value-parser:
+    - name: fast
+    - name: slow
+      help: slower than fast
+```
+  </TabItem>
+  <TabItem label="JSON">
+```json
+{
+  "name": "prog",
+  "args": {
+    "mode": {
+      "long": "mode",
+      "value-name": "MODE",
+      "help": "Speed configuration",
+      "default-value": "fast",
+      "value-parser": [
+        {
+          "name": "fast"
+        },
+        {
+          "name": "slow",
+          "help": "slower than fast"
+        }
+      ]
+    }
+  }
+}
+```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+      --mode <MODE>
+          Speed configuration
+          
+          [default: fast]
+
+          Possible values:
+          - fast
+          - slow: slower than fast
+
+  -h, --help
+          Print help (see a summary with '-h')
 ```

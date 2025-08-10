@@ -1,0 +1,3 @@
+name = "prog"
+[args]
+mode = { long = "mode", value-name = "MODE", help = "Speed configuration", default-value = "fast", value-parser = [{ name = "fast" }, { name = "slow", help = "slower than fast" }] }
