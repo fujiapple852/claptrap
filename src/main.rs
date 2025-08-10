@@ -1,3 +1,5 @@
+#![allow(unknown_lints)]
+
 use anstream::ColorChoice;
 use anyhow::anyhow;
 use clap::builder::StyledStr;
@@ -148,14 +150,11 @@ fn run_generate_template(
     let spec = parse_spec(spec_path, spec_format)?;
     let clap_cmd = clap::Command::from(spec);
     let template = match shell {
-        Shell::Bash => Ok(include_str!("../templates/bash_template.sh.j2")),
-        Shell::Zsh => Ok(include_str!("../templates/zsh_template.sh.j2")),
-        Shell::PowerShell => Ok(include_str!("../templates/powershell_template.ps1.j2")),
-        _ => Err(anyhow::anyhow!(
-            "Unsupported shell for script generation: {:?}",
-            shell
-        )),
-    }?;
+        Shell::Bash => include_str!("../templates/bash_template.sh.j2"),
+        Shell::Fish => include_str!("../templates/fish_template.fish.j2"),
+        Shell::Zsh => include_str!("../templates/zsh_template.sh.j2"),
+        Shell::PowerShell => include_str!("../templates/powershell_template.ps1.j2"),
+    };
     let values = template_values(&clap_cmd);
     let mut env = Environment::new();
     env.set_trim_blocks(true);

@@ -6,7 +6,7 @@ mod posix {
     use std::os::unix::fs::PermissionsExt;
     use test_case::test_matrix;
 
-    #[test_matrix(["bash", "zsh", "powershell"]; "test_script")]
+    #[test_matrix(["bash", "zsh", "powershell", "fish"]; "test_script")]
     fn test_script(shell: &str) {
         let output = std::process::Command::new(CLAPTRAP_BIN)
             .arg("script")
@@ -22,7 +22,7 @@ mod posix {
         );
     }
 
-    #[test_matrix(["bash", "zsh", "powershell"]; "test_pacman_script")]
+    #[test_matrix(["bash", "zsh", "powershell", "fish"]; "test_pacman_script")]
     fn test_pacman_script(shell: &str) {
         let output = std::process::Command::new(CLAPTRAP_BIN)
             .arg("script")
@@ -38,7 +38,7 @@ mod posix {
         );
     }
 
-    #[test_matrix(["bash", "zsh"]; "test_script_exec")]
+    #[test_matrix(["bash", "zsh", "fish"]; "test_script_exec")]
     fn test_script_exec(shell: &str) {
         let output = std::process::Command::new(CLAPTRAP_BIN)
             .arg("script")

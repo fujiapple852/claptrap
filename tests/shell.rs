@@ -12,7 +12,7 @@ mod posix {
         cmd
     }
 
-    #[test_matrix(["bash", "zsh"], ["yaml", "json", "toml"]; "shell_show_usage")]
+    #[test_matrix(["bash", "zsh", "fish"], ["yaml", "json", "toml"]; "shell_show_usage")]
     fn test_show_usage(shell: &str, format: &str) {
         let output = shell_cmd(shell, "file")
             .env(
@@ -28,7 +28,7 @@ mod posix {
         );
     }
 
-    #[test_matrix(["bash", "zsh"], ["yaml", "json", "toml"]; "test_spec_file")]
+    #[test_matrix(["bash", "zsh", "fish"], ["yaml", "json", "toml"]; "test_spec_file")]
     fn test_spec_file(shell: &str, format: &str) {
         let output = shell_cmd(shell, "file")
             .env(
@@ -45,7 +45,7 @@ mod posix {
         );
     }
 
-    #[test_matrix(["bash", "zsh"], ["yaml", "json", "toml"]; "test_spec_stdin_redirect")]
+    #[test_matrix(["bash", "zsh", "fish"], ["yaml", "json", "toml"]; "test_spec_stdin_redirect")]
     fn test_spec_stdin_redirect(shell: &str, format: &str) {
         let output = shell_cmd(shell, "stdin_redirect")
             .env("CLAPTRAP_SPEC_FORMAT", format)
@@ -63,7 +63,7 @@ mod posix {
         );
     }
 
-    #[test_matrix(["bash", "zsh"], ["yaml", "json", "toml"]; "test_spec_stdin_heredoc")]
+    #[test_matrix(["bash", "zsh", "fish"], ["yaml", "json", "toml"]; "test_spec_stdin_heredoc")]
     fn test_spec_stdin_heredoc(shell: &str, format: &str) {
         let output = shell_cmd(shell, &format!("stdin_heredoc_{format}"))
             .args(["--mode", "stream", "--protocol", "udp"])
@@ -76,7 +76,7 @@ mod posix {
         );
     }
 
-    #[test_matrix(["bash", "zsh"]; "test_panic")]
+    #[test_matrix(["bash", "zsh", "fish"]; "test_panic")]
     fn test_panic(shell: &str) {
         let output = shell_cmd(shell, "panic")
             .output()

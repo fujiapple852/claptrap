@@ -58,6 +58,12 @@ jobs:
       - name: Install zsh (macOS)
         if: runner.os == 'macOS'
         run: brew install zsh
+      - name: Install fish (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y fish
+      - name: Install fish (macOS)
+        if: runner.os == 'macOS'
+        run: brew install fish
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: ${{ matrix.rust }}

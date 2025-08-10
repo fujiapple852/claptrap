@@ -1,0 +1,50 @@
+#!/usr/bin/env fish
+
+if not command -q claptrap
+    echo "claptrap command not found. Please install it first, see https://claptrap.sh for instructions."
+    exit 1
+end
+
+eval (claptrap --spec {{spec}} --output-format fish -- $argv | string collect)
+
+{% macro dump_arg(arg) -%}
+{% if arg.multiple %}
+for i in (seq (count ${{ arg.name }}))
+  echo "{{ arg.name }}[$i]: ${{ arg.name }}[$i]"
+end
+{% else %}
+echo "{{ arg.name }}: ${{ arg.name }}"
+{% endif %}
+{% endmacro -%}
+
+{% if values.subcommands|length == 0 %}
+{% for arg in values.args %}
+if set -q {{ arg.name }}
+{{ dump_arg(arg)|indent(2, true) }}
+end
+{% endfor %}
+{% else %}
+if not set -q claptrap__subcommand
+  {% if values.args|length > 0 %}
+  {% for arg in values.args %}
+  if set -q {{ arg.name }}
+{{ dump_arg(arg)|indent(4, true) }}
+  end
+  {% endfor %}
+  {% else %}
+  :
+  {% endif %}
+else
+  echo "claptrap__subcommand: $claptrap__subcommand"
+  switch $claptrap__subcommand
+    {% for sub in values.subcommands %}
+    case "{{ sub.name }}"
+      {% for arg in sub.args %}
+      if set -q {{ arg.name }}
+{{ dump_arg(arg)|indent(6, true) }}
+      end
+      {% endfor %}
+    {% endfor %}
+  end
+end
+{% endif %}
