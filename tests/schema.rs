@@ -1,10 +1,10 @@
 const CLAPTRAP_BIN: &str = env!("CARGO_BIN_EXE_claptrap");
 
 #[test]
-#[ignore = "test is sensitive to terminal width"]
 fn test_schema() {
     let output = std::process::Command::new(CLAPTRAP_BIN)
         .arg("schema")
+        .env("COLUMNS", "80")
         .output()
         .expect("failed to run claptrap");
     assert_eq!(Some(0), output.status.code());
