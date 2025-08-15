@@ -5,17 +5,40 @@ set -euo pipefail
 CLAPTRAP_BIN="${CLAPTRAP_BIN:-claptrap}"
 SPEC_FILE="${CLAPTRAP_SPEC:-$(dirname "$0")/spec.toml}"
 
-# shellcheck disable=SC1090
 eval "$($CLAPTRAP_BIN --spec "$SPEC_FILE" -- "$@")"
 
-for var in $(compgen -A variable | grep '^claptrap' | sort); do
-    if declare -p "$var" 2>/dev/null | grep -q 'declare -a'; then
-        eval "vals=(\"\${$var[@]}\")"
-        for i in "${!vals[@]}"; do
-            echo "$var[$i]: ${vals[$i]}"
-        done
-    else
-        eval "val=\${$var}"
-        echo "$var: $val"
+# shellcheck disable=SC2154
+echo "claptrap__subcommand: ${claptrap__subcommand}"
+case "${claptrap__subcommand}" in
+  "clone")
+    if [ -n "${claptrap_clone_REMOTE+x}" ]; then
+      echo "claptrap_clone_REMOTE: ${claptrap_clone_REMOTE}"
     fi
-done
+    ;;
+  "diff")
+    if [ -n "${claptrap_diff_base+x}" ]; then
+      echo "claptrap_diff_base: ${claptrap_diff_base}"
+    fi
+    if [ -n "${claptrap_diff_head+x}" ]; then
+      echo "claptrap_diff_head: ${claptrap_diff_head}"
+    fi
+    if [ -n "${claptrap_diff_path+x}" ]; then
+      echo "claptrap_diff_path: ${claptrap_diff_path}"
+    fi
+    if [ -n "${claptrap_diff_color+x}" ]; then
+      echo "claptrap_diff_color: ${claptrap_diff_color}"
+    fi
+    ;;
+  "push")
+    if [ -n "${claptrap_push_REMOTE+x}" ]; then
+      echo "claptrap_push_REMOTE: ${claptrap_push_REMOTE}"
+    fi
+    ;;
+  "add")
+    if [ -n "${claptrap_add_PATH+x}" ]; then
+      for i in "${!claptrap_add_PATH[@]}"; do
+        echo "claptrap_add_PATH[$i]: ${claptrap_add_PATH[$i]}"
+      done
+    fi
+    ;;
+esac
