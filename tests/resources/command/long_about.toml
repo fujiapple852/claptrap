@@ -1,3 +1,4 @@
 name = "myprog"
+term-width = 80
 long-about = "Does really amazing things to great people. Now let's talk a little more in depth about how this subcommand really works. It may take about a few lines of text, but that's ok!"
 [args]

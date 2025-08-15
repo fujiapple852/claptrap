@@ -134,7 +134,6 @@ mod command {
     }
 
     #[test]
-    #[ignore = "test is sensitive to terminal width"]
     fn long_about() {
         let output = super::run(
             include_str!("../tests/resources/command/long_about.toml"),
@@ -144,7 +143,6 @@ mod command {
     }
 
     #[test]
-    #[ignore = "test is sensitive to terminal width"]
     fn after_long_help() {
         let output = super::run(
             include_str!("../tests/resources/command/after_long_help.toml"),
@@ -307,7 +305,6 @@ mod arg {
     }
 
     #[test]
-    #[ignore = "test is sensitive to terminal width"]
     fn long_help() {
         let output = super::run(
             include_str!("../tests/resources/arg/long_help.toml"),

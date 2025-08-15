@@ -998,7 +998,7 @@ expression: "String::from_utf8_lossy(&output.stdout)"
             "PossibleValues": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/$defs/PossibleValue"
               }
             }
           },
@@ -1006,6 +1006,51 @@ expression: "String::from_utf8_lossy(&output.stdout)"
             "PossibleValues"
           ],
           "additionalProperties": false
+        }
+      ]
+    },
+    "PossibleValue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "help": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "alias": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "aliases": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "hide": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "name"
+          ]
         }
       ]
     },
