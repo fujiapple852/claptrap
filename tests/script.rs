@@ -48,15 +48,7 @@ mod posix {
             .output()
             .expect("failed to run claptrap");
         assert_eq!(Some(0), output.status.code());
-        let script = String::from_utf8_lossy(&output.stdout);
-        let path = {
-            let mut file = tempfile::NamedTempFile::new().expect("temp file");
-            std::io::Write::write_all(&mut file, script.as_bytes()).expect("write script");
-            file.as_file_mut().sync_all().expect("sync script");
-            let path = file.into_temp_path();
-            std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755)).expect("chmod");
-            path
-        };
+        let script = String::from_utf8_lossy(&output.stdout).to_string();
         let path_env = format!(
             "{}:{}",
             std::path::Path::new(CLAPTRAP_BIN)
@@ -66,11 +58,17 @@ mod posix {
             std::env::var("PATH").unwrap()
         );
         let run = |args: &[&str]| {
-            std::process::Command::new(&path)
+            let dir = tempfile::tempdir().expect("temp dir");
+            let path = dir.path().join("script");
+            std::fs::write(&path, script.as_bytes()).expect("write script");
+            std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755)).expect("chmod");
+            let output = std::process::Command::new(&path)
                 .args(args)
                 .env("PATH", &path_env)
                 .output()
-                .expect("run script")
+                .expect("run script");
+            drop(dir);
+            output
         };
         let mut output_text = String::new();
         let out = run(&["foo", "--multi1", "one", "two"]);
