@@ -14,6 +14,14 @@ macro_rules! case {
     }};
 }
 
+macro_rules! snapshot {
+    ($($tt:tt)*) => {
+        insta::with_settings!({ snapshot_path => "../tests/snapshots" }, {
+            insta::assert_snapshot!($($tt)*);
+        });
+    };
+}
+
 fn run(spec: &str, args: &str) -> String {
     let app: Command = toml::from_str(spec).unwrap();
     let args: Vec<OsString> = if args.trim().is_empty() {
@@ -36,7 +44,7 @@ mod basic {
     #[test_case(case!("basic", "unexpected_arg"))]
     #[test_case(case!("basic", "all_aliases"))]
     fn test_values((name, spec, args): (&str, &str, &str)) {
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 
     #[test]
@@ -44,7 +52,7 @@ mod basic {
         let styled =
             clap::builder::StyledStr::from("this contains EOF in the text\nEOF\nand more\n");
         let cmd = CatCmd::new(styled, ExitCode::Error, clap::ColorChoice::Never).render();
-        insta::assert_snapshot!(format!("{}", cmd));
+        snapshot!(format!("{}", cmd));
     }
 }
 
@@ -130,7 +138,7 @@ mod command {
     #[test_case(case!("command", "subcommand_value_name"))]
     #[test_case(case!("command", "subcommand_help_heading"))]
     fn test_command((name, spec, args): (&str, &str, &str)) {
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 
     #[test]
@@ -139,7 +147,7 @@ mod command {
             include_str!("../tests/resources/command/long_about.toml"),
             include_str!("../tests/resources/command/long_about.args"),
         );
-        insta::assert_snapshot!("long_about", output);
+        snapshot!("long_about", output);
     }
 
     #[test]
@@ -148,7 +156,7 @@ mod command {
             include_str!("../tests/resources/command/after_long_help.toml"),
             include_str!("../tests/resources/command/after_long_help.args"),
         );
-        insta::assert_snapshot!("after_long_help", output);
+        snapshot!("after_long_help", output);
     }
 }
 
@@ -274,7 +282,7 @@ mod arg {
     #[test_case(case!("arg", "visible_short_alias"))]
     #[test_case(case!("arg", "visible_short_aliases"))]
     fn test_arg((name, spec, args): (&str, &str, &str)) {
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 
     #[test_case(case!("arg", "env"))]
@@ -284,7 +292,7 @@ mod arg {
         unsafe {
             std::env::set_var("MY_FLAG", "env");
         }
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 
     #[test_case(case!("arg", "env-falsey"))]
@@ -293,7 +301,7 @@ mod arg {
             std::env::set_var("TRUE_FLAG", "true");
             std::env::set_var("FALSE_FLAG", "0");
         }
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 
     #[test_case(case!("arg", "env-multi"))]
@@ -301,7 +309,7 @@ mod arg {
         unsafe {
             std::env::set_var("MY_FLAG_MULTI", "env1,env2");
         }
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 
     #[test]
@@ -310,7 +318,7 @@ mod arg {
             include_str!("../tests/resources/arg/long_help.toml"),
             include_str!("../tests/resources/arg/long_help.args"),
         );
-        insta::assert_snapshot!("long_help", output);
+        snapshot!("long_help", output);
     }
 }
 
@@ -326,7 +334,7 @@ mod arg_group {
     #[test_case(case!("arg_group", "conflicts_with"))]
     #[test_case(case!("arg_group", "conflicts_with_all"))]
     fn test_arg_group((name, spec, args): (&str, &str, &str)) {
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 }
 
@@ -352,7 +360,7 @@ mod value_parser {
     #[test_case(case!("value_parser", "f32"))]
     #[test_case(case!("value_parser", "f64"))]
     fn test_values((name, spec, args): (&str, &str, &str)) {
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 }
 
@@ -365,7 +373,7 @@ mod possible_value {
     #[test_case(case!("possible_value", "aliases"))]
     #[test_case(case!("possible_value", "hide"))]
     fn test_values((name, spec, args): (&str, &str, &str)) {
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 }
 
@@ -375,6 +383,6 @@ mod quoting {
     #[test_case(case!("quoting", "single_value_with_quote"))]
     #[test_case(case!("quoting", "many_values_special_chars"))]
     fn test_quoting((name, spec, args): (&str, &str, &str)) {
-        insta::assert_snapshot!(name, super::run(spec, args));
+        snapshot!(name, super::run(spec, args));
     }
 }
