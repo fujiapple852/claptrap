@@ -3,7 +3,9 @@ const CLAPTRAP_BIN: &str = env!("CARGO_BIN_EXE_claptrap");
 #[cfg(not(windows))]
 mod posix {
     use crate::CLAPTRAP_BIN;
+    use std::io::Write;
     use std::os::unix::fs::PermissionsExt;
+    use std::time::Duration;
     use test_case::test_matrix;
 
     #[test_matrix(["bash", "zsh", "powershell", "fish"]; "test_script")]
@@ -58,17 +60,27 @@ mod posix {
             std::env::var("PATH").unwrap()
         );
         let run = |args: &[&str]| {
-            let dir = tempfile::tempdir().expect("temp dir");
-            let path = dir.path().join("script");
-            std::fs::write(&path, script.as_bytes()).expect("write script");
+            let path = {
+                let mut file = tempfile::NamedTempFile::with_suffix(".sh").expect("temp file");
+                file.write_all(script.as_bytes()).expect("write script");
+                let _ = file.as_file_mut().sync_all();
+                file.into_temp_path()
+            };
             std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755)).expect("chmod");
-            let output = std::process::Command::new(&path)
-                .args(args)
-                .env("PATH", &path_env)
-                .output()
-                .expect("run script");
-            drop(dir);
-            output
+            for _ in 0..12 {
+                match std::process::Command::new(&path)
+                    .args(args)
+                    .env("PATH", &path_env)
+                    .output()
+                {
+                    Ok(output) => return output,
+                    Err(e) if e.raw_os_error() == Some(26) => {
+                        std::thread::sleep(Duration::from_millis(25));
+                    }
+                    Err(e) => panic!("run script: {e}"),
+                }
+            }
+            panic!("Failed to run script after multiple attempts");
         };
         let mut output_text = String::new();
         let out = run(&["foo", "--multi1", "one", "two"]);
