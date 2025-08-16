@@ -63,10 +63,10 @@ For more information, try '--help'.
 ## Features
 
 Claptrap brings the full power of Clap command line parsing to shell scripts. Command line interface specifications can
-be declared in `toml`, `yaml` or `json` and used as standalone files or
-embedded directly in scripts. Claptrap Supports `bash`, `zsh`, `fish` and `PowerShell` scripts and can run on Linux,
-BSD, macOS, and Windows. Claptrap can also automatically generate shell completions, man pages, markdown documentation
-and template scripts.
+be declared in `toml`, `yaml` or `json` and used as standalone files or embedded directly in scripts.
+
+Claptrap Supports `bash`, `zsh`, `fish` and `PowerShell` scripts and can run on Linux, BSD, macOS, and Windows. Claptrap
+can also automatically generate shell completions, man pages, markdown documentation and template scripts.
 
 See the [documentation](https://claptrap.sh) for more details.
 
