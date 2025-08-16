@@ -1,0 +1,172 @@
+---
+title: Command::visible_long_flag_aliases
+description: The `Command::visible_long_flag_aliases` API.
+sidebar:
+  label: visible_long_flag_aliases
+slug: 0.3.0/reference/api/command/visible_long_flag_aliases
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `visible_long_flag_aliases` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_long_flag_aliases" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Add aliases, which function as visible long flag subcommands.
+
+# Examples
+
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    [[subcommands]]
+    name = "test"
+    long-flag = "test"
+    visible-long-flag-aliases = ["testing", "testall", "test_all"]
+    [subcommands.args]
+    input = { required = false, help = "the file to add" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    subcommands:
+    - name: test
+      long-flag: test
+      visible-long-flag-aliases:
+      - testing
+      - testall
+      - test_all
+      args:
+        input:
+          required: false
+          help: the file to add
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "subcommands": [
+        {
+          "name": "test",
+          "long-flag": "test",
+          "visible-long-flag-aliases": [
+            "testing",
+            "testall",
+            "test_all"
+          ],
+          "args": {
+            "input": {
+              "required": false,
+              "help": "the file to add"
+            }
+          }
+        }
+      ]
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --testing file.txt
+```
+
+### Output
+
+```bash
+claptrap__subcommand='test'
+claptrap_test_input='file.txt'
+```
+
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    [[subcommands]]
+    name = "test"
+    long-flag = "test"
+    visible-long-flag-aliases = ["testing", "testall", "test_all"]
+    [subcommands.args]
+    input = { required = false, help = "the file to add" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    subcommands:
+    - name: test
+      long-flag: test
+      visible-long-flag-aliases:
+      - testing
+      - testall
+      - test_all
+      args:
+        input:
+          required: false
+          help: the file to add
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "subcommands": [
+        {
+          "name": "test",
+          "long-flag": "test",
+          "visible-long-flag-aliases": [
+            "testing",
+            "testall",
+            "test_all"
+          ],
+          "args": {
+            "input": {
+              "required": false,
+              "help": "the file to add"
+            }
+          }
+        }
+      ]
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [COMMAND]
+
+Commands:
+  test, --test  [aliases: --testing, --testall, --test_all]
+  help          Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help
+```

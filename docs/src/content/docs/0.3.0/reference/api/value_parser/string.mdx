@@ -1,0 +1,69 @@
+---
+title: ValueParser::string
+description: The `ValueParser::string` API.
+sidebar:
+  label: string
+slug: 0.3.0/reference/api/value_parser/string
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `string` <LinkButton href="https://docs.rs/clap/latest/clap/value_parser/fn.string.html" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Parse string values.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+
+    [args]
+    foo = { long = "foo", value-parser = ":string:" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      foo:
+        long: foo
+        value-parser: ':string:'
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "foo": {
+          "long": "foo",
+          "value-parser": ":string:"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --foo bar
+```
+
+### Output
+
+```bash
+claptrap_foo='bar'
+```

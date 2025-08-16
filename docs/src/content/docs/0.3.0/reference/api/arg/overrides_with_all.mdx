@@ -1,0 +1,107 @@
+---
+title: Arg::overrides_with_all
+description: The `Arg::overrides_with_all` API.
+sidebar:
+  label: overrides_with_all
+slug: 0.3.0/reference/api/arg/overrides_with_all
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `overrides_with_all` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.overrides_with_all" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets multiple mutually overridable arguments by name.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    flag = { short = 'f', long = "flag", action = "set-true", help = "some flag", conflicts-with = "color" }
+    debug = { short = 'd', long = "debug", action = "set-true", help = "other flag" }
+    color = { short = 'c', long = "color", action = "set-true", help = "third flag", overrides-with-all = ["flag", "debug"] }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      flag:
+        short: f
+        long: flag
+        action: set-true
+        help: some flag
+        conflicts-with: color
+      debug:
+        short: d
+        long: debug
+        action: set-true
+        help: other flag
+      color:
+        short: c
+        long: color
+        action: set-true
+        help: third flag
+        overrides-with-all:
+        - flag
+        - debug
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "flag": {
+          "short": "f",
+          "long": "flag",
+          "action": "set-true",
+          "help": "some flag",
+          "conflicts-with": "color"
+        },
+        "debug": {
+          "short": "d",
+          "long": "debug",
+          "action": "set-true",
+          "help": "other flag"
+        },
+        "color": {
+          "short": "c",
+          "long": "color",
+          "action": "set-true",
+          "help": "third flag",
+          "overrides-with-all": [
+            "flag",
+            "debug"
+          ]
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -f -d -c
+```
+
+### Output
+
+```bash
+claptrap_color='true'
+claptrap_flag='false'
+claptrap_debug='false'
+```

@@ -1,0 +1,345 @@
+---
+title: Arg::default_value_if
+description: The `Arg::default_value_if` API.
+sidebar:
+  label: default_value_if
+slug: 0.3.0/reference/api/arg/default_value_if
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `default_value_if` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_if" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Specifies the value of the argument if arg has been used at runtime.
+
+# Examples
+
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    opt = { long = "opt", action = "set" }
+    other = { long = "other", default-value-if = { arg = "opt", value = "special", default = "default" } }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      opt:
+        long: opt
+        action: set
+      other:
+        long: other
+        default-value-if:
+          arg: opt
+          value: special
+          default: default
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "opt": {
+          "long": "opt",
+          "action": "set"
+        },
+        "other": {
+          "long": "other",
+          "default-value-if": {
+            "arg": "opt",
+            "value": "special",
+            "default": "default"
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --opt special
+```
+
+### Output
+
+```bash
+claptrap_opt='special'
+claptrap_other='default'
+```
+
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    opt = { long = "opt", action = "set" }
+    other = { long = "other", default-value-if = { arg = "opt", value = "special", default = "default" } }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      opt:
+        long: opt
+        action: set
+      other:
+        long: other
+        default-value-if:
+          arg: opt
+          value: special
+          default: default
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "opt": {
+          "long": "opt",
+          "action": "set"
+        },
+        "other": {
+          "long": "other",
+          "default-value-if": {
+            "arg": "opt",
+            "value": "special",
+            "default": "default"
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --opt hahaha
+```
+
+### Output
+
+```bash
+claptrap_opt='hahaha'
+```
+
+## Example 3
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    flag = { long = "flag", action = "set-true" }
+    other = { long = "other", default-value-if = { arg = "flag", value = "true", default = "default" } }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      flag:
+        long: flag
+        action: set-true
+      other:
+        long: other
+        default-value-if:
+          arg: flag
+          value: 'true'
+          default: default
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "flag": {
+          "long": "flag",
+          "action": "set-true"
+        },
+        "other": {
+          "long": "other",
+          "default-value-if": {
+            "arg": "flag",
+            "value": "true",
+            "default": "default"
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog
+```
+
+### Output
+
+```bash
+claptrap_flag='false'
+```
+
+## Example 4
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    flag = { long = "flag", action = "set-true" }
+    other = { long = "other", default-value-if = { arg = "flag", default = "default" } }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      flag:
+        long: flag
+        action: set-true
+      other:
+        long: other
+        default-value-if:
+          arg: flag
+          default: default
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "flag": {
+          "long": "flag",
+          "action": "set-true"
+        },
+        "other": {
+          "long": "other",
+          "default-value-if": {
+            "arg": "flag",
+            "default": "default"
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --flag
+```
+
+### Output
+
+```bash
+claptrap_flag='true'
+claptrap_other='default'
+```
+
+## Example 5
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    flag = { long = "flag", action = "set-true" }
+    other = { long = "other", default-value = "default", default-value-if = { arg = "flag", value = "true" } }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      flag:
+        long: flag
+        action: set-true
+      other:
+        long: other
+        default-value: default
+        default-value-if:
+          arg: flag
+          value: 'true'
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "flag": {
+          "long": "flag",
+          "action": "set-true"
+        },
+        "other": {
+          "long": "other",
+          "default-value": "default",
+          "default-value-if": {
+            "arg": "flag",
+            "value": "true"
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --flag
+```
+
+### Output
+
+```bash
+claptrap_flag='true'
+```

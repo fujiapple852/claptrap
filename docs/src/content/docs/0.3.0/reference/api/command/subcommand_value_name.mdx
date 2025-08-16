@@ -1,0 +1,75 @@
+---
+title: Command::subcommand_value_name
+description: The `Command::subcommand_value_name` API.
+sidebar:
+  label: subcommand_value_name
+slug: 0.3.0/reference/api/command/subcommand_value_name
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `subcommand_value_name` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommand_value_name" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets the value name used for subcommands when printing usage and help.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    subcommand-value-name = "THING"
+    [[subcommands]]
+    name = "sub"
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    subcommand-value-name: THING
+    subcommands:
+    - name: sub
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "subcommand-value-name": "THING",
+      "subcommands": [
+        {
+          "name": "sub"
+        }
+      ]
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --help
+```
+
+### Output
+
+```bash
+Usage: myprog [THING]
+
+Commands:
+  sub   
+  help  Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help
+```

@@ -1,0 +1,271 @@
+---
+title: Arg::default_value_ifs
+description: The `Arg::default_value_ifs` API.
+sidebar:
+  label: default_value_ifs
+slug: 0.3.0/reference/api/arg/default_value_ifs
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `default_value_ifs` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.default_value_ifs" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Specifies multiple values and conditions in the same manner as `default_value_if`.
+
+# Examples
+
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    flag = { long = "flag", action = "set-true" }
+    opt = { long = "opt", action = "set" }
+    other = { long = "other", default-value-ifs = [{ arg = "flag", value = "true", default = "default" }, { arg = "opt", value = "channel", default = "chan" }] }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      flag:
+        long: flag
+        action: set-true
+      opt:
+        long: opt
+        action: set
+      other:
+        long: other
+        default-value-ifs:
+        - arg: flag
+          value: 'true'
+          default: default
+        - arg: opt
+          value: channel
+          default: chan
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "flag": {
+          "long": "flag",
+          "action": "set-true"
+        },
+        "opt": {
+          "long": "opt",
+          "action": "set"
+        },
+        "other": {
+          "long": "other",
+          "default-value-ifs": [
+            {
+              "arg": "flag",
+              "value": "true",
+              "default": "default"
+            },
+            {
+              "arg": "opt",
+              "value": "channel",
+              "default": "chan"
+            }
+          ]
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --opt channel
+```
+
+### Output
+
+```bash
+claptrap_opt='channel'
+claptrap_flag='false'
+claptrap_other='chan'
+```
+
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    flag = { long = "flag", action = "set-true" }
+    opt = { long = "opt", action = "set" }
+    other = { long = "other", default-value-ifs = [{ arg = "flag", value = "true", default = "default" }, { arg = "opt", value = "channel", default = "chan" }] }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      flag:
+        long: flag
+        action: set-true
+      opt:
+        long: opt
+        action: set
+      other:
+        long: other
+        default-value-ifs:
+        - arg: flag
+          value: 'true'
+          default: default
+        - arg: opt
+          value: channel
+          default: chan
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "flag": {
+          "long": "flag",
+          "action": "set-true"
+        },
+        "opt": {
+          "long": "opt",
+          "action": "set"
+        },
+        "other": {
+          "long": "other",
+          "default-value-ifs": [
+            {
+              "arg": "flag",
+              "value": "true",
+              "default": "default"
+            },
+            {
+              "arg": "opt",
+              "value": "channel",
+              "default": "chan"
+            }
+          ]
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog
+```
+
+### Output
+
+```bash
+claptrap_flag='false'
+```
+
+## Example 3
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    flag = { long = "flag", action = "set-true" }
+    opt = { long = "opt", action = "set" }
+    other = { long = "other", default-value-ifs = [{ arg = "flag", default = "default" }, { arg = "opt", value = "channel", default = "chan" }] }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      flag:
+        long: flag
+        action: set-true
+      opt:
+        long: opt
+        action: set
+      other:
+        long: other
+        default-value-ifs:
+        - arg: flag
+          default: default
+        - arg: opt
+          value: channel
+          default: chan
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "flag": {
+          "long": "flag",
+          "action": "set-true"
+        },
+        "opt": {
+          "long": "opt",
+          "action": "set"
+        },
+        "other": {
+          "long": "other",
+          "default-value-ifs": [
+            {
+              "arg": "flag",
+              "default": "default"
+            },
+            {
+              "arg": "opt",
+              "value": "channel",
+              "default": "chan"
+            }
+          ]
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --opt channel --flag
+```
+
+### Output
+
+```bash
+claptrap_opt='channel'
+claptrap_flag='true'
+claptrap_other='default'
+```

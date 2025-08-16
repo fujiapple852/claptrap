@@ -1,0 +1,115 @@
+---
+title: Command::args_conflicts_with_subcommands
+description: The `Command::args_conflicts_with_subcommands` API.
+sidebar:
+  label: args_conflicts_with_subcommands
+slug: 0.3.0/reference/api/command/args_conflicts_with_subcommands
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `args_conflicts_with_subcommands` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.args_conflicts_with_subcommands" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Specifies that use of an argument prevents the use of subcommands.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    [args]
+    foo = { short = 'f' }
+    [[subcommands]]
+    name = "test"
+    args-conflicts-with-subcommands = true
+    [subcommands.args]
+    input = { help = "the file to add" }
+    [[subcommands.subcommands]]
+    name = "nested"
+    about = "A nested sub command"
+    [subcommands.subcommands.args]
+    arg3 = { long = "arg3" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    args:
+      foo:
+        short: f
+    subcommands:
+    - name: test
+      args-conflicts-with-subcommands: true
+      args:
+        input:
+          help: the file to add
+      subcommands:
+      - name: nested
+        about: A nested sub command
+        args:
+          arg3:
+            long: arg3
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "args": {
+        "foo": {
+          "short": "f"
+        }
+      },
+      "subcommands": [
+        {
+          "name": "test",
+          "args-conflicts-with-subcommands": true,
+          "args": {
+            "input": {
+              "help": "the file to add"
+            }
+          },
+          "subcommands": [
+            {
+              "name": "nested",
+              "about": "A nested sub command",
+              "args": {
+                "arg3": {
+                  "long": "arg3"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog test foo nested
+```
+
+### Output
+
+```bash
+error: the subcommand 'nested' cannot be used with '[input]'
+
+Usage: myprog test [input]
+       myprog test <COMMAND>
+
+For more information, try '--help'.
+```

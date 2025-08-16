@@ -1,0 +1,95 @@
+---
+title: Command::ignore_errors
+description: The `Command::ignore_errors` API.
+sidebar:
+  label: ignore_errors
+slug: 0.3.0/reference/api/command/ignore_errors
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `ignore_errors` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.ignore_errors" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Try not to fail on parse errors, like missing option values.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "cmd"
+    ignore-errors = true
+    [args]
+    config = { short = 'c', long = "config", value-name = "FILE", help = "Sets a custom config file" }
+    stuff = { short = 's', long = "stuff", value-name = "FILE", help = "Sets a custom stuff file" }
+    f = { short = 'f', help = "Flag" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: cmd
+    ignore-errors: true
+    args:
+      config:
+        short: c
+        long: config
+        value-name: FILE
+        help: Sets a custom config file
+      stuff:
+        short: s
+        long: stuff
+        value-name: FILE
+        help: Sets a custom stuff file
+      f:
+        short: f
+        help: Flag
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "cmd",
+      "ignore-errors": true,
+      "args": {
+        "config": {
+          "short": "c",
+          "long": "config",
+          "value-name": "FILE",
+          "help": "Sets a custom config file"
+        },
+        "stuff": {
+          "short": "s",
+          "long": "stuff",
+          "value-name": "FILE",
+          "help": "Sets a custom stuff file"
+        },
+        "f": {
+          "short": "f",
+          "help": "Flag"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -c file -f -x
+```
+
+### Output
+
+```bash
+claptrap_config='file'
+```

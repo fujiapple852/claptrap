@@ -1,0 +1,150 @@
+---
+title: Arg::long
+description: The `Arg::long` API.
+sidebar:
+  label: long
+slug: 0.3.0/reference/api/arg/long
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `long` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.long" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets the long version of the argument without the preceding `--`.
+
+# Examples
+
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    cfg = { long = "config", action = "set" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      cfg:
+        long: config
+        action: set
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "cfg": {
+          "long": "config",
+          "action": "set"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config file.toml
+```
+
+### Output
+
+```bash
+claptrap_cfg='file.toml'
+```
+
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    mode = { long = "mode", value-name = "MODE", help = "Speed configuration", default-value = "fast", value-parser = [{ name = "fast" }, { name = "slow", help = "slower than fast" }] }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      mode:
+        long: mode
+        value-name: MODE
+        help: Speed configuration
+        default-value: fast
+        value-parser:
+        - name: fast
+        - name: slow
+          help: slower than fast
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "mode": {
+          "long": "mode",
+          "value-name": "MODE",
+          "help": "Speed configuration",
+          "default-value": "fast",
+          "value-parser": [
+            {
+              "name": "fast"
+            },
+            {
+              "name": "slow",
+              "help": "slower than fast"
+            }
+          ]
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+      --mode <MODE>
+          Speed configuration
+
+          Possible values:
+          - fast
+          - slow: slower than fast
+          
+          [default: fast]
+
+  -h, --help
+          Print help (see a summary with '-h')
+```

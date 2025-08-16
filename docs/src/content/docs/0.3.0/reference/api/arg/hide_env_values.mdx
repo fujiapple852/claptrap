@@ -1,0 +1,76 @@
+---
+title: Arg::hide_env_values
+description: The `Arg::hide_env_values` API.
+sidebar:
+  label: hide_env_values
+slug: 0.3.0/reference/api/arg/hide_env_values
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `hide_env_values` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_env_values" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Do not display in help any values inside the associated ENV variables for the argument.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "connect"
+    [args]
+    host = { long = "host", env = "CONNECT", action = "set", hide-env-values = true }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: connect
+    args:
+      host:
+        long: host
+        env: CONNECT
+        action: set
+        hide-env-values: true
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "connect",
+      "args": {
+        "host": {
+          "long": "host",
+          "env": "CONNECT",
+          "action": "set",
+          "hide-env-values": true
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+connect --help
+```
+
+### Output
+
+```bash
+Usage: connect [OPTIONS]
+
+Options:
+      --host <host>  [env: CONNECT]
+  -h, --help         Print help
+```

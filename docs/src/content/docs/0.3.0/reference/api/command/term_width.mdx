@@ -1,0 +1,76 @@
+---
+title: Command::term_width
+description: The `Command::term_width` API.
+sidebar:
+  label: term_width
+slug: 0.3.0/reference/api/command/term_width
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `term_width` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.term_width" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets the terminal width at which to wrap help messages.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    term-width = 80
+    [args]
+    cfg = { long = "config", help = "This is a very long help message that is longer than 80 characters and so will wrap" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    term-width: 80
+    args:
+      cfg:
+        long: config
+        help: This is a very long help message that is longer than 80 characters and so will wrap
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "term-width": 80,
+      "args": {
+        "cfg": {
+          "long": "config",
+          "help": "This is a very long help message that is longer than 80 characters and so will wrap"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --help
+```
+
+### Output
+
+```bash
+Usage: myprog [OPTIONS]
+
+Options:
+      --config <cfg>  This is a very long help message that is longer than 80
+                      characters and so will wrap
+  -h, --help          Print help
+```

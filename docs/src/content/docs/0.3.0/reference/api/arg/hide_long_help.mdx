@@ -1,0 +1,132 @@
+---
+title: Arg::hide_long_help
+description: The `Arg::hide_long_help` API.
+sidebar:
+  label: hide_long_help
+slug: 0.3.0/reference/api/arg/hide_long_help
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `hide_long_help` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.hide_long_help" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Hides an argument from long help (`--help`).
+
+# Examples
+
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    cfg = { long = "config", hide-long-help = true, help = "Some help text describing the --config arg" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      cfg:
+        long: config
+        hide-long-help: true
+        help: Some help text describing the --config arg
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "cfg": {
+          "long": "config",
+          "hide-long-help": true,
+          "help": "Some help text describing the --config arg"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+  -h, --help
+          Print help (see a summary with '-h')
+```
+
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    cfg = { long = "config", hide-long-help = true, help = "Some help text describing the --config arg" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      cfg:
+        long: config
+        hide-long-help: true
+        help: Some help text describing the --config arg
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "cfg": {
+          "long": "config",
+          "hide-long-help": true,
+          "help": "Some help text describing the --config arg"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -h
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+      --config <cfg>  Some help text describing the --config arg
+  -h, --help          Print help (see more with '--help')
+```

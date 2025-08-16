@@ -1,0 +1,62 @@
+---
+title: Command::version
+description: The `Command::version` API.
+sidebar:
+  label: version
+slug: 0.3.0/reference/api/command/version
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `version` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.version" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets the version for the short version (`-V`) and help messages.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    version = "v0.1.24"
+    [args]
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    version: v0.1.24
+    args: {}
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "version": "v0.1.24",
+      "args": {}
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -V
+```
+
+### Output
+
+```bash
+myprog v0.1.24
+```

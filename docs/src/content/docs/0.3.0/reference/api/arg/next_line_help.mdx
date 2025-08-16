@@ -1,0 +1,92 @@
+---
+title: Arg::next_line_help
+description: The `Arg::next_line_help` API.
+sidebar:
+  label: next_line_help
+slug: 0.3.0/reference/api/arg/next_line_help
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `next_line_help` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.next_line_help" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Render the help on the line after the argument.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    opt = { short = 'o', long = "long-option-flag", action = "set", next-line-help = true, value-names = ["value1", "value2"], help = "Some really long help and complex\nhelp that makes more sense to be\non a line after the option" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      opt:
+        short: o
+        long: long-option-flag
+        action: set
+        next-line-help: true
+        value-names:
+        - value1
+        - value2
+        help: |-
+          Some really long help and complex
+          help that makes more sense to be
+          on a line after the option
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "opt": {
+          "short": "o",
+          "long": "long-option-flag",
+          "action": "set",
+          "next-line-help": true,
+          "value-names": [
+            "value1",
+            "value2"
+          ],
+          "help": "Some really long help and complex\nhelp that makes more sense to be\non a line after the option"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+  -o, --long-option-flag <value1> <value2>
+          Some really long help and complex
+          help that makes more sense to be
+          on a line after the option
+  -h, --help
+          Print help
+```

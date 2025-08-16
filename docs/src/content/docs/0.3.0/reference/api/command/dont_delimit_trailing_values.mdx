@@ -1,0 +1,75 @@
+---
+title: Command::dont_delimit_trailing_values
+description: The `Command::dont_delimit_trailing_values` API.
+sidebar:
+  label: dont_delimit_trailing_values
+slug: 0.3.0/reference/api/command/dont_delimit_trailing_values
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `dont_delimit_trailing_values` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.dont_delimit_trailing_values" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Disables the automatic delimiting of values after `--` or when `Arg::trailing_var_arg` was used.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    dont-delimit-trailing-values = true
+    [args]
+    cmd = {}
+    rest = { num-args = "1..", value-delimiter = "," }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    dont-delimit-trailing-values: true
+    args:
+      cmd: {}
+      rest:
+        num-args: 1..
+        value-delimiter: ','
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "dont-delimit-trailing-values": true,
+      "args": {
+        "cmd": {},
+        "rest": {
+          "num-args": "1..",
+          "value-delimiter": ","
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog foo -- arg1,arg2,arg3
+```
+
+### Output
+
+```bash
+claptrap_cmd='foo'
+claptrap_rest=('arg1,arg2,arg3')
+```

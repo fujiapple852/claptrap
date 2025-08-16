@@ -1,0 +1,69 @@
+---
+title: ValueParser::u64
+description: The `ValueParser::u64` API.
+sidebar:
+  label: u64
+slug: 0.3.0/reference/api/value_parser/u64
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `u64` <LinkButton href="https://docs.rs/clap/latest/clap/value_parser/fn.u64.html" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Parse `u64` values.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+
+    [args]
+    foo = { long = "foo", value-parser = ":u64:" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      foo:
+        long: foo
+        value-parser: ':u64:'
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "foo": {
+          "long": "foo",
+          "value-parser": ":u64:"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --foo 18446744073709551615
+```
+
+### Output
+
+```bash
+claptrap_foo='18446744073709551615'
+```

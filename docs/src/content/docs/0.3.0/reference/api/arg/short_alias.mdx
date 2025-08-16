@@ -1,0 +1,70 @@
+---
+title: Arg::short_alias
+description: The `Arg::short_alias` API.
+sidebar:
+  label: short_alias
+slug: 0.3.0/reference/api/arg/short_alias
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `short_alias` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.short_alias" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Add an alias, which functions as a hidden short flag.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    test = { short = 't', short-alias = 'e', action = "set" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      test:
+        short: t
+        short-alias: e
+        action: set
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "test": {
+          "short": "t",
+          "short-alias": "e",
+          "action": "set"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -e cool
+```
+
+### Output
+
+```bash
+claptrap_test='cool'
+```

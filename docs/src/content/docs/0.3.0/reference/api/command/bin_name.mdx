@@ -1,0 +1,65 @@
+---
+title: Command::bin_name
+description: The `Command::bin_name` API.
+sidebar:
+  label: bin_name
+slug: 0.3.0/reference/api/command/bin_name
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `bin_name` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.bin_name" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Overrides the runtime-determined name of the binary for help and error messages.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    bin-name = "my_binary"
+    [args]
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    bin-name: my_binary
+    args: {}
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "bin-name": "my_binary",
+      "args": {}
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --help
+```
+
+### Output
+
+```bash
+Usage: my_binary
+
+Options:
+  -h, --help  Print help
+```

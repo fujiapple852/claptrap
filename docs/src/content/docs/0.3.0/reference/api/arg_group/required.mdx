@@ -1,0 +1,98 @@
+---
+title: ArgGroup::required
+description: The `ArgGroup::required` API.
+sidebar:
+  label: required
+slug: 0.3.0/reference/api/arg_group/required
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `required` <LinkButton href="https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.required" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Require an argument from the group to be present when parsing.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    [groups]
+    req_flags = { args = ["flag", "color"], required = true }
+    [args]
+    flag = { short = 'f', action = "set-true" }
+    color = { short = 'c', action = "set-true" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    groups:
+      req_flags:
+        args:
+        - flag
+        - color
+        required: true
+    args:
+      flag:
+        short: f
+        action: set-true
+      color:
+        short: c
+        action: set-true
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "groups": {
+        "req_flags": {
+          "args": [
+            "flag",
+            "color"
+          ],
+          "required": true
+        }
+      },
+      "args": {
+        "flag": {
+          "short": "f",
+          "action": "set-true"
+        },
+        "color": {
+          "short": "c",
+          "action": "set-true"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog
+```
+
+### Output
+
+```bash
+error: the following required arguments were not provided:
+  <-f|-c>
+
+Usage: myprog <-f|-c>
+
+For more information, try '--help'.
+```

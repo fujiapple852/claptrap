@@ -1,0 +1,77 @@
+---
+title: Arg::visible_aliases
+description: The `Arg::visible_aliases` API.
+sidebar:
+  label: visible_aliases
+slug: 0.3.0/reference/api/arg/visible_aliases
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `visible_aliases` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.visible_aliases" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Add aliases, which function as visible long flags.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    test = { long = "test", visible-aliases = ["something", "awesome", "cool"], action = "set-true" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      test:
+        long: test
+        visible-aliases:
+        - something
+        - awesome
+        - cool
+        action: set-true
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "test": {
+          "long": "test",
+          "visible-aliases": [
+            "something",
+            "awesome",
+            "cool"
+          ],
+          "action": "set-true"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --awesome
+```
+
+### Output
+
+```bash
+claptrap_test='true'
+```

@@ -1,0 +1,72 @@
+---
+title: Command::disable_help_subcommand
+description: The `Command::disable_help_subcommand` API.
+sidebar:
+  label: disable_help_subcommand
+slug: 0.3.0/reference/api/command/disable_help_subcommand
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `disable_help_subcommand` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_help_subcommand" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Disables the help subcommand.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    disable-help-subcommand = true
+    [[subcommands]]
+    name = "test"
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    disable-help-subcommand: true
+    subcommands:
+    - name: test
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "disable-help-subcommand": true,
+      "subcommands": [
+        {
+          "name": "test"
+        }
+      ]
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog help
+```
+
+### Output
+
+```bash
+error: unrecognized subcommand 'help'
+
+Usage: myprog [COMMAND]
+
+For more information, try '--help'.
+```

@@ -1,0 +1,76 @@
+---
+title: Command
+description: The Command API
+slug: 0.3.0/reference/api/command
+---
+
+<div class="api-table">
+  | API | Description |
+  | --- | ----------- |
+  | [`args`](args) | Adds multiple arguments to the list of valid possibilities. |
+  | [`groups`](groups) | Adds multiple `ArgGroups` to the Command at once. |
+  | [`subcommands`](subcommands) | Adds multiple subcommands to the list of valid possibilities. |
+  | [`no_binary_name`](no_binary_name) | Specifies that the parser should not assume the first argument passed is the binary name. |
+  | [`ignore_errors`](ignore_errors) | Try not to fail on parse errors, like missing option values. |
+  | [`args_override_self`](args_override_self) | Replace prior occurrences of arguments rather than error. |
+  | [`dont_delimit_trailing_values`](dont_delimit_trailing_values) | Disables the automatic delimiting of values after `--` or when `Arg::trailing_var_arg` was used. |
+  | [`color`](color) | Sets when to color output. |
+  | [`styles`](styles) | Sets the `Styles` for terminal output. |
+  | [`term_width`](term_width) | Sets the terminal width at which to wrap help messages. |
+  | [`max_term_width`](max_term_width) | Limit the line length for wrapping help when using the current terminal’s width. |
+  | [`disable_version_flag`](disable_version_flag) | Disables -V and --version flag. |
+  | [`propagate_version`](propagate_version) | Specifies to use the version of the current command for all subcommands. |
+  | [`next_line_help`](next_line_help) | Places the help string for all arguments and subcommands on the line after them. |
+  | [`disable_help_flag`](disable_help_flag) | Disables `-h` and `--help` flag. |
+  | [`disable_help_subcommand`](disable_help_subcommand) | Disables the help subcommand. |
+  | [`disable_colored_help`](disable_colored_help) | Disables colorized help messages. |
+  | [`help_expected`](help_expected) | Panic if help descriptions are omitted. |
+  | [`hide_possible_values`](hide_possible_values) | Tells clap not to print possible values when displaying help information. |
+  | [`infer_long_args`](infer_long_args) | Allow partial matches of long arguments or their aliases. |
+  | [`infer_subcommands`](infer_subcommands) | Allow partial matches of subcommand names and their aliases. |
+  | [`name`](name) | Sets the program’s name. |
+  | [`bin_name`](bin_name) | Overrides the runtime-determined name of the binary for help and error messages. |
+  | [`display_name`](display_name) | Overrides the runtime-determined display name of the program for help and error messages. |
+  | [`author`](author) | Sets the author(s) for the help message. |
+  | [`about`](about) | Sets the program’s description for the short help (`-h`). |
+  | [`long_about`](long_about) | Sets the program’s description for the long help (`--help`). |
+  | [`after_help`](after_help) | Free-form help text for after auto-generated short help (`-h`). |
+  | [`after_long_help`](after_long_help) | Free-form help text for after auto-generated long help (`--help`). |
+  | [`before_help`](before_help) | Free-form help text for before auto-generated short help (`-h`). |
+  | [`before_long_help`](before_long_help) | Free-form help text for before auto-generated long help (`--help`). |
+  | [`version`](version) | Sets the version for the short version (`-V`) and help messages. |
+  | [`long_version`](long_version) | Sets the version for the long version (`--version`) and help messages. |
+  | [`override_usage`](override_usage) | Overrides the clap generated usage string for help and error messages. |
+  | [`override_help`](override_help) | Overrides the clap generated help message (both `-h` and `--help`). |
+  | [`help_template`](help_template) | Sets the help template to be used, overriding the default format. |
+  | [`flatten_help`](flatten_help) | Flatten subcommand help into the current command’s help. |
+  | [`next_help_heading`](next_help_heading) | Set the default section heading for future args. |
+  | [`next_display_order`](next_display_order) | Change the starting value for assigning future display orders for args. |
+  | [`arg_required_else_help`](arg_required_else_help) | Exit gracefully if no arguments are present (e.g. `$ myprog`). |
+  | [`allow_missing_positional`](allow_missing_positional) | Allows one to implement two styles of CLIs where positionals can be used out of order. |
+  | [`short_flag`](short_flag) | Sets the short version of the subcommand flag without the preceding `-`. |
+  | [`long_flag`](long_flag) | Sets the long version of the subcommand flag without the preceding `--`. |
+  | [`alias`](alias) | Sets a hidden alias to this subcommand. |
+  | [`short_flag_alias`](short_flag_alias) | Add an alias, which functions as “hidden” short flag subcommand. |
+  | [`long_flag_alias`](long_flag_alias) | Add an alias, which functions as a “hidden” long flag subcommand. |
+  | [`aliases`](aliases) | Sets multiple hidden aliases to this subcommand. |
+  | [`short_flag_aliases`](short_flag_aliases) | Add aliases, which function as “hidden” short flag subcommands. |
+  | [`long_flag_aliases`](long_flag_aliases) | Add aliases, which function as “hidden” long flag subcommands. |
+  | [`visible_alias`](visible_alias) | Sets a visible alias to this subcommand. |
+  | [`visible_short_flag_alias`](visible_short_flag_alias) | Add an alias, which functions as “visible” short flag subcommand. |
+  | [`visible_long_flag_alias`](visible_long_flag_alias) | Add an alias, which functions as a “visible” long flag subcommand. |
+  | [`visible_aliases`](visible_aliases) | Sets multiple visible aliases to this subcommand. |
+  | [`visible_short_flag_aliases`](visible_short_flag_aliases) | Add aliases, which function as visible short flag subcommands. |
+  | [`visible_long_flag_aliases`](visible_long_flag_aliases) | Add aliases, which function as visible long flag subcommands. |
+  | [`display_order`](display_order) | Set the placement of this subcommand within the help. |
+  | [`hide`](hide) | Specifies that this subcommand should be hidden from help messages. |
+  | [`subcommand_required`](subcommand_required) | If no subcommand is present at runtime, error and exit gracefully. |
+  | [`allow_external_subcommands`](allow_external_subcommands) | Assume unexpected positional arguments are a subcommand. |
+  | [`external_subcommand_value_parser`](external_subcommand_value_parser) | Specifies how to parse external subcommand arguments. |
+  | [`args_conflicts_with_subcommands`](args_conflicts_with_subcommands) | Specifies that use of an argument prevents the use of subcommands. |
+  | [`subcommand_precedence_over_arg`](subcommand_precedence_over_arg) | Prevent subcommands from being consumed as an arguments value. |
+  | [`subcommand_negates_reqs`](subcommand_negates_reqs) | Allows subcommands to override all requirements of the parent command. |
+  | [`multicall`](multicall) | Multiple-personality program dispatched on the binary name (`argv[0]`). |
+  | [`subcommand_value_name`](subcommand_value_name) | Sets the value name used for subcommands when printing usage and help. |
+  | [`subcommand_help_heading`](subcommand_help_heading) | Sets the help heading used for subcommands when printing usage and help. |
+</div>

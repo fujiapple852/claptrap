@@ -1,0 +1,92 @@
+---
+title: Command::next_display_order
+description: The `Command::next_display_order` API.
+sidebar:
+  label: next_display_order
+slug: 0.3.0/reference/api/command/next_display_order
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `next_display_order` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.next_display_order" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Change the starting value for assigning future display orders for args.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    next-display-order = 1
+    [args]
+    custom-help = { short = '?', action = "help", display-order = 100, help = "Alt help" }
+    airplane = { short = 'a', long = "airplane", action = "set", help = "I should be first!" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    next-display-order: 1
+    args:
+      custom-help:
+        short: '?'
+        action: help
+        display-order: 100
+        help: Alt help
+      airplane:
+        short: a
+        long: airplane
+        action: set
+        help: I should be first!
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "next-display-order": 1,
+      "args": {
+        "custom-help": {
+          "short": "?",
+          "action": "help",
+          "display-order": 100,
+          "help": "Alt help"
+        },
+        "airplane": {
+          "short": "a",
+          "long": "airplane",
+          "action": "set",
+          "help": "I should be first!"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+  -a, --airplane <airplane>  I should be first!
+  -?                         Alt help
+  -h, --help                 Print help
+```
