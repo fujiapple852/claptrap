@@ -1,6 +1,6 @@
 ![ci](https://github.com/fujiapple852/claptrap/actions/workflows/ci.yml/badge.svg)
-[![Documentation](https://docs.rs/claptrap/badge.svg)](https://docs.rs/claptrap/0.2.0)
-[![Crate](https://img.shields.io/crates/v/claptrap.svg)](https://crates.io/crates/claptrap/0.2.0)
+[![Documentation](https://docs.rs/claptrap/badge.svg)](https://docs.rs/claptrap/0.3.0)
+[![Crate](https://img.shields.io/crates/v/claptrap.svg)](https://crates.io/crates/claptrap/0.3.0)
 
 # Claptrap 👏🪤
 
@@ -86,7 +86,7 @@ cargo install claptrap --locked
 
 ### Cargo
 
-[![Crates.io](https://img.shields.io/crates/v/claptrap)](https://crates.io/crates/claptrap/0.2.0)
+[![Crates.io](https://img.shields.io/crates/v/claptrap)](https://crates.io/crates/claptrap/0.3.0)
 
 ```shell
 cargo install claptrap --locked
@@ -94,7 +94,7 @@ cargo install claptrap --locked
 
 ### PPA (Ubuntu)
 
-[![Ubuntu PPA](https://img.shields.io/badge/Ubuntu%20PPA-0.2.0-brightgreen)](https://launchpad.net/~fujiapple/+archive/ubuntu/claptrap/+packages)
+[![Ubuntu PPA](https://img.shields.io/badge/Ubuntu%20PPA-0.3.0-brightgreen)](https://launchpad.net/~fujiapple/+archive/ubuntu/claptrap/+packages)
 
 ```shell
 add-apt-repository ppa:fujiapple/claptrap
@@ -115,7 +115,7 @@ snap install claptrap
 
 ### Homebrew (macOS)
 
-[![homebrew version](https://img.shields.io/badge/homebrew-0.2.0-orange)](https://github.com/fujiapple852/homebrew-claptrap)
+[![homebrew version](https://img.shields.io/badge/homebrew-0.3.0-orange)](https://github.com/fujiapple852/homebrew-claptrap)
 
 ```shell
 brew tap fujiapple852/claptrap && brew install claptrap
