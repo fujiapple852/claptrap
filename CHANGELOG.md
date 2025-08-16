@@ -13,6 +13,14 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+## [0.3.0] - 2025-08-16
+
+### Added
+
+- Add support for PowerShell output ([#113](https://github.com/fujiapple852/claptrap/issues/113))
+- Add support for `fish` shell output ([#121](https://github.com/fujiapple852/claptrap/issues/121))
+- Add support for parsing `PossibleValue` ([#116](https://github.com/fujiapple852/claptrap/issues/116))
+
 ## [0.2.0] - 2025-07-20
 
 ### Added
@@ -39,6 +47,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Initial implementation
 
-[Unreleased]: https://github.com/fujiapple852/claptrap/compare/0.2.0...master
-[0.1.0]: https://github.com/fujiapple852/claptrap/compare/0.0.0...0.1.0
+[Unreleased]: https://github.com/fujiapple852/claptrap/compare/0.3.0...master
+[0.3.0]: https://github.com/fujiapple852/claptrap/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/fujiapple852/claptrap/compare/0.1.0...0.2.0
+[0.1.0]: https://github.com/fujiapple852/claptrap/compare/0.0.0...0.1.0
