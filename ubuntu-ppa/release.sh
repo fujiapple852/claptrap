@@ -3,14 +3,14 @@
 set -o errexit -o pipefail -o nounset
 
 # The Claptrap version to release
-VERSION="0.3.0-dev"
+VERSION="0.3.0"
 
 # The upstream version to use in the PPA
 #
 # This should usually be the same as the VERSION, but if the upstream tarball has been repacked
 # (e.g. to remove unnecessary files or to fix the tarball) then this should be set to the upstream version
 # with a `+repack{N}` suffix, where `{N}` is the number of times the tarball has been repacked. i.e. `0.1.0+repack1`.
-UPSTREAM="0.3.0-dev"
+UPSTREAM="0.3.0"
 
 # The revision number for the PPA
 #
