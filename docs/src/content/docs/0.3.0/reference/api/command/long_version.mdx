@@ -1,0 +1,69 @@
+---
+title: Command::long_version
+description: The `Command::long_version` API.
+sidebar:
+  label: long_version
+slug: 0.3.0/reference/api/command/long_version
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `long_version` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.long_version" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets the version for the long version (`--version`) and help messages.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    long-version = "v0.1.24 commit: abcdef89726d\nrevision: 123\nrelease: 2\nbinary: myprog"
+    [args]
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    long-version: |-
+      v0.1.24 commit: abcdef89726d
+      revision: 123
+      release: 2
+      binary: myprog
+    args: {}
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "long-version": "v0.1.24 commit: abcdef89726d\nrevision: 123\nrelease: 2\nbinary: myprog",
+      "args": {}
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --version
+```
+
+### Output
+
+```bash
+myprog v0.1.24 commit: abcdef89726d
+revision: 123
+release: 2
+binary: myprog
+```

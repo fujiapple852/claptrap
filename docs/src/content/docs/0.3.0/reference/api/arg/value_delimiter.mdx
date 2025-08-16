@@ -1,0 +1,70 @@
+---
+title: Arg::value_delimiter
+description: The `Arg::value_delimiter` API.
+sidebar:
+  label: value_delimiter
+slug: 0.3.0/reference/api/arg/value_delimiter
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `value_delimiter` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_delimiter" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Allow grouping of multiple values via a delimiter.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    config = { short = 'c', long = "config", value-delimiter = "," }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      config:
+        short: c
+        long: config
+        value-delimiter: ','
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "config": {
+          "short": "c",
+          "long": "config",
+          "value-delimiter": ","
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config=val1,val2,val3
+```
+
+### Output
+
+```bash
+claptrap_config=('val1' 'val2' 'val3')
+```

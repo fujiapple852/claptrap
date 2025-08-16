@@ -1,0 +1,171 @@
+---
+title: Arg::required_unless_present_any
+description: The `Arg::required_unless_present_any` API.
+sidebar:
+  label: required_unless_present_any
+slug: 0.3.0/reference/api/arg/required_unless_present_any
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `required_unless_present_any` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.required_unless_present_any" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Sets this arg as required unless any of the specified arguments are present at runtime.
+
+# Examples
+
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    cfg = { long = "config", required-unless-present-any = ["dbg", "infile"], action = "set" }
+    dbg = { long = "debug", action = "set-true" }
+    infile = { short = 'i', action = "set" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      cfg:
+        long: config
+        required-unless-present-any:
+        - dbg
+        - infile
+        action: set
+      dbg:
+        long: debug
+        action: set-true
+      infile:
+        short: i
+        action: set
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "cfg": {
+          "long": "config",
+          "required-unless-present-any": [
+            "dbg",
+            "infile"
+          ],
+          "action": "set"
+        },
+        "dbg": {
+          "long": "debug",
+          "action": "set-true"
+        },
+        "infile": {
+          "short": "i",
+          "action": "set"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --debug
+```
+
+### Output
+
+```bash
+claptrap_dbg='true'
+```
+
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    cfg = { long = "config", required-unless-present-any = ["dbg", "infile"], action = "set" }
+    dbg = { long = "debug", action = "set-true" }
+    infile = { short = 'i', action = "set" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      cfg:
+        long: config
+        required-unless-present-any:
+        - dbg
+        - infile
+        action: set
+      dbg:
+        long: debug
+        action: set-true
+      infile:
+        short: i
+        action: set
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "cfg": {
+          "long": "config",
+          "required-unless-present-any": [
+            "dbg",
+            "infile"
+          ],
+          "action": "set"
+        },
+        "dbg": {
+          "long": "debug",
+          "action": "set-true"
+        },
+        "infile": {
+          "short": "i",
+          "action": "set"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog
+```
+
+### Output
+
+```bash
+error: the following required arguments were not provided:
+  --config <cfg>
+
+Usage: prog --config <cfg>
+
+For more information, try '--help'.
+```

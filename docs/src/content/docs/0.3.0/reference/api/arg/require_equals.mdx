@@ -1,0 +1,128 @@
+---
+title: Arg::require_equals
+description: The `Arg::require_equals` API.
+sidebar:
+  label: require_equals
+slug: 0.3.0/reference/api/arg/require_equals
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `require_equals` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.require_equals" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Requires that options use the `--option=val` syntax
+
+# Examples
+
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    cfg = { long = "config", action = "set", require-equals = true }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      cfg:
+        long: config
+        action: set
+        require-equals: true
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "cfg": {
+          "long": "config",
+          "action": "set",
+          "require-equals": true
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config=file.conf
+```
+
+### Output
+
+```bash
+claptrap_cfg='file.conf'
+```
+
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    cfg = { long = "config", action = "set", require-equals = true }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      cfg:
+        long: config
+        action: set
+        require-equals: true
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "cfg": {
+          "long": "config",
+          "action": "set",
+          "require-equals": true
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --config file.conf
+```
+
+### Output
+
+```bash
+error: equal sign is needed when assigning values to '--config=<cfg>'
+
+Usage: prog [OPTIONS]
+
+For more information, try '--help'.
+```

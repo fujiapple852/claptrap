@@ -1,0 +1,69 @@
+---
+title: ValueParser::usize
+description: The `ValueParser::usize` API.
+sidebar:
+  label: usize
+slug: 0.3.0/reference/api/value_parser/usize
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `usize` <LinkButton href="https://docs.rs/clap/latest/clap/value_parser/fn.usize.html" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Parse `usize` values.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+
+    [args]
+    foo = { long = "foo", value-parser = ":usize:" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      foo:
+        long: foo
+        value-parser: ':usize:'
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "foo": {
+          "long": "foo",
+          "value-parser": ":usize:"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --foo 18446744073709551615
+```
+
+### Output
+
+```bash
+claptrap_foo='18446744073709551615'
+```

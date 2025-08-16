@@ -1,0 +1,68 @@
+---
+title: Arg::id
+description: The `Arg::id` API.
+sidebar:
+  label: id
+slug: 0.3.0/reference/api/arg/id
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `id` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.id" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Set the identifier used for referencing this argument in the clap API.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    my-arg-id = { long = "foo", action = "set" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      my-arg-id:
+        long: foo
+        action: set
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "my-arg-id": {
+          "long": "foo",
+          "action": "set"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --foo file.toml
+```
+
+### Output
+
+```bash
+claptrap_my-arg-id='file.toml'
+```

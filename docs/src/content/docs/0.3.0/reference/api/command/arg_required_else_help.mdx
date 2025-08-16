@@ -1,0 +1,62 @@
+---
+title: Command::arg_required_else_help
+description: The `Command::arg_required_else_help` API.
+sidebar:
+  label: arg_required_else_help
+slug: 0.3.0/reference/api/command/arg_required_else_help
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `arg_required_else_help` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.arg_required_else_help" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Exit gracefully if no arguments are present (e.g. `$ myprog`).
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    arg-required-else-help = true
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    arg-required-else-help: true
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "arg-required-else-help": true
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog
+```
+
+### Output
+
+```bash
+Usage: myprog
+
+Options:
+  -h, --help  Print help
+```

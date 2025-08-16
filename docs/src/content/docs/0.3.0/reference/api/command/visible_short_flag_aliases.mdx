@@ -1,0 +1,88 @@
+---
+title: Command::visible_short_flag_aliases
+description: The `Command::visible_short_flag_aliases` API.
+sidebar:
+  label: visible_short_flag_aliases
+slug: 0.3.0/reference/api/command/visible_short_flag_aliases
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `visible_short_flag_aliases` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.visible_short_flag_aliases" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Add aliases, which function as visible short flag subcommands.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    [[subcommands]]
+    name = "test"
+    visible-short-flag-aliases = ['a', 'b', 'c']
+    [subcommands.args]
+    input = { required = false, help = "the file to add" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    subcommands:
+    - name: test
+      visible-short-flag-aliases:
+      - a
+      - b
+      - c
+      args:
+        input:
+          required: false
+          help: the file to add
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "subcommands": [
+        {
+          "name": "test",
+          "visible-short-flag-aliases": [
+            "a",
+            "b",
+            "c"
+          ],
+          "args": {
+            "input": {
+              "required": false,
+              "help": "the file to add"
+            }
+          }
+        }
+      ]
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog -a file.txt
+```
+
+### Output
+
+```bash
+claptrap__subcommand='test'
+claptrap_test_input='file.txt'
+```

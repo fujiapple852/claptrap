@@ -1,0 +1,76 @@
+---
+title: Arg
+description: The Arg API
+slug: 0.3.0/reference/api/arg
+---
+
+<div class="api-table">
+  | API | Description |
+  | --- | ----------- |
+  | [`id`](id)| Set the identifier used for referencing this argument in the clap API. |
+  | [`short`](short)| Sets the short version of the argument without the preceding `-`. |
+  | [`long`](long)| Sets the long version of the argument without the preceding `--`. |
+  | [`alias`](alias)| Add an alias, which functions as a hidden long flag. |
+  | [`short_alias`](short_alias)| Add an alias, which functions as a hidden short flag. |
+  | [`aliases`](aliases)| Add aliases, which function as hidden long flags. |
+  | [`short_aliases`](short_aliases)| Add aliases, which functions as a hidden short flag. |
+  | [`visible_alias`](visible_alias)| Add an alias, which functions as a visible long flag. |
+  | [`visible_short_alias`](visible_short_alias)| Add an alias, which functions as a visible short flag. |
+  | [`visible_aliases`](visible_aliases)| Add aliases, which function as visible long flags. |
+  | [`visible_short_aliases`](visible_short_aliases)| Add aliases, which function as visible short flags. |
+  | [`index`](arg_index)| Specifies the index of a positional argument starting at 1. |
+  | [`trailing_var_arg`](trailing_var_arg)| This is a “var arg” and everything that follows should be captured by it, as if the user had used a `--`. |
+  | [`last`](last)| This arg is the last, or final, positional argument (i.e. has the highest index) and is only able to be accessed via the `--` syntax (i.e. `$ prog args -- last_arg`). |
+  | [`required`](required)| Specifies that the argument must be present. |
+  | [`requires`](requires)| Sets an argument that is required when this one is present. |
+  | [`exclusive`](exclusive)| This argument must be passed alone; it conflicts with all other arguments. |
+  | [`global`](global)| Specifies that an argument can be matched to all child Subcommands. |
+  | [`action`](action)| Specify how to react to an argument when parsing it. |
+  | [`value_parser`](value_parser)| Specify the typed behavior of the argument. |
+  | [`num_args`](num_args)| Specifies the number of arguments parsed per occurrence. |
+  | [`value_name`](value_name)| Placeholder for the argument’s value in the help message / usage. |
+  | [`value_names`](value_names)| Placeholders for the argument’s values in the help message / usage. |
+  | [`value_hint`](value_hint)| Provide the shell a hint about how to complete this argument. |
+  | [`ignore_case`](ignore_case)| Match values against PossibleValuesParser without matching case. |
+  | [`allow_hyphen_values`](allow_hyphen_values)| Allows values which start with a leading hyphen (`-`) |
+  | [`allow_negative_numbers`](allow_negative_numbers)| Allows negative numbers to pass as values. |
+  | [`require_equals`](require_equals)| Requires that options use the `--option=val` syntax |
+  | [`value_delimiter`](value_delimiter)| Allow grouping of multiple values via a delimiter. |
+  | [`value_terminator`](value_terminator)| Sentinel to stop parsing multiple values of a given argument. |
+  | [`raw`](raw)| Consume all following arguments. |
+  | [`default_value`](default_value)| Value for the argument when not present. |
+  | [`default_values`](default_values)| Value for the argument when not present. |
+  | [`default_missing_value`](default_missing_value)| Value for the argument when the flag is present but no value is specified. |
+  | [`default_missing_value_os`](default_missing_value_os)| Value for the argument when the flag is present but no value is specified. |
+  | [`default_missing_values`](default_missing_values)| Value for the argument when the flag is present but no value is specified. |
+  | [`default_missing_values_os`](default_missing_values_os)| Value for the argument when the flag is present but no value is specified. |
+  | [`env`](env)| Read from name environment variable when argument is not present. |
+  | [`help`](help)| Sets the description of the argument for short help (`-h`). |
+  | [`long_help`](long_help)| Sets the description of the argument for long help (`--help`). |
+  | [`display_order`](display_order)| Allows custom ordering of args within the help message. |
+  | [`help_heading`](help_heading)| Override the current help section. |
+  | [`next_line_help`](next_line_help)| Render the help on the line after the argument. |
+  | [`hide`](hide)| Hide this argument from the generated help text. |
+  | [`hide_possible_values`](hide_possible_values)| Do not display the possible values in the help message. |
+  | [`hide_default_value`](hide_default_value)| Do not display the default value of the argument in the help message. |
+  | [`hide_env`](hide_env)| Do not display in help the environment variable name. |
+  | [`hide_env_values`](hide_env_values)| Do not display in help any values inside the associated ENV variables for the argument. |
+  | [`hide_short_help`](hide_short_help)| Hides an argument from short help (`-h`). |
+  | [`hide_long_help`](hide_long_help)| Hides an argument from long help (`--help`). |
+  | [`group`](group)| The name of the ArgGroup the argument belongs to. |
+  | [`groups`](groups)| The names of ArgGroup’s the argument belongs to. |
+  | [`default_value_if`](default_value_if)| Specifies the value of the argument if arg has been used at runtime. |
+  | [`default_value_ifs`](default_value_ifs)| Specifies multiple values and conditions in the same manner as `default_value_if`. |
+  | [`required_unless_present`](required_unless_present)| Set this arg as required as long as the specified argument is not present at runtime. |
+  | [`required_unless_present_all`](required_unless_present_all)| Sets this arg as required unless all of the specified arguments are present at runtime. |
+  | [`required_unless_present_any`](required_unless_present_any)| Sets this arg as required unless any of the specified arguments are present at runtime. |
+  | [`required_if_eq`](required_if_eq)| This argument is required only if the specified arg is present at runtime and its value equals val. |
+  | [`required_if_eq_any`](required_if_eq_any)| Specify this argument is required based on multiple conditions. |
+  | [`required_if_eq_all`](required_if_eq_all)| Specify this argument is required based on multiple conditions. |
+  | [`requires_if`](requires_if)| Require another argument if this arg matches the ArgPredicate. |
+  | [`requires_ifs`](requires_ifs)| Allows multiple conditional requirements. |
+  | [`conflicts_with`](conflicts_with)| This argument is mutually exclusive with the specified argument. |
+  | [`conflicts_with_all`](conflicts_with_all)| This argument is mutually exclusive with the specified arguments. |
+  | [`overrides_with`](overrides_with)| Sets an overridable argument. |
+  | [`overrides_with_all`](overrides_with_all)| Sets multiple mutually overridable arguments by name. |
+</div>

@@ -1,0 +1,70 @@
+---
+title: Arg::allow_hyphen_values
+description: The `Arg::allow_hyphen_values` API.
+sidebar:
+  label: allow_hyphen_values
+slug: 0.3.0/reference/api/arg/allow_hyphen_values
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `allow_hyphen_values` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.allow_hyphen_values" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Allows values which start with a leading hyphen (`-`)
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    pat = { long = "pattern", action = "set", allow-hyphen-values = true }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      pat:
+        long: pattern
+        action: set
+        allow-hyphen-values: true
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "pat": {
+          "long": "pattern",
+          "action": "set",
+          "allow-hyphen-values": true
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --pattern -file
+```
+
+### Output
+
+```bash
+claptrap_pat='-file'
+```

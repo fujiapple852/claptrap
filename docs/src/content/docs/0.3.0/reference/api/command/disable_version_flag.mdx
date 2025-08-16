@@ -1,0 +1,140 @@
+---
+title: Command::disable_version_flag
+description: The `Command::disable_version_flag` API.
+sidebar:
+  label: disable_version_flag
+slug: 0.3.0/reference/api/command/disable_version_flag
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `disable_version_flag` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.disable_version_flag" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Disables -V and --version flag.
+
+# Examples
+
+## Example 1
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    version = "1.0.0"
+    disable-version-flag = true
+    [args]
+    version = { long = "version", action = "version", help = "Print version" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    version: 1.0.0
+    disable-version-flag: true
+    args:
+      version:
+        long: version
+        action: version
+        help: Print version
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "version": "1.0.0",
+      "disable-version-flag": true,
+      "args": {
+        "version": {
+          "long": "version",
+          "action": "version",
+          "help": "Print version"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog -V
+```
+
+### Output
+
+```bash
+error: unexpected argument '-V' found
+
+Usage: myprog
+
+For more information, try '--help'.
+```
+
+## Example 2
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    version = "1.0.0"
+    disable-version-flag = true
+    [args]
+    version = { long = "version", action = "version", help = "Print version" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    version: 1.0.0
+    disable-version-flag: true
+    args:
+      version:
+        long: version
+        action: version
+        help: Print version
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "version": "1.0.0",
+      "disable-version-flag": true,
+      "args": {
+        "version": {
+          "long": "version",
+          "action": "version",
+          "help": "Print version"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --version
+```
+
+### Output
+
+```bash
+myprog 1.0.0
+```

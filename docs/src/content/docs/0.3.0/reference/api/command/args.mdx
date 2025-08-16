@@ -1,0 +1,85 @@
+---
+title: Command::args
+description: The `Command::args` API.
+sidebar:
+  label: args
+slug: 0.3.0/reference/api/command/args
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `args` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.args" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Adds multiple arguments to the list of valid possibilities.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    [args]
+    debug = { short = 'd', action = "set-true", help = "turns on debugging mode" }
+    config = { short = 'c', long = "config", action = "set-true", value-name = "CONFIG", help = "Optionally sets a config file to use" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    args:
+      debug:
+        short: d
+        action: set-true
+        help: turns on debugging mode
+      config:
+        short: c
+        long: config
+        action: set-true
+        value-name: CONFIG
+        help: Optionally sets a config file to use
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "args": {
+        "debug": {
+          "short": "d",
+          "action": "set-true",
+          "help": "turns on debugging mode"
+        },
+        "config": {
+          "short": "c",
+          "long": "config",
+          "action": "set-true",
+          "value-name": "CONFIG",
+          "help": "Optionally sets a config file to use"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog -d -c
+```
+
+### Output
+
+```bash
+claptrap_debug='true'
+claptrap_config='true'
+```

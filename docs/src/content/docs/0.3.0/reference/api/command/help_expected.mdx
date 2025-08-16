@@ -1,0 +1,75 @@
+---
+title: Command::help_expected
+description: The `Command::help_expected` API.
+sidebar:
+  label: help_expected
+slug: 0.3.0/reference/api/command/help_expected
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `help_expected` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.help_expected" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Panic if help descriptions are omitted.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    help-expected = true
+    [args]
+    foo = { help = "It does foo stuff" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    help-expected: true
+    args:
+      foo:
+        help: It does foo stuff
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "help-expected": true,
+      "args": {
+        "foo": {
+          "help": "It does foo stuff"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog --help
+```
+
+### Output
+
+```bash
+Usage: myprog [foo]
+
+Arguments:
+  [foo]  It does foo stuff
+
+Options:
+  -h, --help  Print help
+```

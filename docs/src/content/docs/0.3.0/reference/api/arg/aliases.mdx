@@ -1,0 +1,79 @@
+---
+title: Arg::aliases
+description: The `Arg::aliases` API.
+sidebar:
+  label: aliases
+slug: 0.3.0/reference/api/arg/aliases
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `aliases` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.aliases" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Add aliases, which function as hidden long flags.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    test = { long = "test", aliases = ["do-tests", "tests"], action = "set-true", required = false, help = "the file to add" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      test:
+        long: test
+        aliases:
+        - do-tests
+        - tests
+        action: set-true
+        required: false
+        help: the file to add
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "test": {
+          "long": "test",
+          "aliases": [
+            "do-tests",
+            "tests"
+          ],
+          "action": "set-true",
+          "required": false,
+          "help": "the file to add"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --do-tests
+```
+
+### Output
+
+```bash
+claptrap_test='true'
+```

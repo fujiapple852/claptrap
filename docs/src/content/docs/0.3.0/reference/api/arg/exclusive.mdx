@@ -1,0 +1,83 @@
+---
+title: Arg::exclusive
+description: The `Arg::exclusive` API.
+sidebar:
+  label: exclusive
+slug: 0.3.0/reference/api/arg/exclusive
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `exclusive` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.exclusive" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+This argument must be passed alone; it conflicts with all other arguments.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    exclusive = { long = "exclusive", action = "set", exclusive = true }
+    debug = { long = "debug" }
+    input = {}
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      exclusive:
+        long: exclusive
+        action: set
+        exclusive: true
+      debug:
+        long: debug
+      input: {}
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "exclusive": {
+          "long": "exclusive",
+          "action": "set",
+          "exclusive": true
+        },
+        "debug": {
+          "long": "debug"
+        },
+        "input": {}
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --exclusive file.conf file.txt
+```
+
+### Output
+
+```bash
+error: the argument '--exclusive <exclusive>' cannot be used with one or more of the other specified arguments
+
+Usage: prog [OPTIONS] [input]
+
+For more information, try '--help'.
+```

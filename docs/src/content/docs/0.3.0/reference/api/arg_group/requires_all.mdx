@@ -1,0 +1,119 @@
+---
+title: ArgGroup::requires_all
+description: The `ArgGroup::requires_all` API.
+sidebar:
+  label: requires_all
+slug: 0.3.0/reference/api/arg_group/requires_all
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `requires_all` <LinkButton href="https://docs.rs/clap/latest/clap/struct.ArgGroup.html#method.requires_all" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Specify arguments or groups that must be present when this group is.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    [groups]
+    req_flags = { args = ["flag", "color"], requires-all = ["debug", "verb"] }
+    [args]
+    flag = { short = 'f', action = "set-true" }
+    color = { short = 'c', action = "set-true" }
+    debug = { short = 'd', action = "set-true" }
+    verb = { short = 'v', action = "set-true" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    groups:
+      req_flags:
+        args:
+        - flag
+        - color
+        requires-all:
+        - debug
+        - verb
+    args:
+      flag:
+        short: f
+        action: set-true
+      color:
+        short: c
+        action: set-true
+      debug:
+        short: d
+        action: set-true
+      verb:
+        short: v
+        action: set-true
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "groups": {
+        "req_flags": {
+          "args": [
+            "flag",
+            "color"
+          ],
+          "requires-all": [
+            "debug",
+            "verb"
+          ]
+        }
+      },
+      "args": {
+        "flag": {
+          "short": "f",
+          "action": "set-true"
+        },
+        "color": {
+          "short": "c",
+          "action": "set-true"
+        },
+        "debug": {
+          "short": "d",
+          "action": "set-true"
+        },
+        "verb": {
+          "short": "v",
+          "action": "set-true"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog -c -d
+```
+
+### Output
+
+```bash
+error: the following required arguments were not provided:
+  -v
+
+Usage: myprog -d -v -c
+
+For more information, try '--help'.
+```

@@ -1,0 +1,77 @@
+---
+title: Arg::value_parser
+description: The `Arg::value_parser` API.
+sidebar:
+  label: value_parser
+slug: 0.3.0/reference/api/arg/value_parser
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `value_parser` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_parser" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Specify the typed behavior of the argument.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "raw"
+    [args]
+    color = { long = "color", value-parser = ["always", "auto", "never"], default-value = "auto" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: raw
+    args:
+      color:
+        long: color
+        value-parser:
+        - always
+        - auto
+        - never
+        default-value: auto
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "raw",
+      "args": {
+        "color": {
+          "long": "color",
+          "value-parser": [
+            "always",
+            "auto",
+            "never"
+          ],
+          "default-value": "auto"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --color auto
+```
+
+### Output
+
+```bash
+claptrap_color='auto'
+```

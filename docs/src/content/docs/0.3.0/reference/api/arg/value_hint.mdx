@@ -1,0 +1,74 @@
+---
+title: Arg::value_hint
+description: The `Arg::value_hint` API.
+sidebar:
+  label: value_hint
+slug: 0.3.0/reference/api/arg/value_hint
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `value_hint` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Arg.html#method.value_hint" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Provide the shell a hint about how to complete this argument.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "prog"
+    [args]
+    command = { short = 'u', long = 'username', value-hint = "username" }
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: prog
+    args:
+      command:
+        short: u
+        long: username
+        value-hint: username
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "prog",
+      "args": {
+        "command": {
+          "short": "u",
+          "long": "username",
+          "value-hint": "username"
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+prog --help
+```
+
+### Output
+
+```bash
+Usage: prog [OPTIONS]
+
+Options:
+  -u, --username <command>  
+  -h, --help                Print help
+```

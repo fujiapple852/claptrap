@@ -1,0 +1,62 @@
+---
+title: Command::external_subcommand_value_parser
+description: The `Command::external_subcommand_value_parser` API.
+sidebar:
+  label: external_subcommand_value_parser
+slug: 0.3.0/reference/api/command/external_subcommand_value_parser
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `external_subcommand_value_parser` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.external_subcommand_value_parser" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Specifies how to parse external subcommand arguments.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    allow-external-subcommands = true
+    external-subcommand-value-parser = ":string:"
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    allow-external-subcommands: true
+    external-subcommand-value-parser: ':string:'
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "allow-external-subcommands": true,
+      "external-subcommand-value-parser": ":string:"
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog subcmd --option value -fff --flag
+```
+
+### Output
+
+```bash
+claptrap__subcommand='subcmd'
+```

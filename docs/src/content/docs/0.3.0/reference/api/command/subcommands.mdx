@@ -1,0 +1,123 @@
+---
+title: Command::subcommands
+description: The `Command::subcommands` API.
+sidebar:
+  label: subcommands
+slug: 0.3.0/reference/api/command/subcommands
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
+import { LinkButton } from '@astrojs/starlight/components';
+
+# `subcommands` <LinkButton href="https://docs.rs/clap/latest/clap/struct.Command.html#method.subcommands" icon="open-book" variant="minimal" />
+
+<Badge text="since 0.1.0" size="small" />
+
+Adds multiple subcommands to the list of valid possibilities.
+
+# Example
+
+### Spec
+
+<Tabs syncKey="format">
+  <TabItem label="TOML">
+    ```toml
+    name = "myprog"
+    [args]
+    arg1 = {}
+    [[subcommands]]
+    name = "subcommand"
+    about = "a sub command"
+    [subcommands.args]
+    arg2 = {}
+    [[subcommands.subcommands]]
+    name = "nested"
+    about = "A nested sub command"
+    [subcommands.subcommands.args]
+    arg3 = { long = "arg3", action = "append" }
+    [[subcommands]]
+    name = "subcommand2"
+    about = "another sub command"
+    [subcommands.args]
+    arg4 = {}
+    ```
+  </TabItem>
+
+  <TabItem label="YAML">
+    ```yaml
+    name: myprog
+    args:
+      arg1: {}
+    subcommands:
+    - name: subcommand
+      about: a sub command
+      args:
+        arg2: {}
+      subcommands:
+      - name: nested
+        about: A nested sub command
+        args:
+          arg3:
+            long: arg3
+            action: append
+    - name: subcommand2
+      about: another sub command
+      args:
+        arg4: {}
+    ```
+  </TabItem>
+
+  <TabItem label="JSON">
+    ```json
+    {
+      "name": "myprog",
+      "args": {
+        "arg1": {}
+      },
+      "subcommands": [
+        {
+          "name": "subcommand",
+          "about": "a sub command",
+          "args": {
+            "arg2": {}
+          },
+          "subcommands": [
+            {
+              "name": "nested",
+              "about": "A nested sub command",
+              "args": {
+                "arg3": {
+                  "long": "arg3",
+                  "action": "append"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "subcommand2",
+          "about": "another sub command",
+          "args": {
+            "arg4": {}
+          }
+        }
+      ]
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Input
+
+```bash
+myprog subcommand nested --arg3 one --arg3 two
+```
+
+### Output
+
+```bash
+claptrap__subcommand='subcommand::nested'
+claptrap_subcommand_nested_arg3=('one' 'two')
+```
