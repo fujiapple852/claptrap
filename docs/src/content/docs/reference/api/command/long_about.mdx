@@ -24,6 +24,7 @@ Sets the program’s description for the long help (`--help`).
   <TabItem label="TOML">
 ```toml
 name = "myprog"
+term-width = 80
 long-about = "Does really amazing things to great people. Now let's talk a little more in depth about how this subcommand really works. It may take about a few lines of text, but that's ok!"
 [args]
 ```
@@ -31,6 +32,7 @@ long-about = "Does really amazing things to great people. Now let's talk a littl
   <TabItem label="YAML">
 ```yaml
 name: myprog
+term-width: 80
 long-about: Does really amazing things to great people. Now let's talk a little more in depth about how this subcommand really works. It may take about a few lines of text, but that's ok!
 args: {}
 ```
@@ -39,6 +41,7 @@ args: {}
 ```json
 {
   "name": "myprog",
+  "term-width": 80,
   "long-about": "Does really amazing things to great people. Now let's talk a little more in depth about how this subcommand really works. It may take about a few lines of text, but that's ok!",
   "args": {}
 }
@@ -55,8 +58,9 @@ myprog --help
 ### Output
 
 ```bash
-Does really amazing things to great people. Now let's talk a little more in depth about how this subcommand really works. It may take about a few lines of text,
-but that's ok!
+Does really amazing things to great people. Now let's talk a little more in
+depth about how this subcommand really works. It may take about a few lines of
+text, but that's ok!
 
 Usage: myprog
 
