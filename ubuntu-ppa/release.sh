@@ -15,7 +15,7 @@ UPSTREAM="0.3.0"
 # The revision number for the PPA
 #
 # This is incremented each time a new upload is made to the PPA so will always be one greater than repack number.
-REVISION=2
+REVISION=1
 
 # The Ubuntu series to build for
 SERIES=("noble" "jammy")
