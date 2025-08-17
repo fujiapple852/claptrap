@@ -1,5 +1,5 @@
 use anyhow::{Context, Result};
-use minijinja::{context, Environment};
+use minijinja::{Environment, context};
 use regex::Regex;
 use serde::Serialize;
 use std::fs;
@@ -60,9 +60,9 @@ fn convert_spec(toml_str: &str) -> Result<(String, String)> {
 }
 
 fn build_example(module: &str, base: &str) -> Result<Example> {
-    let spec_path = format!("tests/resources/{module}/{base}.toml");
-    let args_path = format!("tests/resources/{module}/{base}.args");
-    let snap_path = format!("src/snapshots/claptrap__tests__{module}__{base}.snap");
+    let spec_path = format!("../../tests/resources/{module}/{base}.toml");
+    let args_path = format!("../../tests/resources/{module}/{base}.args");
+    let snap_path = format!("../../tests/snapshots/claptrap__tests__{module}__{base}.snap");
     let toml = fs::read_to_string(&spec_path)
         .context(spec_path)?
         .trim_end()
@@ -134,7 +134,7 @@ fn generate_docs(
 }
 
 fn collect_examples(module: &str, slug: &str) -> Result<Vec<Example>> {
-    let base_dir = Path::new("tests/resources").join(module);
+    let base_dir = Path::new("../../tests/resources").join(module);
     let mut examples = Vec::new();
     let direct = base_dir.join(format!("{slug}.toml"));
     let mut files: Vec<PathBuf> = Vec::new();
@@ -165,7 +165,7 @@ fn collect_examples(module: &str, slug: &str) -> Result<Vec<Example>> {
 }
 
 fn main() -> Result<()> {
-    let path_prefix = "docs/src/content/docs/reference/api";
+    let path_prefix = "../../docs/src/content/docs/reference/api";
     let modules = [
         ("arg", "arg.mdx"),
         ("command", "command.mdx"),
@@ -176,7 +176,10 @@ fn main() -> Result<()> {
     let mut env = Environment::new();
     env.set_trim_blocks(true);
     env.set_lstrip_blocks(true);
-    env.add_template("api_doc", include_str!("../docs/templates/api_doc.mdx.j2"))?;
+    env.add_template(
+        "api_doc",
+        include_str!("../../../docs/templates/api_doc.mdx.j2"),
+    )?;
     for (module, table) in modules {
         let entries = parse_table(Path::new(path_prefix).join(table))?;
         let out_dir = Path::new(path_prefix).join(module);
