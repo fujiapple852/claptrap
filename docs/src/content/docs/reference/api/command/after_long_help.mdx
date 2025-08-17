@@ -24,6 +24,7 @@ Free-form help text for after auto-generated long help (`--help`).
   <TabItem label="TOML">
 ```toml
 name = "myprog"
+term-width = 80
 after-long-help = "Does really amazing things to great people... but be careful with -R, like, for real, be careful with this!"
 [args]
 ```
@@ -31,6 +32,7 @@ after-long-help = "Does really amazing things to great people... but be careful 
   <TabItem label="YAML">
 ```yaml
 name: myprog
+term-width: 80
 after-long-help: Does really amazing things to great people... but be careful with -R, like, for real, be careful with this!
 args: {}
 ```
@@ -39,6 +41,7 @@ args: {}
 ```json
 {
   "name": "myprog",
+  "term-width": 80,
   "after-long-help": "Does really amazing things to great people... but be careful with -R, like, for real, be careful with this!",
   "args": {}
 }
@@ -61,5 +64,6 @@ Options:
   -h, --help
           Print help (see a summary with '-h')
 
-Does really amazing things to great people... but be careful with -R, like, for real, be careful with this!
+Does really amazing things to great people... but be careful with -R, like, for
+real, be careful with this!
 ```

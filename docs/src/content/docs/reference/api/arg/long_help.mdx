@@ -24,6 +24,7 @@ Sets the description of the argument for long help (`--help`).
   <TabItem label="TOML">
 ```toml
 name = "prog"
+term-width = 80
 [args]
 cfg = { long = "config", long-help = "The config file used by the myprog must be in JSON format with only valid keys and may not contain other nonsense that cannot be read by this program. Obviously I'm going on and on, so I'll stop now." }
 ```
@@ -31,6 +32,7 @@ cfg = { long = "config", long-help = "The config file used by the myprog must be
   <TabItem label="YAML">
 ```yaml
 name: prog
+term-width: 80
 args:
   cfg:
     long: config
@@ -41,6 +43,7 @@ args:
 ```json
 {
   "name": "prog",
+  "term-width": 80,
   "args": {
     "cfg": {
       "long": "config",
@@ -65,8 +68,9 @@ Usage: prog [OPTIONS]
 
 Options:
       --config <cfg>
-          The config file used by the myprog must be in JSON format with only valid keys and may not contain other nonsense that cannot be read by this program.
-          Obviously I'm going on and on, so I'll stop now.
+          The config file used by the myprog must be in JSON format with only
+          valid keys and may not contain other nonsense that cannot be read by
+          this program. Obviously I'm going on and on, so I'll stop now.
 
   -h, --help
           Print help (see a summary with '-h')
