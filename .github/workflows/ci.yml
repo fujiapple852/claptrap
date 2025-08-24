@@ -171,8 +171,10 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - name: install cargo-msrv
         run: cargo install --git https://github.com/foresterre/cargo-msrv.git --tag v0.18.4 cargo-msrv
-      - name: check msrv
-        run: cargo msrv verify --output-format json --manifest-path Cargo.toml -- cargo check
+      - name: check msrv for claptrap
+        run: cargo msrv verify --output-format json --manifest-path crates/claptrap/Cargo.toml -- cargo check
+      - name: check msrv for claptrap-core
+        run: cargo msrv verify --output-format json --manifest-path crates/claptrap-core/Cargo.toml -- cargo check
 
   shellcheck:
     runs-on: ubuntu-22.04
@@ -187,7 +189,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y shellcheck
       - name: Generate and check script
         run: |
-          cargo run --bin claptrap -- script --spec tests/resources/script/${{ matrix.shell }}/spec.toml \
+          cargo run --bin claptrap -- script --spec crates/claptrap/tests/resources/script/${{ matrix.shell }}/spec.toml \
             ${{ matrix.shell }} --output script.${{ matrix.shell }}
           shellcheck -s ${{ matrix.shell }} script.${{ matrix.shell }}
 
