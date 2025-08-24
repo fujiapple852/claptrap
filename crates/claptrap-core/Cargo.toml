@@ -1,0 +1,33 @@
+[package]
+name = "claptrap-core"
+description.workspace = true
+version.workspace = true
+authors.workspace = true
+documentation.workspace = true
+homepage.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[features]
+default = ["schema"]
+schema = ["schemars"]
+
+[dependencies]
+anstyle.workspace = true
+clap = { workspace = true, features = ["string", "cargo", "wrap_help", "usage", "unstable-styles", "color", "suggestions", "error-context", "env"] }
+crc32fast.workspace = true
+indexmap = { workspace = true, features = ["serde"] }
+itertools.workspace = true
+schemars = { workspace = true, optional = true, features = ["derive", "indexmap2"] }
+serde = { workspace = true, features = ["derive"] }
+
+[dev-dependencies]
+insta = "1.43.1"
+test-case = "3.3.1"
+serde_json = { workspace = true, features = ["preserve_order"] }
+toml = { workspace = true, features = ["preserve_order"] }

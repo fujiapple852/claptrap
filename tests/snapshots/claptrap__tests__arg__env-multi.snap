@@ -1,5 +1,0 @@
----
-source: src/tests.rs
-expression: "super::run(spec, args)"
----
-claptrap_flag=('env1' 'env2')

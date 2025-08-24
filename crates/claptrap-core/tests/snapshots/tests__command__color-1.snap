@@ -1,0 +1,12 @@
+---
+source: crates/claptrap-core/tests/tests.rs
+expression: "super::run(spec, args)"
+---
+command cat <<'EOF_c5a6fdd8'
+Usage: myprog [OPTIONS]
+
+Options:
+      --config <cfg>  
+  -h, --help          Print help
+EOF_c5a6fdd8
+exit 0

@@ -1,0 +1,6 @@
+---
+source: crates/claptrap-core/tests/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap_first='one'
+claptrap_third='three'

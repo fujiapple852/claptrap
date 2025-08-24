@@ -1,5 +1,0 @@
----
-source: src/tests.rs
-expression: "super::run(spec, args)"
----
-claptrap_foo='-170141183460469231731687303715884105728'

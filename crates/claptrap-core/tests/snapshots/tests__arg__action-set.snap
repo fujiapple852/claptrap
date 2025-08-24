@@ -1,0 +1,5 @@
+---
+source: crates/claptrap-core/tests/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap_flag='value'
