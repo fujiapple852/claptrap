@@ -1,6 +1,0 @@
----
-source: src/tests.rs
-expression: "super::run(spec, args)"
----
-claptrap__subcommand='subcommand::nested'
-claptrap_subcommand_nested_arg3=('one' 'two')

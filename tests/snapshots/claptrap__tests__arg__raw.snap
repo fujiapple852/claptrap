@@ -1,5 +1,0 @@
----
-source: src/tests.rs
-expression: "super::run(spec, args)"
----
-claptrap_everything=('--foo' 'something' '--' '-v' '-v' '-v' '-b' '-b' '-b' '--baz' '-q' '-u' '-x')
