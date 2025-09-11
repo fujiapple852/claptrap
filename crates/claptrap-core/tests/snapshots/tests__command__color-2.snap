@@ -1,0 +1,14 @@
+---
+source: crates/claptrap-core/tests/tests.rs
+expression: "super::run(spec, args)"
+---
+command cat <<'EOF_a2c275c0'
+error: unexpected argument '--confg' found
+
+  tip: a similar argument exists: '--config'
+
+Usage: myprog --config <cfg>
+
+For more information, try '--help'.
+EOF_a2c275c0
+exit 1

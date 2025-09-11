@@ -1,0 +1,7 @@
+---
+source: crates/claptrap-core/tests/tests.rs
+expression: "super::run(spec, args)"
+---
+claptrap_foo='foo'
+claptrap_bar='bar'
+claptrap_baz=('baz1' 'baz2' 'baz3')

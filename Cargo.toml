@@ -1,7 +1,10 @@
-[package]
-name = "claptrap"
+[workspace]
+resolver = "2"
+members = ["crates/claptrap", "crates/claptrap-core", "crates/gen-api-doc"]
+
+[workspace.package]
 description = "Bring the power of Clap to shell scripts."
-version = "0.3.0"
+version = "0.4.0-dev"
 authors = ["FujiApple <fujiapple852@gmail.com>"]
 documentation = "https://github.com/fujiapple852/claptrap"
 homepage = "https://github.com/fujiapple852/claptrap"
@@ -13,37 +16,33 @@ license = "Apache-2.0"
 edition = "2021"
 rust-version = "1.82.0"
 
-[features]
-default = ["schema"]
-schema = ["schemars"]
-
-[dependencies]
+[workspace.dependencies]
+claptrap-core = { version = "0.4.0-dev", path = "crates/claptrap-core" }
 anstream = "0.6.20"
 anstyle = "1.0.11"
 anyhow = "1.0.99"
-clap = { version = "4.5.47", features = ["derive", "string", "cargo", "wrap_help", "usage", "unstable-styles", "color", "suggestions", "error-context", "env"] }
+clap = "4.5.47"
 clap-markdown = "0.1.5"
 clap_complete = "4.5.57"
 clap_mangen = "0.2.29"
 crc32fast = "1.5.0"
-indexmap = { version = "2.11.1", features = ["serde"] }
+indexmap = "2.11.1"
+insta = "1.43.1"
 itertools = "0.14.0"
-minijinja = "2.12.0"
-schemars = { version = "1.0.1", optional = true, features = ["derive", "indexmap2"] }
-serde = { version = "1.0.219", features = ["derive"] }
-serde_json = { version = "1.0.143", features = ["preserve_order"] }
-serde_yaml = { version = "=0.9.33", features = [] }
-toml = { version = "0.9.5", features = ["preserve_order"] }
-
-[dev-dependencies]
-insta = "1.43.2"
-tempfile = "3.22.0"
+minijinja = "2.11.0"
+regex = "1.11.1"
+schemars = "1.0.1"
+serde = "1.0.219"
+serde_json = "1.0.143"
+serde_yaml = "=0.9.33"
+tempfile = "3.21.0"
 test-case = "3.3.1"
+toml = "0.9.5"
 
-[lints.rust]
+[workspace.lints.rust]
 rust_2018_idioms = { level = "warn", priority = -1 }
 
-[lints.clippy]
+[workspace.lints.clippy]
 all = { level = "warn", priority = -1 }
 pedantic = { level = "warn", priority = -1 }
 nursery = { level = "warn", priority = -1 }
@@ -52,8 +51,3 @@ cast_possible_truncation = "allow"
 map_unwrap_or = "allow"
 missing_const_for_fn = "allow"
 struct_field_names = "allow"
-
-[package.metadata.generate-rpm]
-assets = [
-  { source = "target/release/claptrap", dest = "/usr/bin/claptrap", mode = "755" },
-]

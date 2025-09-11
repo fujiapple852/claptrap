@@ -1,0 +1,19 @@
+[package]
+name = "gen-api-doc"
+description = "A tool to generate API documentation for the website"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+anyhow.workspace = true
+minijinja.workspace = true
+regex.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true, features = ["preserve_order"] }
+serde_yaml = { workspace = true, features = [] }
+toml = { workspace = true, features = ["preserve_order"] }
+
+[lints]
+workspace = true

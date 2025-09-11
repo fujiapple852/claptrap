@@ -1,0 +1,41 @@
+[package]
+name = "claptrap"
+description.workspace = true
+version.workspace = true
+authors.workspace = true
+documentation.workspace = true
+homepage.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "README.md"
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+claptrap-core.workspace = true
+anstream.workspace = true
+anyhow.workspace = true
+clap = { workspace = true, features = ["derive", "string", "cargo", "wrap_help", "usage", "unstable-styles", "color", "suggestions", "error-context", "env"] }
+clap-markdown.workspace = true
+clap_complete.workspace = true
+clap_mangen.workspace = true
+minijinja.workspace = true
+schemars = { workspace = true, features = ["derive", "indexmap2"] }
+serde_json = { workspace = true, features = ["preserve_order"] }
+serde_yaml = { workspace = true, features = [] }
+toml = { workspace = true, features = ["preserve_order"] }
+
+[dev-dependencies]
+insta = "1.43.1"
+tempfile = "3.21.0"
+test-case = "3.3.1"
+
+[lints]
+workspace = true
+
+[package.metadata.generate-rpm]
+assets = [
+  { source = "target/release/claptrap", dest = "/usr/bin/claptrap", mode = "755" },
+]
