@@ -30,7 +30,7 @@ indexmap = { version = "2.11.1", features = ["serde"] }
 itertools = "0.14.0"
 minijinja = "2.12.0"
 schemars = { version = "1.0.1", optional = true, features = ["derive", "indexmap2"] }
-serde = { version = "1.0.224", features = ["derive"] }
+serde = { version = "1.0.225", features = ["derive"] }
 serde_json = { version = "1.0.145", features = ["preserve_order"] }
 serde_yaml = { version = "=0.9.33", features = [] }
 toml = { version = "0.9.6", features = ["preserve_order"] }
