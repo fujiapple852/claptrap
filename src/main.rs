@@ -263,7 +263,6 @@ fn parse_spec_file(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<
     }
 }
 
-#[expect(clippy::coerce_container_to_any)]
 fn panic_output(err: &Box<dyn std::any::Any + Send>) -> Output {
     let panic_message = if let Some(message) = err.downcast_ref::<String>() {
         message
