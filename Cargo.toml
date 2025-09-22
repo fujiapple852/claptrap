@@ -21,7 +21,7 @@ schema = ["schemars"]
 anstream = "0.6.20"
 anstyle = "1.0.11"
 anyhow = "1.0.99"
-clap = { version = "4.5.47", features = ["derive", "string", "cargo", "wrap_help", "usage", "unstable-styles", "color", "suggestions", "error-context", "env"] }
+clap = { version = "4.5.48", features = ["derive", "string", "cargo", "wrap_help", "usage", "unstable-styles", "color", "suggestions", "error-context", "env"] }
 clap-markdown = "0.1.5"
 clap_complete = "4.5.58"
 clap_mangen = "0.2.29"
