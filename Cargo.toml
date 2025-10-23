@@ -33,7 +33,7 @@ schemars = { version = "1.0.1", optional = true, features = ["derive", "indexmap
 serde = { version = "1.0.225", features = ["derive"] }
 serde_json = { version = "1.0.145", features = ["preserve_order"] }
 serde_yaml = { version = "=0.9.33", features = [] }
-toml = { version = "0.9.6", features = ["preserve_order"] }
+toml = { version = "0.9.8", features = ["preserve_order"] }
 
 [dev-dependencies]
 insta = "1.43.2"
