@@ -213,7 +213,7 @@ fn run_app(
 }
 
 fn parse_spec(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Command> {
-    if spec_path == PathBuf::from("-") {
+    if spec_path == "-" {
         parse_spec_stdin(spec_format)
     } else {
         parse_spec_file(spec_path, spec_format)
