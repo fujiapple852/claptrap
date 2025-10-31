@@ -213,6 +213,7 @@ fn run_app(
 }
 
 fn parse_spec(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<Command> {
+    #[expect(clippy::cmp_owned)]
     if spec_path == PathBuf::from("-") {
         parse_spec_stdin(spec_format)
     } else {
