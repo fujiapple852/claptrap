@@ -38,7 +38,7 @@ pub struct Command {
     #[serde(default, deserialize_with = "deserialize_args")]
     args: Option<IndexMap<String, Arg>>,
     #[serde(default)]
-    subcommands: Vec<Command>,
+    subcommands: Vec<Self>,
     #[serde(default, deserialize_with = "deserialize_groups")]
     groups: Option<IndexMap<String, ArgGroup>>,
     no_binary_name: Option<bool>,
