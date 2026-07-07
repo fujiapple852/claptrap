@@ -250,7 +250,7 @@ fn parse_spec_file(spec_path: &Path, spec_format: SpecFormat) -> anyhow::Result<
                     "json" => Ok(serde_json::from_str::<Command>(&spec)?),
                     "yaml" | "yml" => Ok(serde_yaml::from_str::<Command>(&spec)?),
                     "toml" => Ok(toml::from_str::<Command>(&spec)?),
-                    _ => Err(anyhow::anyhow!("Unsupported spec format: {}", ext))?,
+                    _ => Err(anyhow::anyhow!("Unsupported spec format: {ext}"))?,
                 }
             } else {
                 Err(anyhow::anyhow!(
