@@ -105,6 +105,10 @@ apt update && apt install claptrap
 >
 > Only available for Ubuntu 24.04 (`Noble`) and 22.04 (`Jammy`).
 
+### NetBSD
+
+[![pkgsrc current package](https://repology.org/badge/version-for-repo/pkgsrc_current/claptrap.svg)](https://pkgsrc.se/sysutils/claptrap)
+
 ### Snap (Linux)
 
 [![claptrap](https://snapcraft.io/claptrap/badge.svg)](https://snapcraft.io/claptrap)
