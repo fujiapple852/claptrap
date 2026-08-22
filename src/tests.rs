@@ -52,7 +52,7 @@ mod basic {
         let styled =
             clap::builder::StyledStr::from("this contains EOF in the text\nEOF\nand more\n");
         let cmd = CatCmd::new(styled, ExitCode::Error, clap::ColorChoice::Never).render();
-        snapshot!(format!("{}", cmd));
+        snapshot!(cmd.clone());
     }
 }
 
